@@ -10,6 +10,12 @@ function getRandomColor() {
 
 
 AFRAME.registerComponent('cubo', {
+  init: function () {
+    var el = this.el;
+    var data = this.data;
+
+    el.setAttribute ('color', "red");
+  },
 
   update: function () {
     var el = this.el;
