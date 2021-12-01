@@ -1,42 +1,29 @@
-const synth = new Tone.Synth({
-    volume: -15, // -15dB
-    oscillator: {
-      type: 'triangle' // triangle wave
-    },
-    envelope: {
-      attack: 0.03, // 30ms attack
-      release: 1 // 1s release
-    }
-}).toMaster()
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 
+AFRAME.registerComponent('cubo', {
 
-AFRAME.registerComponent('synth', {
-   dependencies: ['raycaster'],
-    schema: {
-        note: {
-            type: 'string',
-            default: 'C4' // C4 default note
-          },
-        duration: {
-            type: 'string',
-            default: '4n' // quarter note default time
-          }
-    },
+  dependencies: ['raycaster'],
 
-    init: function () {
-      this.el.addEventListener('raycaster-intersection', this.trigger.bind(this));
-      this.el.addEventListener('fusing', this.trigger.bind(this))
-    },
+  init: function () {
+    this.el.addEventListener('raycaster-intersection', this.trigger.bind(this));
+    this.el.addEventListener('fusing', this.trigger.bind(this))
+  },
 
-    trigger: function () {
-      synth.triggerAttackRelease(this.data.note, this.data.duration)
-    },
+  update: function () {
+    var el = this.el;
+    var data = this.data;
 
-    remove: function () {
-      // Do something the component or its entity is detached.
-    },
+    el.addEventListener('abuttondown', function () {
+      el.setAttribute ('color', getRandomColor());
+    });
 
-    tick: function (time, timeDelta) {
-      // Do something on every scene tick or frame.
-    }
+  }
+
 });
