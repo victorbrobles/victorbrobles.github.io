@@ -2,17 +2,33 @@
   <title>Most Basic Super-Hands Example</title>
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
-  <script scr="vr2.js"></script>
+  <script type="text/javascript"
+        src="https://unpkg.com/aframe-thumb-controls-component@1.1.0/dist/aframe-thumb-controls-component.min.js">
+  </script>
+  <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/gh/n5ro/Micah1.github.io@7022b232989831d0748167999c5ac2998fa0eeb2/scripts/pilaser.js">
+  </script>
+  <script type="text/javascript"
+        src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js">
+  </script>
 </head>
 
 <body>
-  <a-scene>
-    <a-assets></a-assets>
-    <a-entity>
-      <a-camera></a-camera>
-      <a-entity oculus-touch-controls="hand: left"></a-entity>
-      <a-entity oculus-touch-controls="hand: right"></a-entity>
+  <a-scene environment="preset: starry; grid: none; groundTexture: walkernoise">
+    <a-box class="clickable" color="#EF2D5E" position="0 1 -4" change-color="color: blue"></a-box>
+    <a-entity id="cameraRig">
+     <a-entity id="cameraRig_1" character-controller="pivot: #head">
+      <a-entity id="head" camera wasd-controls touch-look-controls position="0 0 0"></a-entity>
+       <a-entity
+           teleport-controls="startEvents: thumbdownstart, abuttondown; endEvents: thumbdownend, abuttondown; cameraRig: #cameraRig; teleportOrigin: #head; curveShootingSpeed: 12; collisionEntities: [ground]"
+           thumb-controls
+           my-laser-controls  line="color: white; opacity: 0.75"
+           raycaster="objects:.clickable; far: 50">
+       </a-entity>
+       <a-entity daydream-controls vive-focus-controls oculus-go-controls></a-entity>
+       <a-entity id="left-hand" hand-controls="hand: left"></a-entity>
+       <a-entity id="right-hand" hand-controls="hand: right"></a-entity>
     </a-entity>
-    <a-box cubo color="blue" position="0 0 -1"></a-box>
+   </a-entity>
   </a-scene>
 </body>
