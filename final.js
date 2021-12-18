@@ -12,7 +12,7 @@ function getRandomColor() {
 AFRAME.registerComponent('cubo', {
 
   init: function() {
-    var el = thsis.el;
+    var el = this.el;
 
     el.addEventListener('grab-start', function() {
       el.setAttribute('color', getRandomColor());
