@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A-Frame Super Hands Component - Pointer Controls</title>
+    <!-- Cambiar a 1.0.4 si no funciona -->
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
+    <script src="stretch.js"></script>
+  </head>
+  <body>
+    <a-scene environment="preset: default; shadow: true">
+      <a-mixin id="pointer"
+                super-hands="colliderEvent: raycaster-intersection;
+                              colliderEventProperty: els;
+                              colliderEndEvent:raycaster-intersection-cleared;
+                              colliderEndEventProperty: clearedEls;">
+      </a-mixin>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: #cubo2, a-link"sphere-collider="objects: a-box" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: #cubo1, a-link" sphere-collider="objects: a-box" oculus-touch-controls="hand: left"></a-entity>
+
+      <a-box id="cubo1" cubo color="red" position="-2 3 -5" rotation='0 45 45' scale='2 2 2' shadow>
+        <a-animation attribute='position' to='-2 3.3 -5' direction='alternate' dur='2000' repeat='indefinite'></a-animation>
+        <a-animation attribute="scale" begin="hover-start" dur="300" to="2.3 2.3 2.3"></a-animation>
+        <a-animation attribute="scale" begin="hover-end" dur="300" to="2 2 2"></a-animation>
+        <a-animation attribute="rotation" begin="grab-end" dur="2000" to="360 405 45"></a-animation>
+      </a-box>
+
+      <a-box id="cubo2" cubo color="red" position="2 3 -5" rotation='0 45 45' scale='2 2 2' shadow>
+        <a-animation attribute='position' to='2 3.3 -5' direction='alternate' dur='2000' repeat='indefinite'></a-animation>
+        <a-animation attribute="scale" begin="hover-start" dur="300" to="2.3 2.3 2.3"></a-animation>
+        <a-animation attribute="scale" begin="hover-end" dur="300" to="2 2 2"></a-animation>
+        <a-animation attribute="rotation" begin="grab-end" dur="2000" to="360 405 45"></a-animation>
+      </a-box>
+
+    </a-scene>
+  </body>
+</html>
