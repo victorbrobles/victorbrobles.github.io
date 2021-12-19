@@ -18,7 +18,7 @@ AFRAME.registerComponent('cubo', {
       el.setAttribute('color', getRandomColor());
 
       texto = document.getElementById("message");
-      texto.setAttribute('value', event.detail.hand);
+      texto.setAttribute('value', event.detail.hand.toString());
     })
 
     el.addEventListener('grab-end', function() {
