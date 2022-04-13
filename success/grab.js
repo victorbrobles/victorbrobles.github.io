@@ -17,8 +17,8 @@ AFRAME.registerComponent('cubo', {
     el.addEventListener('grab-start', function(event) {
 
       console.log("He clickado el cubo");
-      console.log("Componente " + el.getAttribute("position"));
-      console.log("Mano " + event.detail.hand.getAttribute("position"));
+      console.log("Componente " + el.getAttribute("position").outerHTML);
+      console.log("Mano " + event.detail.hand.getAttribute("position").outerHTML);
 
       el.setAttribute('color', getRandomColor());
 
