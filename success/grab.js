@@ -36,6 +36,12 @@ AFRAME.registerComponent('cubo', {
 
       el.setAttribute('position', positionTmp);
 
+      var position2 = el.getAttribute("position");
+
+      console.log("CuboF x " + position2.x);
+      console.log("CuboF y " + position2.y);
+      console.log("CuboF z " + position2.z);
+
       el.setAttribute('color', getRandomColor());
 
       texto = document.getElementById("message");
