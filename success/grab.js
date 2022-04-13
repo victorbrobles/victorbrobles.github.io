@@ -18,16 +18,23 @@ AFRAME.registerComponent('cubo', {
 
       var position = el.getAttribute("position");
 
-
       console.log("Cubo x " + position.x);
       console.log("Cubo y " + position.y);
       console.log("Cubo z " + position.z);
 
       var positionMano = event.detail.hand.getAttribute("position");
-      
+
       console.log("Mano x " + positionMano.x);
       console.log("Mano x " + positionMano.y);
       console.log("Mano x " + positionMano.z);
+
+      var positionTmp = this.positionTmp = this.positionTmp || {x: 0, y: 2, z: -10};
+
+      positionTmp.x = position.x + positionMano.x;
+      positionTmp.y = position.y + positionMano.y;
+      positionTmp.z = position.z;
+
+      el.setAttribute('position', positionTmp);
 
       el.setAttribute('color', getRandomColor());
 
