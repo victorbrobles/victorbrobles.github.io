@@ -7,45 +7,19 @@ function getRandomColor() {
   return color;
 }
 
-
-AFRAME.registerComponent('escena', {
-
-  init: function() {
-    var el = this.el;
-
-    el.addEventListener('grab-start', function(event) {
-
-      var cubo = document.getElementById("cubo1");
-      var position = cubo.getAttribute("position");
-
-      console.log("ESC Cubo x " + position.x);
-      console.log("ESC Cubo y " + position.y);
-      console.log("ESC Cubo z " + position.z);
-
-      var positionMano = event.detail.hand.getAttribute("position");
-
-      console.log("ESC Mano x " + positionMano.x);
-      console.log("ESC Mano x " + positionMano.y);
-      console.log("ESC Mano x " + positionMano.z);
-
-      var positionTmp = this.positionTmp = this.positionTmp || {x: 0, y: 2, z: -10};
-
-      positionTmp.x = position.x + positionMano.x;
-      positionTmp.y = position.y + positionMano.y;
-      positionTmp.z = position.z;
-
-      el.setAttribute('position', positionTmp);
-
-      var position2 = el.getAttribute("position");
-
-      console.log("ESC CuboF x " + position2.x);
-      console.log("ESC CuboF y " + position2.y);
-      console.log("ESC CuboF z " + position2.z);
-
-      cubo.setAttribute('color', getRandomColor());
-    })
+function nuevaPosicion(cubo, mano) {
+  if (mano > cubo) {
+    return mano + cubo;
+  } else if (mano < cubo) {
+    if (mano < 0) {
+      return mano + cubo;
+    } else {
+      return cubo - mano;
+    }
+  } else {
+    return cubo;
   }
-});
+}
 
 
 AFRAME.registerComponent('cubo', {
@@ -69,8 +43,8 @@ AFRAME.registerComponent('cubo', {
 
       var positionTmp = this.positionTmp = this.positionTmp || {x: 0, y: 2, z: -10};
 
-      positionTmp.x = position.x + positionMano.x;
-      positionTmp.y = position.y + positionMano.y;
+      positionTmp.x = nuevaPosicion(position.x, positionMano.x);
+      positionTmp.y = nuevaPosicion(position.y, positionMano.y);
       positionTmp.z = position.z;
 
       el.setAttribute('position', positionTmp);
