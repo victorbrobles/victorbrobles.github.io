@@ -38,13 +38,13 @@ AFRAME.registerComponent('cubo', {
       var positionMano = event.detail.hand.getAttribute("position");
 
       console.log("Mano x " + positionMano.x);
-      console.log("Mano x " + positionMano.y);
-      console.log("Mano x " + positionMano.z);
+      console.log("Mano y " + positionMano.y);
+      console.log("Mano z " + positionMano.z);
 
       var positionTmp = this.positionTmp = this.positionTmp || {x: 0, y: 2, z: -10};
 
-      positionTmp.x = nuevaPosicion(position.x, positionMano.x);
-      positionTmp.y = nuevaPosicion(position.y, positionMano.y);
+      positionTmp.x = positionMano.x;
+      positionTmp.y = positionMano.y;
       positionTmp.z = position.z;
 
       el.setAttribute('position', positionTmp);
@@ -56,13 +56,6 @@ AFRAME.registerComponent('cubo', {
       console.log("CuboF z " + position2.z);
 
       el.setAttribute('color', getRandomColor());
-
-      texto = document.getElementById("message");
-      texto.setAttribute('value', event.detail.hand.getAttribute("position"));
-    })
-
-    el.addEventListener('grab-end', function() {
-      el.setAttribute('color', "black");
-    })
+    });
   }
 });
