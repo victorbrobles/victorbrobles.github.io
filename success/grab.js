@@ -7,20 +7,6 @@ function getRandomColor() {
   return color;
 }
 
-function nuevaPosicion(cubo, mano) {
-  if (mano > cubo) {
-    return mano + cubo;
-  } else if (mano < cubo) {
-    if (mano < 0) {
-      return mano + cubo;
-    } else {
-      return cubo - mano;
-    }
-  } else {
-    return cubo;
-  }
-}
-
 
 AFRAME.registerComponent('cubo', {
 
@@ -38,9 +24,13 @@ AFRAME.registerComponent('cubo', {
     el.addEventListener('grab-end', function(event) {
 
       console.log("Termina grab");
-      el.setAttribute('geometry', "primitive: sphere; radius: 1");
+      el.setAttribute('geometry', "primitive: sphere; radius: 0.75");
       el.setAttribute('color', "black");
 
+    });
+
+    el.addEventListener('onclick', function(event) {
+      console.log("Click en el cubo");
     });
   }
 });
