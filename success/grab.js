@@ -39,8 +39,8 @@ AFRAME.registerComponent('cubo', {
 
       var positionTmp = this.positionTmp = this.positionTmp || {x: 0, y: 2, z: -10};
 
-      positionTmp.x = positionMano.x;
-      positionTmp.y = positionMano.y;
+      positionTmp.x = position.x + positionMano.x;
+      positionTmp.y = position.y + positionMano.y;
       positionTmp.z = position.z;
 
       el.setAttribute('position', positionTmp);
