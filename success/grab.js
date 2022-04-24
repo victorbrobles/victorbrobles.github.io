@@ -31,29 +31,23 @@ AFRAME.registerComponent('cubo', {
 
       var position = el.getAttribute("position");
 
-      console.log("Cubo x " + position.x);
-      console.log("Cubo y " + position.y);
-      console.log("Cubo z " + position.z);
+      console.log("Cubo " + position.x.round(2) + " | " + position.y.round(2) + " | " + position.z.round(2));
 
       var positionMano = event.detail.hand.getAttribute("position");
 
-      console.log("Mano x " + positionMano.x);
-      console.log("Mano y " + positionMano.y);
-      console.log("Mano z " + positionMano.z);
+      console.log("Mano " + positionMano.x.round(2) + " | " + positionMano.y.round(2) + " | " + positionMano.z.round(2));
 
       var positionTmp = this.positionTmp = this.positionTmp || {x: 0, y: 2, z: -10};
 
-      positionTmp.x = positionMano.x;
-      positionTmp.y = positionMano.y;
-      positionTmp.z = position.z;
+      positionTmp.x = positionMano.x.round(2);
+      positionTmp.y = positionMano.y.round(2);
+      positionTmp.z = position.z.round(2);
 
       el.setAttribute('position', positionTmp);
 
       var position2 = el.getAttribute("position");
 
-      console.log("CuboF x " + position2.x);
-      console.log("CuboF y " + position2.y);
-      console.log("CuboF z " + position2.z);
+      console.log("CuboFinal " + position2.x.round(2) + " | " + position2.y.round(2) + " | " + position2.z.round(2));
 
       el.setAttribute('color', getRandomColor());
     });
