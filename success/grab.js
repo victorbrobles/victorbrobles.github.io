@@ -29,27 +29,18 @@ AFRAME.registerComponent('cubo', {
 
     el.addEventListener('grab-start', function(event) {
 
-      var position = el.getAttribute("position");
-
-      console.log("Cubo " + position.x + " | " + position.y + " | " + position.z);
-
-      var positionMano = event.detail.hand.getAttribute("position");
-
-      console.log("Mano " + positionMano.x + " | " + positionMano.y + " | " + positionMano.z);
-
-      var positionTmp = this.positionTmp = this.positionTmp || {x: 0, y: 2, z: -10};
-
-      positionTmp.x = position.x + positionMano.x;
-      positionTmp.y = position.y + positionMano.y;
-      positionTmp.z = position.z;
-
-      el.setAttribute('position', positionTmp);
-
-      var position2 = el.getAttribute("position");
-
-      console.log("CuboFinal " + position2.x + " | " + position2.y + " | " + position2.z);
-
+      console.log("Empieza grab");
+      //var positionMano = event.detail.hand.getAttribute("position");
       el.setAttribute('color', getRandomColor());
+
+    });
+
+    el.addEventListener('grab-end', function(event) {
+
+      console.log("Termina grab");
+      el.setAttribute('geometry', "sphere");
+      el.setAttribute('color', "yellow");
+
     });
   }
 });
