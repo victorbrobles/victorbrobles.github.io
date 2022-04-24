@@ -38,8 +38,8 @@ AFRAME.registerComponent('cubo', {
     el.addEventListener('grab-end', function(event) {
 
       console.log("Termina grab");
-      //el.setAttribute('geometry', "sphere");
-      el.setAttribute('color', "yellow");
+      el.setAttribute('geometry', "primitive: sphere; radius: 2");
+      el.setAttribute('color', "black");
 
     });
   }
