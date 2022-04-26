@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A-Frame Super Hands Component - Pointer Controls</title>
+    <!-- Cambiar a 1.0.4 si no funciona -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
+    <script src="demo.js"></script>
+    <script src="https://github.com/wmurphyrd/aframe-super-hands-component/tree/master/examples/build.js"></script>
+  </head>
+  <body>
+    <a-scene environment="preset: default; shadow: true">
+      <a-mixin id="pointer"
+                super-hands="colliderEvent: raycaster-intersection;
+                              colliderEventProperty: els;
+                              colliderEndEvent:raycaster-intersection-cleared;
+                              colliderEndEventProperty: clearedEls;">
+      </a-mixin>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link"sphere-collider="objects: a-box" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link" sphere-collider="objects: a-box" oculus-touch-controls="hand: left"></a-entity>
+
+      <a-entity id="tablero" suelo="height:1; width:10; position: 0 0 -20"
+        pared_izq="height:30; width:1; position: -5 0 -20"
+        pared_der="height:30; width:1; position: 5 0 -20">
+      </a-entity>
+
+      <a-box class="cubo" cubo="position: 0 20 -20" shadow hoverable grabbable stretchable draggable droppable></a-box>
+
+    </a-scene>
+  </body>
+</html>

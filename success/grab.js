@@ -8,7 +8,8 @@ function getRandomColor() {
 }
 
 
-//Proximo dia: crear tablero tetris, boton girar pieza a un lado, y hacer que una pieza vaya cayendo y tu la puedas mover solo para el lado
+//Proximo dia: crear tablero tetris, boton girar pieza a un lado, y hacer que una pieza vaya cayendo y tu la puedas mover solo para el lado o para abajo.
+//Cuando la pieza sobrepase el tablero por el lado deberá quedarse en el tablero.
 
 AFRAME.registerComponent('cubo', {
 
