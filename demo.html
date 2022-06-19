@@ -8,25 +8,46 @@
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
     <script src="demo.js"></script>
+    <script src="funciones.js"></script>
     <script src="https://github.com/wmurphyrd/aframe-super-hands-component/tree/master/examples/build.js"></script>
   </head>
   <body>
-    <a-scene environment="preset: default; shadow: true">
+    <a-scene id="entorno" environment="preset: default; shadow: true">
       <a-mixin id="pointer"
                 super-hands="colliderEvent: raycaster-intersection;
                               colliderEventProperty: els;
                               colliderEndEvent:raycaster-intersection-cleared;
                               colliderEndEventProperty: clearedEls;">
       </a-mixin>
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link"sphere-collider="objects: a-box" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link" sphere-collider="objects: a-box" oculus-touch-controls="hand: left"></a-entity>
 
-      <a-entity id="tablero" suelo="height:1; width:10; position: 0 0 -20"
-        pared_izq="height:30; width:1; position: -5 0 -20"
-        pared_der="height:30; width:1; position: 5 0 -20">
+      <a-entity position="-10 10 -3"
+                    text="color: white; align: center; value: HIGH SCORE; width: 0.4"></a-entity>
+
+      <a-mixin id="objetosManejables" hoverable grabbable="suppressY:true" stretchable draggable droppable></a-mixin>
+      <a-mixin id="botones" clickable></a-mixin>
+
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton"sphere-collider="objects: a-box, a-sphere" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton" sphere-collider="objects: a-box, a-sphere" oculus-touch-controls="hand: left"></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton" sphere-collider="objects: a-box, a-sphere" cursor="rayOrigin: mouse"></entity>
+
+
+      <a-entity id="tablero">
+        <a-box suelo="height:1; width:12; position: 0 0.5 -20"></a-box>
+        <a-box pared_izq="height:21; width:1; position: -5.5 10.5 -20"></a-box>
+        <a-box pared_der="height:21; width:1; position: 5.5 10.5 -20"></a-box>
       </a-entity>
 
-      <a-box class="cubo" cubo="position: 0 20 -20" shadow hoverable grabbable stretchable draggable droppable></a-box>
+      <a-entity id="botones">
+        <a-box bajarpieza="position: -10 15 -20; color: red; width: 3; height: 3; depth: 0; id:bajarPieza; mixin:botones;
+          positionText: 0.3 -0.4 1; colorText: white; alignText: center; valueText: BAJAR PIEZA; widthText: 10"></a-box>
+        <a-box rotarpieza="position: -10 10 -20; color: red; width: 3; height: 3; depth: 0 id:rotarPieza; mixin:botones;
+          positionText: 0.3 -0.4 1; colorText: white; alignText: center; valueText: ROTAR PIEZA; widthText: 10"></a-box>
+      </a-entity>
+
+      <a-entity id="mandocontrolador">
+        <a-plane mando="height:0.2; width:5; position: 0 0.5 -5; rotation: -45 0 0; color:black; id: mando"></a-plane>
+        <a-sphere controller="height:0.5; width:0.5; radius:0.25; position: 0 0.5 -4.9; rotation: -45 0 0; mixin:objetosManejables; color: white; id: controller"></a-sphere>
+      </a-entity>
 
     </a-scene>
   </body>

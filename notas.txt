@@ -1,0 +1,4 @@
+
+
+Con la nueva disposición del suelo, habrá que cambiar la restricción a la hora de girar una pieza o bajarla,
+teniendo en cuenta la nueva width de la pieza que no toque el nuevo suelo
