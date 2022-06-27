@@ -1,4 +1,6 @@
 
+let fuenteScore = "https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json";
+
 //Booleans para saber la posición de la pieza
 let piezaTocaSuelo = false;
 let piezaTocaParedIzq = false;
@@ -14,6 +16,9 @@ let limiteDer = 0;
 let rotarPieza = false;
 let bajarPieza = false;
 let moverPieza = false;
+let crearPieza = true;
+let actualizaMarcadorPieza = false;
+let actualizaMarcadorFila = false;
 
 //Inicialización del controlador
 let posController = {x: 0, y: 0, z: 0};
@@ -22,141 +27,203 @@ let posController = {x: 0, y: 0, z: 0};
 let nuevaPos = "";
 
 //Tablero
-var tablero = [];
+let tablero = [];
+let anchuraTablero = 0;
+let alturaTablero = 0;
 
+//Piezas
+let contadorPieza = 0;
+
+//Otras variables
+let velocidad = 0.005;
+let scoreActual = 0;
+let imprimeTableroBool = true;
+let numFilasEliminadas = 0;
+
+
+//PUNTUACION
+
+AFRAME.registerComponent('score', {
+  schema: {
+    position: {default: "0 0 0"},
+    anchuraTexto: {default: 0},
+    alturaTexto: {default:0}
+  },
+
+  init: function() {
+    var el = this.el;
+    var data = this.data;
+
+    el.setAttribute('position', data.position);
+
+    var texto = document.createElement("a-entity");
+    texto.id = "valorscore";
+    texto.setAttribute('position', "0 0 1");
+    texto.setAttribute('text', "value:HIGH SCORE: 0; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
+
+    el.appendChild(texto);
+  },
+  tick: function() {
+    var el = this.el;
+    var data = this.data;
+
+    if (actualizaMarcadorPieza && !isGameOver()) {
+
+      var pieza = document.getElementById("cubo" + contadorPieza);
+      var alturaPieza = pieza.getAttribute('height');
+      var anchuraPieza = pieza.getAttribute('width');
+
+      var valorTotal = Number(alturaPieza) * Number(anchuraPieza) * 100;
+      scoreActual = Number(scoreActual) + Number(valorTotal);
+
+      var texto = document.getElementById("valorscore");
+      texto.setAttribute('text', "value:HIGH SCORE: " + scoreActual + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
+      actualizaMarcadorPieza = false;
+
+    } else if (actualizaMarcadorFila && !isGameOver()) {
+
+      scoreActual = Number(scoreActual) + (5000 * numFilasEliminadas);
+
+      var texto = document.getElementById("valorscore");
+      texto.setAttribute('text', "value:HIGH SCORE: " + scoreActual + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
+      actualizaMarcadorFila = false;
+
+    }
+  }
+});
 
 
 // CREACIÓN DEL TABLERO
 
-AFRAME.registerComponent('suelo', {
+AFRAME.registerComponent('tablero', {
   schema: {
-    position: {default: "0 0 0"},
-    width: {default: 0},
-    height: {default: 0}
+    alturaSuelo: {default: 0},
+    anchuraSuelo: {default: 0},
+    positionSuelo: {default: "0 0 0"},
+    colorTablero: {default: "white"},
+    alturaPared: {default: 0},
+    anchuraPared: {default: 0},
+    positionParedIzq: {default: "0 0 0"},
+    positionParedDer: {default: "0 0 0"}
   },
 
   init: function() {
     var el = this.el;
     var data = this.data;
 
-    el.setAttribute('position', data.position);
-    el.setAttribute('color', "black");
-    el.setAttribute('width', data.width);
-    el.setAttribute('height', data.height);
-    el.id = 'suelo';
+    var suelo = document.createElement('a-box');
+    suelo.setAttribute('height', data.alturaSuelo);
+    suelo.setAttribute('width', data.anchuraSuelo);
+    suelo.setAttribute('position', data.positionSuelo);
+    suelo.setAttribute('color', data.colorTablero);
+    suelo.id = 'suelo';
 
-    //Creamos pieza
+    var paredIzq = document.createElement('a-box');
+    paredIzq.setAttribute('height', data.alturaPared);
+    paredIzq.setAttribute('width', data.anchuraPared);
+    paredIzq.setAttribute('position', data.positionParedIzq);
+    paredIzq.setAttribute('color', data.colorTablero);
+    paredIzq.id = 'pared_izq';
+
+    var paredDer = document.createElement('a-box');
+    paredDer.setAttribute('height', data.alturaPared);
+    paredDer.setAttribute('width', data.anchuraPared);
+    paredDer.setAttribute('position', data.positionParedDer);
+    paredDer.setAttribute('color', data.colorTablero);
+    paredDer.id = 'pared_der';
+
+    el.appendChild(suelo);
+    el.appendChild(paredIzq);
+    el.appendChild(paredDer);
+
+    var positionYSuelo = Number(data.positionSuelo.split(" ")[1]);
+    alturaSuelo = positionYSuelo + Number(data.alturaSuelo) / 2;
+
+    var positionXParedIzq = Number(data.positionParedIzq.split(" ")[0]);
+    limiteIzq = positionXParedIzq + Number(data.anchuraPared) / 2;
+
+    var positionXParedDer = Number(data.positionParedDer.split(" ")[0]);
+    limiteDer = positionXParedDer - Number(data.anchuraPared) / 2;
+
+    anchuraTablero = Number(data.anchuraSuelo) - 2 * Number(data.anchuraPared);
+    alturaTablero = Number(data.alturaPared) - Number(data.alturaSuelo);
+
+    crearTablero(anchuraTablero, alturaTablero + 4);
+    imprimeTablero();
+
+  },
+  tick: function() {
 
     var entorno = document.getElementById("entorno");
-    var pieza = document.createElement("a-box");
 
-    pieza.classList.add("cubo");
-    pieza.id = "cubo";
-    pieza.setAttribute('cubo', damePropsPieza())
+    if (crearPieza) {
 
-    entorno.appendChild(pieza);
+      eliminarFilasCompletas();
 
-  },
-  tick: function() {
-    var el = this.el;
-    var data = this.data;
+      imprimeTableroBool = true;
+      contadorPieza += 1;
 
-    var pieza = document.getElementById("cubo");
+      var pieza = document.createElement("a-box");
+
+      pieza.classList.add("cubo");
+      pieza.id = "cubo" + contadorPieza;
+      pieza.setAttribute('cubo', damePropsPieza());
+
+      entorno.appendChild(pieza);
+    }
+
+    var pieza = document.getElementById("cubo" + contadorPieza);
+
     var position = pieza.getAttribute('position');
     var alturaPieza = pieza.getAttribute('height');
-    var positionSuelo = el.getAttribute('position');
-
-    alturaSuelo = (data.height/2) + positionSuelo.y;
-
-    if (position.y <= alturaSuelo + (alturaPieza/2)) {
-      piezaTocaSuelo = true;
-    } else {
-      piezaTocaSuelo = false;
-    }
-
-    if (tablero.length == 0) {
-      crearTablero ();
-    }
-  }
-});
-
-AFRAME.registerComponent('pared_izq', {
-  schema: {
-    position: {default: "0 0 0"},
-    width: {default: 0},
-    height: {default: 0}
-  },
-
-  init: function() {
-    var el = this.el;
-    var data = this.data;
-
-    el.setAttribute('position', data.position);
-    el.setAttribute('color', "black");
-    el.setAttribute('width', data.width);
-    el.setAttribute('height', data.height);
-    el.id = 'pared_izq';
-  },
-
-  tick: function() {
-    var el = this.el;
-    var data = this.data;
-
-    var pieza = document.getElementById("cubo");
-    var position = pieza.getAttribute('position');
     var anchuraPieza = pieza.getAttribute('width');
-    var positionPared = el.getAttribute('position');
 
-    limiteIzq = (positionPared.x + data.width/2);
+    if (alturaPieza != null && anchuraPieza != null) {
 
-    if (position.x <= limiteIzq + anchuraPieza/2) {
-      piezaTocaParedIzq = true;
-    } else {
-      piezaTocaParedIzq = false;
+      var posX = dameCoordenadaX(position.x, anchuraPieza);
+      var posY = dameCoordenadaY(position.y, alturaPieza);
+
+      //console.log("Pos [" + posX + "," + posY + "]");
+
+      if (posY != null) {
+
+        if (posY == 0) {
+          piezaTocaSuelo = true;
+        } else {
+          var ocupada = false;
+          for (let i=0; i<anchuraPieza; i++) {
+            if (casillaEstaOcupada(Number(posX) + i, posY)) {
+              ocupada = true;
+            }
+          }
+          if (ocupada) {
+            piezaTocaSuelo = true;
+          } else {
+            piezaTocaSuelo = false;
+          }
+        }
+
+        if (position.x <= limiteIzq + anchuraPieza/2) {
+          piezaTocaParedIzq = true;
+        } else {
+          piezaTocaParedIzq = false;
+        }
+
+        if (position.x >= limiteDer - anchuraPieza/2) {
+          piezaTocaParedDer = true;
+        } else {
+          piezaTocaParedDer = false;
+        }
+      }
+
+      if (piezaTocaSuelo && imprimeTableroBool) {
+        actualizaTablero(posX,posY,anchuraPieza,alturaPieza, contadorPieza);
+        imprimeTableroBool = false;
+      }
+
     }
   }
 });
-
-AFRAME.registerComponent('pared_der', {
-  schema: {
-    position: {default: "0 0 0"},
-    width: {default: 0},
-    height: {default: 0}
-  },
-
-  init: function() {
-    var el = this.el;
-    var data = this.data;
-
-    el.setAttribute('position', data.position);
-    el.setAttribute('color', "black");
-    el.setAttribute('width', data.width);
-    el.setAttribute('height', data.height);
-    el.id = 'pared_der';
-
-  },
-
-  tick: function() {
-    var el = this.el;
-    var data = this.data;
-
-    var pieza = document.getElementById("cubo");
-    var position = pieza.getAttribute('position');
-    var anchuraPieza = pieza.getAttribute('width');
-    var positionPared = el.getAttribute('position');
-
-    limiteDer = (positionPared.x - data.width/2);
-
-    if (position.x >= limiteDer - anchuraPieza/2) {
-      piezaTocaParedDer = true;
-    } else {
-      piezaTocaParedDer = false;
-    }
-  }
-});
-
-
-
 
 
 //CREACIÓN DE LOS BOTONES
@@ -353,6 +420,7 @@ AFRAME.registerComponent('cubo', {
   },
 
   init: function() {
+
     var el = this.el;
     var data = this.data;
 
@@ -360,34 +428,47 @@ AFRAME.registerComponent('cubo', {
     el.setAttribute('position', data.position);
     el.setAttribute('width', data.width);
     el.setAttribute('height', data.height);
+
+    crearPieza = false;
   },
 
   tick: function() {
-    var el = this.el;
-    var data = this.data;
 
-    var position = el.getAttribute("position");
-    var width = el.getAttribute('width');
-    var height = el.getAttribute('height');
-    var perimetro = limiteDer - limiteIzq;
+    var el = document.getElementById("cubo" + contadorPieza);
+    var data = this.data;
 
     if (!piezaTocaSuelo) {
 
-      var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
-      el.setAttribute('position', positionTmp);
+      if (el != null) {
+        var position = el.getAttribute("position");
+        var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
+        el.setAttribute('position', positionTmp);
 
-      if (rotarPieza) {
-        rotarPiezaFunction(el);
+        if (rotarPieza) {
+          rotarPiezaFunction(el);
+        }
+
+        if (bajarPieza) {
+          bajarPiezaFunction(el);
+        }
+
+        if (moverPieza) {
+          moverPiezaFunction(el);
+        }
       }
 
-      if (bajarPieza) {
-        bajarPiezaFunction(el);
-      }
+    } else {
 
-      if (moverPieza) {
-        moverPiezaFunction(el);
-      }
+      actualizaMarcadorPieza = true;
 
+      if (!isGameOver()) {
+        crearPieza = true;
+        piezaTocaSuelo = false;
+        bajarPieza = false;
+        rotarPieza = false;
+      } else {
+        location.replace("gameover.html")
+      }
     }
   }
 });

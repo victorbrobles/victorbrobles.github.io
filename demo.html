@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>A-Frame Super Hands Component - Pointer Controls</title>
-    <!-- Cambiar a 1.0.4 si no funciona -->
+    <title>Tetris VR</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
@@ -12,16 +11,13 @@
     <script src="https://github.com/wmurphyrd/aframe-super-hands-component/tree/master/examples/build.js"></script>
   </head>
   <body>
-    <a-scene id="entorno" environment="preset: default; shadow: true">
+    <a-scene id="entorno" environment="preset: threetowers; shadow: true">
       <a-mixin id="pointer"
                 super-hands="colliderEvent: raycaster-intersection;
                               colliderEventProperty: els;
                               colliderEndEvent:raycaster-intersection-cleared;
                               colliderEndEventProperty: clearedEls;">
       </a-mixin>
-
-      <a-entity position="-10 10 -3"
-                    text="color: white; align: center; value: HIGH SCORE; width: 0.4"></a-entity>
 
       <a-mixin id="objetosManejables" hoverable grabbable="suppressY:true" stretchable draggable droppable></a-mixin>
       <a-mixin id="botones" clickable></a-mixin>
@@ -30,11 +26,10 @@
       <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton" sphere-collider="objects: a-box, a-sphere" oculus-touch-controls="hand: left"></a-entity>
       <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton" sphere-collider="objects: a-box, a-sphere" cursor="rayOrigin: mouse"></entity>
 
+      <a-entity id="score" score="position: -25 10 -20; anchuraTexto:30; alturaTexto:30"></a-entity>
 
-      <a-entity id="tablero">
-        <a-box suelo="height:1; width:12; position: 0 0.5 -20"></a-box>
-        <a-box pared_izq="height:21; width:1; position: -5.5 10.5 -20"></a-box>
-        <a-box pared_der="height:21; width:1; position: 5.5 10.5 -20"></a-box>
+      <a-entity id="tablero" tablero="alturaSuelo: 1; anchuraSuelo: 12; positionSuelo: 0 0.5 -20; colorTablero: black;
+          alturaPared: 21; anchuraPared: 1; positionParedIzq: -5.5 10.5 -20; positionParedDer: 5.5 10.5 -20">
       </a-entity>
 
       <a-entity id="botones">
