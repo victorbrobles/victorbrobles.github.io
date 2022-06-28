@@ -62,7 +62,7 @@ AFRAME.registerComponent('boton', {
       }
     }
 
-    el.addEventListener('grab-start', function(event) {
+    el.addEventListener('grab-end', function(event) {
         location.replace("menu.html");
     });
   }

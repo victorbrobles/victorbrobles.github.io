@@ -376,12 +376,13 @@ AFRAME.registerComponent('controller', {
 
     var position = el.getAttribute('position');
 
-    if (posController.x != position.x) {
-      moverPieza = true;
-      nuevaPos = position.x * 2;
-    }
-
     if (!piezaTocaSuelo) {
+
+      if (posController.x != position.x) {
+        moverPieza = true;
+        nuevaPos = position.x * 2;
+      }
+
       el.addEventListener('grab-end', function(event) {
 
         var positionFinal = controller.getAttribute("position");
@@ -436,11 +437,13 @@ AFRAME.registerComponent('cubo', {
 
     var el = document.getElementById("cubo" + contadorPieza);
     var data = this.data;
+    var piezas = document.querySelectorAll('.cubo');
 
     if (!piezaTocaSuelo) {
 
       if (el != null) {
         var position = el.getAttribute("position");
+        sleep(0.01 * (piezas.length - 1))
         var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
         el.setAttribute('position', positionTmp);
 

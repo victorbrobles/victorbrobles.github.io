@@ -21,6 +21,14 @@ function damePropsPieza () {
   }
 }
 
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
 
 //Funciones de una casilla
 
@@ -127,8 +135,6 @@ function eliminarFila (numFila) {
       }
     }
   }
-
-  //console.log("Para la fila " + numFila + " hay que eliminar las piezas " + listaPiezas);
 
   for (let j=0; j<listaPiezas.length; j++) {
     console.log("PIEZA " + listaPiezas[j]);
@@ -246,6 +252,9 @@ function moverPiezaFunction (el) {
   var width = el.getAttribute('width');
   var height = el.getAttribute('height');
 
+  var posControllerAux = posController.x;
+  var nuevaPosAux = nuevaPos/2;
+
   posController = {x: nuevaPos/2, y: position.y, z: position.z}
   var positionTmp = {x: nuevaPos, y: position.y, z: position.z};
 
@@ -267,7 +276,27 @@ function moverPiezaFunction (el) {
     }
   }
 
-  el.setAttribute('position', positionTmp);
+  var posXInicial = dameCoordenadaX(position.x, width);
+  var posYInicial = dameCoordenadaY(position.y, height);
+  var destinoLibre = true;
+
+  if (nuevaPosAux > posControllerAux && posYInicial != 0 && posYInicial <= alturaTablero && Number(posXInicial)+Number(width) <= anchuraTablero) {
+    for (let i=0; i<height; i++) {
+      if (tablero[Number(posYInicial)+i][Number(posXInicial)+Number(width)] != ".") {
+        destinoLibre = false;
+      }
+    }
+  } else if (nuevaPosAux < posControllerAux && posYInicial != 0 && posYInicial <= alturaTablero && posXInicial != 1) {
+    for (let i=0; i<height; i++) {
+      if (tablero[posYInicial+i][posXInicial-1] != ".") {
+        destinoLibre = false;
+      }
+    }
+  }
+
+  if (destinoLibre) {
+    el.setAttribute('position', positionTmp);
+  }
 
   moverPieza = false;
 

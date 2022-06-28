@@ -71,7 +71,7 @@ AFRAME.registerComponent('boton', {
       }
     }
 
-    el.addEventListener('grab-start', function(event) {
+    el.addEventListener('grab-end', function(event) {
 
       var id = el.getAttribute('id');
       console.log("Id: " + id);
