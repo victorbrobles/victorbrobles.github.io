@@ -6,12 +6,24 @@
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
-    <script src="demo.js"></script>
-    <script src="funciones.js"></script>
+    <script src="js/demo.js"></script>
+    <script src="js/variables.js"></script>
+    <script src="js/generales.js"></script>
+    <script src="js/piezas.js"></script>
+    <script src="js/tableros.js"></script>
+    <script src="js/marcador.js"></script>
+    <script src="js/controller.js"></script>
     <script src="https://github.com/wmurphyrd/aframe-super-hands-component/tree/master/examples/build.js"></script>
   </head>
   <body>
-    <a-scene id="entorno" environment="preset: threetowers; shadow: true">
+    <a-scene id="entorno" environment="skyColor:#87faf4;horizonColor:#87faf4;dressingAmount:0;dressingOnPlayArea:0.5;dressingVariance:0.2 0.2 0.2;dressingScale:0.5;groundColor:#7d787b;groundColor2:#f1f518;dressingColor:#08fd18;grid:dots;dressingUniformScale:false;ground:flat;active:true;seed:17;lightPosition:-0.72 0.53 0.97;fog:0.8;groundYScale:20;groundTexture:walkernoise;gridColor:#239893;preset:dream" preset-switcher="">
+      <a-entity class="environment" position="0 50 0" light="color:#c3fcf9;intensity:0.6;groundColor:#7d787b;type:hemisphere"></a-entity>
+      <a-entity class="environment" position="-0.72 0.53 0.97" light="shadowCameraLeft:-10;shadowCameraBottom:-10;shadowCameraRight:10;shadowCameraTop:10;intensity:0.6"></a-entity>
+      <a-entity rotation="-90 0 0" class="environmentGround environment" scale="1 1 20" shadow="cast:false;receive:false"></a-entity>
+      <a-entity class="environmentDressing environment" visible="false"></a-entity>
+      <a-sky radius="200" theta-length="110" class="environment" geometry="" material="npot:false;color:#87faf4;fog:false"></a-sky>
+      <a-entity id="stars" visible="false"></a-entity>
+
       <a-mixin id="pointer"
                 super-hands="colliderEvent: raycaster-intersection;
                               colliderEventProperty: els;
@@ -26,7 +38,7 @@
       <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton" sphere-collider="objects: a-box, a-sphere" oculus-touch-controls="hand: left"></a-entity>
       <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton" sphere-collider="objects: a-box, a-sphere" cursor="rayOrigin: mouse"></entity>
 
-      <a-entity id="score" score="position: -25 10 -20; anchuraTexto:30; alturaTexto:30"></a-entity>
+      <a-entity id="score" score="position: 0 25 -20; anchuraTexto:30; alturaTexto:30"></a-entity>
 
       <a-entity id="tablero" tablero="alturaSuelo: 1; anchuraSuelo: 12; positionSuelo: 0 0.5 -20; colorTablero: black;
           alturaPared: 21; anchuraPared: 1; positionParedIzq: -5.5 10.5 -20; positionParedDer: 5.5 10.5 -20">
@@ -34,14 +46,14 @@
 
       <a-entity id="botones">
         <a-box bajarpieza="position: -10 15 -20; color: red; width: 3; height: 3; depth: 0; id:bajarPieza; mixin:botones;
-          positionText: 0.3 -0.4 1; colorText: white; alignText: center; valueText: BAJAR PIEZA; widthText: 10"></a-box>
-        <a-box rotarpieza="position: -10 10 -20; color: red; width: 3; height: 3; depth: 0 id:rotarPieza; mixin:botones;
-          positionText: 0.3 -0.4 1; colorText: white; alignText: center; valueText: ROTAR PIEZA; widthText: 10"></a-box>
+          positionText: 0.3 -0.4 1; colorText: black; alignText: center; valueText: BAJAR PIEZA; widthText: 10"></a-box>
+        <a-box rotarpieza="position: 10 15 -20; color: red; width: 3; height: 3; depth: 0 id:rotarPieza; mixin:botones;
+          positionText: -0.3 -0.4 1; colorText: black; alignText: center; valueText: ROTAR PIEZA; widthText: 10"></a-box>
       </a-entity>
 
       <a-entity id="mandocontrolador">
         <a-plane mando="height:0.2; width:5; position: 0 0.5 -5; rotation: -45 0 0; color:black; id: mando"></a-plane>
-        <a-sphere controller="height:0.5; width:0.5; radius:0.25; position: 0 0.5 -4.9; rotation: -45 0 0; mixin:objetosManejables; color: white; id: controller"></a-sphere>
+        <a-sphere controller="height:0.5; width:0.5; radius:0.25; position: 0 0.5 -4.9; rotation: -45 0 0; mixin:objetosManejables; color: #525250; id: controller"></a-sphere>
       </a-entity>
 
     </a-scene>

@@ -1,44 +1,4 @@
 
-let fuenteScore = "https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json";
-
-//Booleans para saber la posición de la pieza
-let piezaTocaSuelo = false;
-let piezaTocaParedIzq = false;
-let piezaTocaParedDer = false;
-
-
-//Límites horizontales y límite vertical
-let alturaSuelo = 0;
-let limiteIzq = 0;
-let limiteDer = 0;
-
-//Booleans para activar funciones
-let rotarPieza = false;
-let bajarPieza = false;
-let moverPieza = false;
-let crearPieza = true;
-let actualizaMarcadorPieza = false;
-let actualizaMarcadorFila = false;
-
-//Inicialización del controlador
-let posController = {x: 0, y: 0, z: 0};
-
-//Variable de nueva posición pieza
-let nuevaPos = "";
-
-//Tablero
-let tablero = [];
-let anchuraTablero = 0;
-let alturaTablero = 0;
-
-//Piezas
-let contadorPieza = 0;
-
-//Otras variables
-let velocidad = 0.005;
-let scoreActual = 0;
-let imprimeTableroBool = true;
-let numFilasEliminadas = 0;
 
 
 //PUNTUACION
@@ -68,26 +28,9 @@ AFRAME.registerComponent('score', {
     var data = this.data;
 
     if (actualizaMarcadorPieza && !isGameOver()) {
-
-      var pieza = document.getElementById("cubo" + contadorPieza);
-      var alturaPieza = pieza.getAttribute('height');
-      var anchuraPieza = pieza.getAttribute('width');
-
-      var valorTotal = Number(alturaPieza) * Number(anchuraPieza) * 100;
-      scoreActual = Number(scoreActual) + Number(valorTotal);
-
-      var texto = document.getElementById("valorscore");
-      texto.setAttribute('text', "value:HIGH SCORE: " + scoreActual + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
-      actualizaMarcadorPieza = false;
-
+      actualizaMarcadorPiezaFunction(data);
     } else if (actualizaMarcadorFila && !isGameOver()) {
-
-      scoreActual = Number(scoreActual) + (5000 * numFilasEliminadas);
-
-      var texto = document.getElementById("valorscore");
-      texto.setAttribute('text', "value:HIGH SCORE: " + scoreActual + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
-      actualizaMarcadorFila = false;
-
+      actualizaMarcadorFilaFunction(data);
     }
   }
 });
@@ -136,91 +79,44 @@ AFRAME.registerComponent('tablero', {
     el.appendChild(paredIzq);
     el.appendChild(paredDer);
 
-    var positionYSuelo = Number(data.positionSuelo.split(" ")[1]);
-    alturaSuelo = positionYSuelo + Number(data.alturaSuelo) / 2;
-
-    var positionXParedIzq = Number(data.positionParedIzq.split(" ")[0]);
-    limiteIzq = positionXParedIzq + Number(data.anchuraPared) / 2;
-
-    var positionXParedDer = Number(data.positionParedDer.split(" ")[0]);
-    limiteDer = positionXParedDer - Number(data.anchuraPared) / 2;
-
-    anchuraTablero = Number(data.anchuraSuelo) - 2 * Number(data.anchuraPared);
-    alturaTablero = Number(data.alturaPared) - Number(data.alturaSuelo);
+    iniciaVariablesEntorno(data);
 
     crearTablero(anchuraTablero, alturaTablero + 4);
     imprimeTablero();
 
   },
   tick: function() {
+    var el = this.el;
+    var data = this.data;
 
     var entorno = document.getElementById("entorno");
+    var id = el.getAttribute('id');
 
-    if (crearPieza) {
+    if (id == "tablero") {
+      if (crearPieza) {
+        imprimeTableroBool = true;
+        contadorPieza += 1;
 
-      eliminarFilasCompletas();
+        eliminarFilasCompletas();
+        crearPiezaFunction(entorno);
+      }
 
-      imprimeTableroBool = true;
-      contadorPieza += 1;
+      var pieza = document.getElementById("cubo" + contadorPieza);
 
-      var pieza = document.createElement("a-box");
-
-      pieza.classList.add("cubo");
-      pieza.id = "cubo" + contadorPieza;
-      pieza.setAttribute('cubo', damePropsPieza());
-
-      entorno.appendChild(pieza);
-    }
-
-    var pieza = document.getElementById("cubo" + contadorPieza);
-
-    var position = pieza.getAttribute('position');
-    var alturaPieza = pieza.getAttribute('height');
-    var anchuraPieza = pieza.getAttribute('width');
-
-    if (alturaPieza != null && anchuraPieza != null) {
+      var position = pieza.getAttribute('position');
+      var alturaPieza = pieza.getAttribute('height');
+      var anchuraPieza = pieza.getAttribute('width');
 
       var posX = dameCoordenadaX(position.x, anchuraPieza);
       var posY = dameCoordenadaY(position.y, alturaPieza);
 
-      //console.log("Pos [" + posX + "," + posY + "]");
-
-      if (posY != null) {
-
-        if (posY == 0) {
-          piezaTocaSuelo = true;
-        } else {
-          var ocupada = false;
-          for (let i=0; i<anchuraPieza; i++) {
-            if (casillaEstaOcupada(Number(posX) + i, posY)) {
-              ocupada = true;
-            }
-          }
-          if (ocupada) {
-            piezaTocaSuelo = true;
-          } else {
-            piezaTocaSuelo = false;
-          }
-        }
-
-        if (position.x <= limiteIzq + anchuraPieza/2) {
-          piezaTocaParedIzq = true;
-        } else {
-          piezaTocaParedIzq = false;
-        }
-
-        if (position.x >= limiteDer - anchuraPieza/2) {
-          piezaTocaParedDer = true;
-        } else {
-          piezaTocaParedDer = false;
-        }
-      }
+      revisaPosicionHorizontalPieza(position, alturaPieza, anchuraPieza);
+      revisaPosicionVerticalPieza(pieza, posX, posY, alturaPieza, anchuraPieza);
 
       if (piezaTocaSuelo && imprimeTableroBool) {
         actualizaTablero(posX,posY,anchuraPieza,alturaPieza, contadorPieza);
         imprimeTableroBool = false;
       }
-
     }
   }
 });
@@ -265,7 +161,6 @@ AFRAME.registerComponent('rotarpieza', {
 
   tick: function() {
     var el = this.el;
-    var data = this.data;
 
     el.addEventListener('grab-start', function(event) {
       rotarPieza = true;
@@ -312,11 +207,97 @@ AFRAME.registerComponent('bajarpieza', {
 
   tick: function() {
     var el = this.el;
-    var data = this.data;
 
     el.addEventListener('grab-start', function(event) {
       bajarPieza = true;
       //location.replace("https://www.google.com")
+    });
+  }
+});
+
+
+AFRAME.registerComponent('botonestableros', {
+  schema: {
+    positionIzq: {default: "0 0 0"},
+    positionDer: {default: "0 0 0"},
+    width: {default: 0},
+    height: {default: 0},
+    color: {default: "black"},
+    depth: {default: 0},
+    idIzq: {default: ""},
+    idDer: {default: ""},
+    mixin: {default: ""},
+    positionTextIzq: {default: "0 0 0"},
+    positionTextDer: {default: "0 0 0"},
+    colorText: {default: "white"},
+    alignText: {default: "center"},
+    valueText: {default: ""},
+    widthText: {default: 0}
+  },
+
+  init: function () {
+    var el = this.el;
+    var data = this.data;
+
+    var botonIzq = document.createElement('a-box');
+    botonIzq.setAttribute('position', data.positionIzq);
+    botonIzq.setAttribute('color', data.color);
+    botonIzq.setAttribute('width', data.width);
+    botonIzq.setAttribute('height', data.height);
+    botonIzq.setAttribute('depth', data.depth);
+    botonIzq.setAttribute('mixin', data.mixin);
+    botonIzq.classList.add('boton');
+    botonIzq.id = data.idIzq;
+
+    var botonDer = document.createElement('a-box');
+    botonDer.setAttribute('position', data.positionDer);
+    botonDer.setAttribute('color', data.color);
+    botonDer.setAttribute('width', data.width);
+    botonDer.setAttribute('height', data.height);
+    botonDer.setAttribute('depth', data.depth);
+    botonDer.setAttribute('mixin', data.mixin);
+    botonDer.classList.add('boton');
+    botonDer.id = data.idDer;
+
+    var textoIzq = document.createElement("a-entity");
+    textoIzq.setAttribute('position', data.positionTextIzq);
+    textoIzq.setAttribute('text', "color: " + data.colorText + "; align: " + data.alignText + "; value: " + data.valueText + "; width: " + data.widthText);
+
+    var textoDer = document.createElement("a-entity");
+    textoDer.setAttribute('position', data.positionTextDer);
+    textoDer.setAttribute('text', "color: " + data.colorText + "; align: " + data.alignText + "; value: " + data.valueText + "; width: " + data.widthText);
+
+    botonIzq.appendChild(textoIzq);
+    botonDer.appendChild(textoDer);
+
+    el.appendChild(botonIzq);
+    el.appendChild(botonDer);
+  },
+  tick: function() {
+    var el = this.el;
+    var data = this.data;
+
+    if (crearTablerosIzq) {
+      //crearTableroIzqFunction();
+      console.log("Tableros IZQ");
+      crearTablerosIzq = false;
+    }
+
+    if (crearTablerosDer) {
+      //crearTableroDerFunction();
+      console.log("Tableros DER");
+      crearTablerosDer = false;
+    }
+
+    var botonIzq = document.getElementById('tablerosizq');
+    var botonDer = document.getElementById('tablerosder');
+
+    botonIzq.addEventListener('grab-end', function(event) {
+      crearTablerosIzq = true;
+    });
+
+    botonDer.addEventListener('grab-end', function(event) {
+      crearTablerosDer = true;
     });
   }
 });
@@ -376,6 +357,7 @@ AFRAME.registerComponent('controller', {
 
     var position = el.getAttribute('position');
 
+
     if (!piezaTocaSuelo) {
 
       if (posController.x != position.x) {
@@ -384,25 +366,7 @@ AFRAME.registerComponent('controller', {
       }
 
       el.addEventListener('grab-end', function(event) {
-
-        var positionFinal = controller.getAttribute("position");
-
-        var positionZ = data.position.split(" ")[2];
-        var positionAux = {x: positionFinal.x, y: positionFinal.y, z: positionZ};
-
-        var mando = document.getElementById("mando");
-        var longitud = mando.getAttribute("width");
-        var limiteX = longitud / 2;
-
-        if (positionFinal.x < -limiteX) {
-          positionAux.x = -limiteX;
-        }
-
-        if (positionFinal.x > limiteX) {
-          positionAux.x = limiteX;
-        }
-
-        el.setAttribute('position', positionAux);
+        moverControlador(controller, data, el);
       });
     } else {
       var positionAux = {x: 0, y: position.y, z: position.z};
@@ -470,7 +434,7 @@ AFRAME.registerComponent('cubo', {
         bajarPieza = false;
         rotarPieza = false;
       } else {
-        location.replace("gameover.html")
+        location.replace("../gameover.html")
       }
     }
   }

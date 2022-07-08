@@ -7,6 +7,9 @@ let minY = 0;
 let subir = false;
 let bajar = true;
 
+let botonPulsado = false;
+let idPulsado = "";
+
 AFRAME.registerComponent('boton', {
   schema: {
     position: {default: "0 0 0"},
@@ -71,14 +74,18 @@ AFRAME.registerComponent('boton', {
       }
     }
 
-    el.addEventListener('grab-end', function(event) {
-
-      var id = el.getAttribute('id');
-      console.log("Id: " + id);
-
-      if (id == "opcion1") {
-        location.replace("demo.html");
+    if (botonPulsado) {
+      botonPulsado = false;
+      if (idPulsado == "opcion1") {
+        location.replace("estandar/demo.html");
+      } else if (idPulsado == "opcion2") {
+        location.replace("multiples/multiples.html");
       }
+    }
+
+    el.addEventListener('grab-end', function(event) {
+      botonPulsado = true;
+      idPulsado = el.getAttribute('id');
     });
   }
 });

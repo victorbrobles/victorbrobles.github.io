@@ -6,6 +6,8 @@ let maxX = 0;
 let derecha = false;
 let izquierda = false;
 
+let volverMenu = false;
+
 AFRAME.registerComponent('boton', {
   schema: {
     position: {default: "0 0 0"},
@@ -34,7 +36,7 @@ AFRAME.registerComponent('boton', {
     var texto = document.createElement('a-entity');
 
     texto.setAttribute('position', "0 -0.5 1");
-    texto.setAttribute('text', "value: " + data.texto + "; width: 15; height: 20; align: center; color: black; shader: msdf; font: " + fuenteBoton);
+    texto.setAttribute('text', "value: " + data.texto + "; width: 15; height: 20; align: center; color: white; shader: msdf; font: " + fuenteBoton);
 
     el.appendChild(texto);
   },
@@ -62,8 +64,13 @@ AFRAME.registerComponent('boton', {
       }
     }
 
+    if (volverMenu) {
+      volverMenu = false;
+      location.replace("menu.html");
+    }
+
     el.addEventListener('grab-end', function(event) {
-        location.replace("menu.html");
+      volverMenu = true;
     });
   }
 });

@@ -6,11 +6,19 @@
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
-    <script src="menu.js"></script>
+    <script src="js/menu.js"></script>
     <script src="https://github.com/wmurphyrd/aframe-super-hands-component/tree/master/examples/build.js"></script>
   </head>
   <body>
-    <a-scene id="entorno" environment="horizonColor:#0481f6;skyColor:#00ffe1;active:true;preset:yavapai">
+    <!--<a-scene id="entorno" environment="horizonColor:#0481f6;skyColor:#00ffe1;active:true;preset:yavapai">-->
+    <a-scene environment="grid:dots;dressingColor:#f5bb56;groundTexture:walkernoise;shadowSize:10.01;groundColor:#fbbb4b;groundColor2:#f2a65f;groundYScale:30;skyColor:#f3f702;horizonColor:#02f2e2;active:true;seed:11;skyType:gradient;lightPosition:0.5 1 0;fog:0.8;flatShading:false;dressingAmount:500;dressingScale:0.04;dressingVariance:0.2 0.1 0.2;dressingOnPlayArea:0;gridColor:#239893;preset:yavapai" preset-switcher="" id="entorno" position="0 0 -1.087">
+      <a-entity class="environment" position="0 50 0" light="intensity:0.6;color:#f9fb80;groundColor:#fbbb4b;type:hemisphere"></a-entity>
+      <a-entity class="environment" position="0.5 1 0" light="shadowCameraLeft:-10.01;shadowCameraBottom:-10.01;shadowCameraRight:10.01;shadowCameraTop:10.01;intensity:0.6"></a-entity>
+      <a-entity rotation="-90 0 0" class="environmentGround environment" scale="1 1 30" shadow="cast:false;receive:false"></a-entity>
+      <a-entity class="environmentDressing environment" visible="false"></a-entity>
+      <a-sky radius="200" theta-length="110" class="environment" geometry="" material="npot:false;shader:gradientshader;topColor:#f3f702;bottomColor:#02f2e2"></a-sky>
+      <a-entity id="stars" visible="false"></a-entity>
+
       <a-mixin id="pointer" super-hands="colliderEvent: raycaster-intersection;
                               colliderEventProperty: els;
                               colliderEndEvent:raycaster-intersection-cleared;
@@ -21,12 +29,12 @@
       <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, a-link" sphere-collider="objects: a-box" oculus-touch-controls="hand: left"></a-entity>
       <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, a-link" sphere-collider="objects: a-box" cursor="rayOrigin: mouse"></entity>
 
-      <a-entity position="0 6.5 -10" text="value:Tetris VR; width:40; height:40; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json"></a-entity>
+      <a-entity position="0 6.5 -10" text="value:T e t r i s      V R; width:40; height:40; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json"></a-entity>
 
-      <a-box id="opcion1" boton="color:#ccff00; position: -12 4 -10; rotation: 0 0 5; width: 5; height: 3; texto: MODO 1" clickable></a-box>
-      <a-box id="opcion2" boton="color:#FFFF33; position: -4 4 -10; rotation: 0 0 -5; width: 5; height: 3; texto: MODO 2" clickable></a-box>
-      <a-box id="opcion3" boton="color:#FFFF33; position: 4 4 -10; rotation: 0 0 5; width: 5; height: 3; texto: MODO 3" clickable></a-box>
-      <a-box id="opcion4" boton="color:#ccff00; position: 12 4 -10; rotation: 0 0 -5; width: 5; height: 3; texto: MODO 4" clickable></a-box>
+      <a-box id="opcion1" boton="color:#383D4E; position: -12 4 -10; rotation: 0 0 5; width: 6; height: 2; texto: NORMAL" clickable></a-box>
+      <a-box id="opcion2" boton="color:#383D4E; position: -4 4 -10; rotation: 0 0 -5; width: 6; height: 2; texto: MULTITABLERO" clickable></a-box>
+      <a-box id="opcion3" boton="color:#383D4E; position: 4 4 -10; rotation: 0 0 5; width: 6; height: 2; texto: COLORES" clickable></a-box>
+      <a-box id="opcion4" boton="color:#383D4E; position: 12 4 -10; rotation: 0 0 -5; width: 6; height: 2; texto: OBSTACULOS" clickable></a-box>
 
     </a-scene>
   </body>
