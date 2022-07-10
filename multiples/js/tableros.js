@@ -68,7 +68,6 @@ function revisaEliminarFilas() {
 
 function eliminarFila (numFila) {
   var listaPiezas = [];
-  console.log("FILA " + numFila);
   for (let i=numFila; i<=alturaTablero; i++) {
     for (let j=1; j<=anchuraTablero; j++) {
       var casilla = tablero[i][j];
@@ -79,11 +78,10 @@ function eliminarFila (numFila) {
   }
 
   for (let j=0; j<listaPiezas.length; j++) {
-    console.log("PIEZA " + listaPiezas[j]);
     var pieza = document.getElementById("cubo" + listaPiezas[j]);
     var height = pieza.getAttribute('height');
     var position = pieza.getAttribute('position');
-    var entorno = document.getElementById("entorno");
+    var entornoPiezas = document.getElementById("piezas");
 
     var piezaPerteneceAFila = false;
     for (let x=1; x<=anchuraTablero; x++) {
@@ -93,7 +91,7 @@ function eliminarFila (numFila) {
     }
     if (piezaPerteneceAFila) {
       if (Number(height) == 1) {
-        entorno.removeChild(pieza);
+        entornoPiezas.removeChild(pieza);
       } else {
         pieza.setAttribute('position', {x:position.x, y:position.y - 0.5, z:position.z});
         pieza.setAttribute('height', Number(height) - 1);

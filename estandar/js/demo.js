@@ -83,15 +83,16 @@ AFRAME.registerComponent('tablero', {
 
   },
   tick: function() {
+    var el = this.el;
 
-    var entorno = document.getElementById("entorno");
+    var entornoPiezas = document.getElementById("piezas");
 
     if (crearPieza) {
       imprimeTableroBool = true;
       contadorPieza += 1;
 
       eliminarFilasCompletas();
-      crearPiezaFunction(entorno);
+      crearPiezaFunction(entornoPiezas);
     }
 
     var pieza = document.getElementById("cubo" + contadorPieza);

@@ -45,3 +45,9 @@ let posXTablerosIzq = 0;
 let posXTablerosDer = 0;
 let crearTablerosIzq = false;
 let crearTablerosDer = false;
+let separacionTableros = 0;
+
+
+//OtrasVariablesMultiTablero
+let tableroDerCreado = false;
+let tableroIzqCreado = false;

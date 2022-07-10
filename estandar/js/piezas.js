@@ -60,14 +60,14 @@ function revisaPosicionHorizontalPieza (position, alturaPieza, anchuraPieza) {
 }
 
 
-function crearPiezaFunction (entorno) {
+function crearPiezaFunction (entornoPiezas) {
   var pieza = document.createElement("a-box");
 
   pieza.classList.add("cubo");
   pieza.id = "cubo" + contadorPieza;
   pieza.setAttribute('cubo', damePropsPieza());
 
-  entorno.appendChild(pieza);
+  entornoPiezas.appendChild(pieza);
 }
 
 

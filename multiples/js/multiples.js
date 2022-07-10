@@ -47,7 +47,10 @@ AFRAME.registerComponent('tablero', {
     alturaPared: {default: 0},
     anchuraPared: {default: 0},
     positionParedIzq: {default: "0 0 0"},
-    positionParedDer: {default: "0 0 0"}
+    positionParedDer: {default: "0 0 0"},
+    idSuelo: {default: ""},
+    idParedIzq: {default: ""},
+    idParedDer: {default: ""}
   },
 
   init: function() {
@@ -59,37 +62,37 @@ AFRAME.registerComponent('tablero', {
     suelo.setAttribute('width', data.anchuraSuelo);
     suelo.setAttribute('position', data.positionSuelo);
     suelo.setAttribute('color', data.colorTablero);
-    suelo.id = 'suelo';
+    suelo.id = data.idSuelo;
 
     var paredIzq = document.createElement('a-box');
     paredIzq.setAttribute('height', data.alturaPared);
     paredIzq.setAttribute('width', data.anchuraPared);
     paredIzq.setAttribute('position', data.positionParedIzq);
     paredIzq.setAttribute('color', data.colorTablero);
-    paredIzq.id = 'pared_izq';
+    paredIzq.id = data.idParedIzq;
 
     var paredDer = document.createElement('a-box');
     paredDer.setAttribute('height', data.alturaPared);
     paredDer.setAttribute('width', data.anchuraPared);
     paredDer.setAttribute('position', data.positionParedDer);
     paredDer.setAttribute('color', data.colorTablero);
-    paredDer.id = 'pared_der';
+    paredDer.id = data.idParedDer;
 
     el.appendChild(suelo);
     el.appendChild(paredIzq);
     el.appendChild(paredDer);
 
-    iniciaVariablesEntorno(data);
+    if (data.idSuelo !== "izq" && data.idSuelo !== "der") {
+      iniciaVariablesEntorno(data);
 
-    crearTablero(anchuraTablero, alturaTablero + 4);
-    imprimeTablero();
-
+      crearTablero(anchuraTablero, alturaTablero + 4);
+      imprimeTablero();
+    }
   },
   tick: function() {
     var el = this.el;
-    var data = this.data;
 
-    var entorno = document.getElementById("entorno");
+    var entornoPiezas = document.getElementById("piezas");
     var id = el.getAttribute('id');
 
     if (id == "tablero") {
@@ -98,7 +101,7 @@ AFRAME.registerComponent('tablero', {
         contadorPieza += 1;
 
         eliminarFilasCompletas();
-        crearPiezaFunction(entorno);
+        crearPiezaFunction(entornoPiezas);
       }
 
       var pieza = document.getElementById("cubo" + contadorPieza);
@@ -136,7 +139,8 @@ AFRAME.registerComponent('rotarpieza', {
     colorText: {default: "white"},
     alignText: {default: "center"},
     valueText: {default: ""},
-    widthText: {default: 0}
+    widthText: {default: 0},
+    idText: {default: ""}
   },
 
   init: function () {
@@ -153,6 +157,7 @@ AFRAME.registerComponent('rotarpieza', {
     el.id = data.id;
 
     var texto = document.createElement("a-entity");
+    texto.id = data.idText;
     texto.setAttribute('position', data.positionText);
     texto.setAttribute('text', "color: " + data.colorText + "; align: " + data.alignText + "; value: " + data.valueText + "; width: " + data.widthText);
 
@@ -182,8 +187,9 @@ AFRAME.registerComponent('bajarpieza', {
     colorText: {default: "white"},
     alignText: {default: "center"},
     valueText: {default: ""},
-    widthText: {default: 0}
-  },
+    widthText: {default: 0},
+    idText: {default: ""}
+    },
 
   init: function () {
     var el = this.el;
@@ -199,6 +205,7 @@ AFRAME.registerComponent('bajarpieza', {
     el.id = data.id;
 
     var texto = document.createElement("a-entity");
+    texto.id = data.idText;
     texto.setAttribute('position', data.positionText);
     texto.setAttribute('text', "color: " + data.colorText + "; align: " + data.alignText + "; value: " + data.valueText + "; width: " + data.widthText);
 
@@ -210,7 +217,6 @@ AFRAME.registerComponent('bajarpieza', {
 
     el.addEventListener('grab-start', function(event) {
       bajarPieza = true;
-      //location.replace("https://www.google.com")
     });
   }
 });
@@ -275,30 +281,37 @@ AFRAME.registerComponent('botonestableros', {
   },
   tick: function() {
     var el = this.el;
-    var data = this.data;
 
-    if (crearTablerosIzq) {
-      //crearTableroIzqFunction();
-      console.log("Tableros IZQ");
-      crearTablerosIzq = false;
+    if (tableroDerCreado && tableroIzqCreado) {
+        el.remove();
+    } else {
+      if (crearTablerosIzq) {
+        crearTableroIzqFunction();
+        crearTablerosIzq = false;
+        tableroIzqCreado = true;
+      }
+
+      if (crearTablerosDer) {
+        crearTableroDerFunction();
+        crearTablerosDer = false;
+        tableroDerCreado = true;
+      }
+
+      var botonIzq = document.getElementById('tablerosizq');
+      var botonDer = document.getElementById('tablerosder');
+
+      if (botonIzq != null) {
+        botonIzq.addEventListener('grab-end', function(event) {
+          crearTablerosIzq = true;
+        });
+      }
+
+      if (botonDer != null) {
+        botonDer.addEventListener('grab-end', function(event) {
+          crearTablerosDer = true;
+        });
+      }
     }
-
-    if (crearTablerosDer) {
-      //crearTableroDerFunction();
-      console.log("Tableros DER");
-      crearTablerosDer = false;
-    }
-
-    var botonIzq = document.getElementById('tablerosizq');
-    var botonDer = document.getElementById('tablerosder');
-
-    botonIzq.addEventListener('grab-end', function(event) {
-      crearTablerosIzq = true;
-    });
-
-    botonDer.addEventListener('grab-end', function(event) {
-      crearTablerosDer = true;
-    });
   }
 });
 
@@ -349,6 +362,7 @@ AFRAME.registerComponent('controller', {
     el.setAttribute('rotation', data.rotation);
     el.setAttribute('mixin', data.mixin);
     el.id = data.id;
+    el.classList.add('controller');
   },
 
   tick: function() {
@@ -357,20 +371,23 @@ AFRAME.registerComponent('controller', {
 
     var position = el.getAttribute('position');
 
+    var id = el.getAttribute('id');
 
-    if (!piezaTocaSuelo) {
+    if (id == "controller") {
+      if (!piezaTocaSuelo) {
 
-      if (posController.x != position.x) {
-        moverPieza = true;
-        nuevaPos = position.x * 2;
+        if (posController.x != position.x) {
+          moverPieza = true;
+          nuevaPos = position.x * 2;
+        }
+
+        el.addEventListener('grab-end', function(event) {
+          moverControlador(controller, data, el);
+        });
+      } else {
+        var positionAux = {x: 0, y: position.y, z: position.z};
+        el.setAttribute('position', positionAux);
       }
-
-      el.addEventListener('grab-end', function(event) {
-        moverControlador(controller, data, el);
-      });
-    } else {
-      var positionAux = {x: 0, y: position.y, z: position.z};
-      el.setAttribute('position', positionAux);
     }
   }
 });
