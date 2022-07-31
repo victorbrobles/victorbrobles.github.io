@@ -13,6 +13,10 @@ function crearTableroIzqFunction() {
   entity.id = "tableroizq";
   entity.setAttribute('tablero', props);
 
+  var piezas = document.createElement('a-entity');
+  piezas.id = "piezas_izq";
+
+  entity.appendChild(piezas);
   entornoTableros.appendChild(entity);
 
   var botonIzq = document.getElementById('tablerosizq');
@@ -36,6 +40,10 @@ function crearTableroDerFunction() {
   entity.id = "tableroder"
   entity.setAttribute('tablero', props);
 
+  var piezas = document.createElement('a-entity');
+  piezas.id = "piezas_der";
+
+  entity.appendChild(piezas);
   entornoTableros.appendChild(entity);
 
   var botonDer = document.getElementById('tablerosder');
@@ -74,7 +82,7 @@ function damePropsTablero(pos) {
 
   return "alturaSuelo: " + alturaSuelo + "; anchuraSuelo: " + anchuraTablero + "; positionSuelo: " + positionSuelo + "; colorTablero: "
     + colorTablero + "; alturaPared: " + alturaPared + "; anchuraPared: " + anchuraPared + "; positionParedIzq: " + positionParedIzq
-    + "; positionParedDer: " + positionParedDer + "; idSuelo: " + id + "; idParedIzq: " + id + "; idParedDer: " + id;
+    + "; positionParedDer: " + positionParedDer + "; idSuelo: suelo_" + id + "; idParedIzq: pared_izq_" + id + "; idParedDer: pared_der_" + id;
 }
 
 

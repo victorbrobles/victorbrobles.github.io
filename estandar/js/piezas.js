@@ -27,7 +27,7 @@ function revisaPosicionVerticalPieza (pieza, posX, posY, alturaPieza, anchuraPie
     if (posY != null) {
 
       if (posY == 0) {
-        piezaTocaSuelo = true;
+        pieza.components.cubo.tocaSuelo = true;
       } else {
         var ocupada = false;
         for (let i=0; i<anchuraPieza; i++) {
@@ -36,36 +36,36 @@ function revisaPosicionVerticalPieza (pieza, posX, posY, alturaPieza, anchuraPie
           }
         }
         if (ocupada) {
-          piezaTocaSuelo = true;
+          pieza.components.cubo.tocaSuelo = true;
         } else {
-          piezaTocaSuelo = false;
+          pieza.components.cubo.tocaSuelo = false;
         }
       }
     }
   }
 }
 
-function revisaPosicionHorizontalPieza (position, alturaPieza, anchuraPieza) {
+function revisaPosicionHorizontalPieza (pieza, position, alturaPieza, anchuraPieza) {
   if (position.x <= limiteIzq + anchuraPieza/2) {
-    piezaTocaParedIzq = true;
+    pieza.components.cubo.tocaParedIzq = true;
   } else {
-    piezaTocaParedIzq = false;
+    pieza.components.cubo.tocaParedIzq = false;
   }
 
   if (position.x >= limiteDer - anchuraPieza/2) {
-    piezaTocaParedDer = true;
+    pieza.components.cubo.tocaParedDer = true;
   } else {
-    piezaTocaParedDer = false;
+    pieza.components.cubo.tocaParedDer = false;
   }
 }
 
 
-function crearPiezaFunction (entornoPiezas) {
+function crearPiezaFunction (entornoPiezas, suelo) {
   var pieza = document.createElement("a-box");
 
   pieza.classList.add("cubo");
   pieza.id = "cubo" + contadorPieza;
-  pieza.setAttribute('cubo', damePropsPieza());
+  pieza.setAttribute('cubo', damePropsPieza(suelo));
 
   entornoPiezas.appendChild(pieza);
 }
@@ -137,10 +137,10 @@ function moverPiezaFunction (el) {
 
   var positionTmp = {x: nuevaPos, y: position.y, z: position.z};
 
-  if (piezaTocaParedDer && !(nuevaPos < position.x)) {
+  if (el.components.cubo.tocaParedDer && !(nuevaPos < position.x)) {
     positionTmp.x = limiteDer - width/2;
   }
-  if (piezaTocaParedIzq && !(nuevaPos > position.x)) {
+  if (el.components.cubo.tocaParedIzq && !(nuevaPos > position.x)) {
     positionTmp.x = limiteIzq + width/2;
   }
 

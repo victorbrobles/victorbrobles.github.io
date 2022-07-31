@@ -8,17 +8,22 @@ function getRandomColor() {
   return color;
 }
 
-function damePropsPieza () {
+function damePropsPieza (suelo) {
   var anchuras = [1, 1, 1, 2, 3, 4];
   var alturas = [1, 1, 1, 2, 3, 4];
 
   var altura = alturas[Math.floor(Math.random() * alturas.length)];
   var anchura = anchuras[Math.floor(Math.random() * anchuras.length)];
 
+  var position = suelo.getAttribute('position');
+
+  var positionAnchuraPar = position.x + " " + (alturaTablero + 5) + " " + position.z;
+  var positionAnchuraImpar = (Number(position.x) - 0.5) + " " + (alturaTablero + 5) + " " + position.z;
+
   if ((anchura % 2) == 0) {
-    return "position: 0 25 -20; width:" + anchura + "; height:" + altura + "; velocidad: " + velocidad;
+    return "position: " + positionAnchuraPar + "; width:" + anchura + "; height:" + altura + "; velocidad: " + velocidad;
   } else {
-    return "position: -0.5 25 -20; width:" + anchura + "; height:" + altura + "; velocidad: " + velocidad;
+    return "position: " + positionAnchuraImpar + "; width:" + anchura + "; height:" + altura + "; velocidad: " + velocidad;
   }
 }
 

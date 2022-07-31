@@ -1,12 +1,6 @@
 
 let fuenteScore = "https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json";
 
-//Booleans para saber la posición de la pieza
-let piezaTocaSuelo = false;
-let piezaTocaParedIzq = false;
-let piezaTocaParedDer = false;
-
-
 //Límites horizontales y límite vertical
 let alturaSuelo = 0;
 let limiteIzq = 0;
@@ -40,14 +34,18 @@ let scoreActual = 0;
 let imprimeTableroBool = true;
 let numFilasEliminadas = 0;
 
-//Crear más tableros
+//MULTITABLEROS
 let posXTablerosIzq = 0;
 let posXTablerosDer = 0;
 let crearTablerosIzq = false;
 let crearTablerosDer = false;
 let separacionTableros = 0;
 
-
-//OtrasVariablesMultiTablero
 let tableroDerCreado = false;
 let tableroIzqCreado = false;
+
+let crearPiezaIzq = false;
+let crearPiezaDer = false;
+
+let contadorPiezaIzq = 0;
+let contadorPiezaDer = 0;

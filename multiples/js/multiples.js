@@ -82,7 +82,7 @@ AFRAME.registerComponent('tablero', {
     el.appendChild(paredIzq);
     el.appendChild(paredDer);
 
-    if (data.idSuelo !== "izq" && data.idSuelo !== "der") {
+    if (data.idSuelo === "suelo") {
       iniciaVariablesEntorno(data);
 
       crearTablero(anchuraTablero, alturaTablero + 4);
@@ -91,34 +91,36 @@ AFRAME.registerComponent('tablero', {
   },
   tick: function() {
     var el = this.el;
-
-    var entornoPiezas = document.getElementById("piezas");
     var id = el.getAttribute('id');
 
     if (id == "tablero") {
+      var suelo = document.getElementById('suelo');
+      var entornoPiezas = document.getElementById("piezas");
+
       if (crearPieza) {
         imprimeTableroBool = true;
         contadorPieza += 1;
 
         eliminarFilasCompletas();
-        crearPiezaFunction(entornoPiezas);
+        crearPiezaFunction(entornoPiezas, suelo);
       }
+    } else if (id == "tableroizq") {
+      var suelo = document.getElementById('suelo_izq');
+      var entornoPiezas = document.getElementById("piezas_izq");
 
-      var pieza = document.getElementById("cubo" + contadorPieza);
+      if (crearPiezaIzq) {
+        contadorPiezaIzq += 1;
+        crearPiezaFunction(entornoPiezas, suelo);
+        crearPiezaIzq = false;
+      }
+    } else if (id == "tableroder") {
+      var suelo = document.getElementById('suelo_der');
+      var entornoPiezas = document.getElementById("piezas_der");
 
-      var position = pieza.getAttribute('position');
-      var alturaPieza = pieza.getAttribute('height');
-      var anchuraPieza = pieza.getAttribute('width');
-
-      var posX = dameCoordenadaX(position.x, anchuraPieza);
-      var posY = dameCoordenadaY(position.y, alturaPieza);
-
-      revisaPosicionHorizontalPieza(position, alturaPieza, anchuraPieza);
-      revisaPosicionVerticalPieza(pieza, posX, posY, alturaPieza, anchuraPieza);
-
-      if (piezaTocaSuelo && imprimeTableroBool) {
-        actualizaTablero(posX,posY,anchuraPieza,alturaPieza, contadorPieza);
-        imprimeTableroBool = false;
+      if (crearPiezaDer) {
+        contadorPiezaDer += 1;
+        crearPiezaFunction(entornoPiezas, suelo);
+        crearPiezaDer = false;
       }
     }
   }
@@ -289,12 +291,14 @@ AFRAME.registerComponent('botonestableros', {
         crearTableroIzqFunction();
         crearTablerosIzq = false;
         tableroIzqCreado = true;
+        crearPiezaIzq = true;
       }
 
       if (crearTablerosDer) {
         crearTableroDerFunction();
         crearTablerosDer = false;
         tableroDerCreado = true;
+        crearPiezaDer = true;
       }
 
       var botonIzq = document.getElementById('tablerosizq');
@@ -369,13 +373,20 @@ AFRAME.registerComponent('controller', {
     var el = this.el;
     var data = this.data;
 
-    var position = el.getAttribute('position');
-
     var id = el.getAttribute('id');
 
     if (id == "controller") {
-      if (!piezaTocaSuelo) {
 
+      var pieza = document.getElementById("cubo" + contadorPieza);
+      var position = el.getAttribute('position');
+      var positionPieza = pieza.getAttribute('position');
+
+      if (positionPieza.y == alturaTablero + 5) {
+        var positionAux = {x: 0, y: position.y, z: position.z};
+        el.setAttribute('position', positionAux);
+      }
+
+      if (!pieza.components.cubo.tocaSuelo) {
         if (posController.x != position.x) {
           moverPieza = true;
           nuevaPos = position.x * 2;
@@ -384,9 +395,6 @@ AFRAME.registerComponent('controller', {
         el.addEventListener('grab-end', function(event) {
           moverControlador(controller, data, el);
         });
-      } else {
-        var positionAux = {x: 0, y: position.y, z: position.z};
-        el.setAttribute('position', positionAux);
       }
     }
   }
@@ -411,47 +419,68 @@ AFRAME.registerComponent('cubo', {
     el.setAttribute('width', data.width);
     el.setAttribute('height', data.height);
 
+    this.tocaSuelo = false;
+    this.tocaParedDer = false;
+    this.tocaParedIzq = false;
     crearPieza = false;
   },
 
   tick: function() {
 
-    var el = document.getElementById("cubo" + contadorPieza);
+    var el = this.el;
     var data = this.data;
-    var piezas = document.querySelectorAll('.cubo');
 
-    if (!piezaTocaSuelo) {
+    var idPieza = el.getAttribute('id');
 
-      if (el != null) {
-        var position = el.getAttribute("position");
-        sleep(0.01 * (piezas.length - 1))
-        var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
-        el.setAttribute('position', positionTmp);
+    if (!idPieza.includes("cubo_der") && !idPieza.includes("cubo_izq")) {
+      var numPieza = idPieza.split("cubo")[1];
 
-        if (rotarPieza) {
-          rotarPiezaFunction(el);
+      var position = el.getAttribute('position');
+      var alturaPieza = el.getAttribute('height');
+      var anchuraPieza = el.getAttribute('width');
+      var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
+
+      var posX = dameCoordenadaX(position.x, anchuraPieza);
+      var posY = dameCoordenadaY(position.y, alturaPieza);
+
+      revisaPosicionHorizontalPieza(el, position, alturaPieza, anchuraPieza);
+      revisaPosicionVerticalPieza(el, posX, posY, alturaPieza, anchuraPieza);
+
+      if (numPieza == contadorPieza) {
+        if (!this.tocaSuelo) {
+          if (el != null) {
+            el.setAttribute('position', positionTmp);
+
+            if (rotarPieza) {
+              rotarPiezaFunction(el);
+            }
+
+            if (bajarPieza) {
+              bajarPiezaFunction(el);
+            }
+
+            if (moverPieza) {
+              moverPiezaFunction(el);
+            }
+          }
+
+        } else {
+
+          if (imprimeTableroBool) {
+            actualizaTablero(posX,posY,anchuraPieza,alturaPieza, contadorPieza);
+            imprimeTableroBool = false;
+          }
+
+          actualizaMarcadorPieza = true;
+
+          if (!isGameOver()) {
+            crearPieza = true;
+            bajarPieza = false;
+            rotarPieza = false;
+          } else {
+            location.replace("../gameover.html")
+          }
         }
-
-        if (bajarPieza) {
-          bajarPiezaFunction(el);
-        }
-
-        if (moverPieza) {
-          moverPiezaFunction(el);
-        }
-      }
-
-    } else {
-
-      actualizaMarcadorPieza = true;
-
-      if (!isGameOver()) {
-        crearPieza = true;
-        piezaTocaSuelo = false;
-        bajarPieza = false;
-        rotarPieza = false;
-      } else {
-        location.replace("../gameover.html")
       }
     }
   }

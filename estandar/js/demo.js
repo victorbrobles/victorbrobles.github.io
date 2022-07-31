@@ -84,34 +84,16 @@ AFRAME.registerComponent('tablero', {
   },
   tick: function() {
     var el = this.el;
-
     var entornoPiezas = document.getElementById("piezas");
+    var suelo = document.getElementById('suelo');
 
     if (crearPieza) {
       imprimeTableroBool = true;
       contadorPieza += 1;
 
       eliminarFilasCompletas();
-      crearPiezaFunction(entornoPiezas);
+      crearPiezaFunction(entornoPiezas, suelo);
     }
-
-    var pieza = document.getElementById("cubo" + contadorPieza);
-
-    var position = pieza.getAttribute('position');
-    var alturaPieza = pieza.getAttribute('height');
-    var anchuraPieza = pieza.getAttribute('width');
-
-    var posX = dameCoordenadaX(position.x, anchuraPieza);
-    var posY = dameCoordenadaY(position.y, alturaPieza);
-
-    revisaPosicionHorizontalPieza(position, alturaPieza, anchuraPieza);
-    revisaPosicionVerticalPieza(pieza, posX, posY, alturaPieza, anchuraPieza);
-
-    if (piezaTocaSuelo && imprimeTableroBool) {
-      actualizaTablero(posX,posY,anchuraPieza,alturaPieza, contadorPieza);
-      imprimeTableroBool = false;
-    }
-
   }
 });
 
@@ -261,21 +243,23 @@ AFRAME.registerComponent('controller', {
     var el = this.el;
     var data = this.data;
 
+    var pieza = document.getElementById("cubo" + contadorPieza);
     var position = el.getAttribute('position');
+    var positionPieza = pieza.getAttribute('position');
 
-    if (!piezaTocaSuelo) {
+    if (positionPieza.y == alturaTablero + 5) {
+      var positionAux = {x: 0, y: position.y, z: position.z};
+      el.setAttribute('position', positionAux);
+    }
 
+    if (!pieza.components.cubo.tocaSuelo) {
       if (posController.x != position.x) {
         moverPieza = true;
         nuevaPos = position.x * 2;
       }
-
       el.addEventListener('grab-end', function(event) {
         moverControlador(controller, data, el);
       });
-    } else {
-      var positionAux = {x: 0, y: position.y, z: position.z};
-      el.setAttribute('position', positionAux);
     }
   }
 });
@@ -299,47 +283,64 @@ AFRAME.registerComponent('cubo', {
     el.setAttribute('width', data.width);
     el.setAttribute('height', data.height);
 
+    this.tocaSuelo = false;
+    this.tocaParedDer = false;
+    this.tocaParedIzq = false;
     crearPieza = false;
   },
 
   tick: function() {
 
-    var el = document.getElementById("cubo" + contadorPieza);
+    var el = this.el;
     var data = this.data;
-    var piezas = document.querySelectorAll('.cubo');
 
-    if (!piezaTocaSuelo) {
+    var idPieza = el.getAttribute('id');
+    var numPieza = idPieza.split("cubo")[1];
 
-      if (el != null) {
-        var position = el.getAttribute("position");
-        sleep(0.01 * (piezas.length - 1))
-        var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
-        el.setAttribute('position', positionTmp);
+    var position = el.getAttribute('position');
+    var alturaPieza = el.getAttribute('height');
+    var anchuraPieza = el.getAttribute('width');
+    var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
 
-        if (rotarPieza) {
-          rotarPiezaFunction(el);
+    var posX = dameCoordenadaX(position.x, anchuraPieza);
+    var posY = dameCoordenadaY(position.y, alturaPieza);
+
+    revisaPosicionHorizontalPieza(el, position, alturaPieza, anchuraPieza);
+    revisaPosicionVerticalPieza(el, posX, posY, alturaPieza, anchuraPieza);
+
+    if (numPieza == contadorPieza) {
+      if (!this.tocaSuelo) {
+        if (el != null) {
+          el.setAttribute('position', positionTmp);
+
+          if (rotarPieza) {
+            rotarPiezaFunction(el);
+          }
+
+          if (bajarPieza) {
+            bajarPiezaFunction(el);
+          }
+
+          if (moverPieza) {
+            moverPiezaFunction(el);
+          }
         }
-
-        if (bajarPieza) {
-          bajarPiezaFunction(el);
-        }
-
-        if (moverPieza) {
-          moverPiezaFunction(el);
-        }
-      }
-
-    } else {
-
-      actualizaMarcadorPieza = true;
-
-      if (!isGameOver()) {
-        crearPieza = true;
-        piezaTocaSuelo = false;
-        bajarPieza = false;
-        rotarPieza = false;
       } else {
-        location.replace("../gameover.html")
+
+        if (imprimeTableroBool) {
+          actualizaTablero(posX,posY,anchuraPieza,alturaPieza, contadorPieza);
+          imprimeTableroBool = false;
+        }
+
+        actualizaMarcadorPieza = true;
+
+        if (!isGameOver()) {
+          crearPieza = true;
+          bajarPieza = false;
+          rotarPieza = false;
+        } else {
+          location.replace("../gameover.html")
+        }
       }
     }
   }
