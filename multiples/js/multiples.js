@@ -85,8 +85,14 @@ AFRAME.registerComponent('tablero', {
     if (data.idSuelo === "suelo") {
       iniciaVariablesEntorno(data);
 
-      crearTablero(anchuraTablero, alturaTablero + 4);
-      imprimeTablero();
+      crearTablero(anchuraTablero, alturaTablero + 4, tablero);
+      imprimeTablero(tablero);
+    } else if (data.idSuelo == "suelo_izq") {
+      crearTablero(anchuraTablero, alturaTablero + 4, tableroIzq);
+      imprimeTablero(tableroIzq);
+    } else if (data.idSuelo == "suelo_der") {
+      crearTablero(anchuraTablero, alturaTablero + 4, tableroDer);
+      imprimeTablero(tableroDer);
     }
   },
   tick: function() {
@@ -101,15 +107,19 @@ AFRAME.registerComponent('tablero', {
         imprimeTableroBool = true;
         contadorPieza += 1;
 
-        eliminarFilasCompletas();
+        eliminarFilasCompletas(tablero, "def");
         crearPiezaFunction(entornoPiezas, suelo);
+        crearPieza = false;
       }
     } else if (id == "tableroizq") {
       var suelo = document.getElementById('suelo_izq');
       var entornoPiezas = document.getElementById("piezas_izq");
 
       if (crearPiezaIzq) {
+        imprimeTableroBool = true;
         contadorPiezaIzq += 1;
+
+        eliminarFilasCompletas(tableroIzq, "izq");
         crearPiezaFunction(entornoPiezas, suelo);
         crearPiezaIzq = false;
       }
@@ -118,7 +128,10 @@ AFRAME.registerComponent('tablero', {
       var entornoPiezas = document.getElementById("piezas_der");
 
       if (crearPiezaDer) {
+        imprimeTableroBool = true;
         contadorPiezaDer += 1;
+
+        eliminarFilasCompletas(tableroDer, "der");
         crearPiezaFunction(entornoPiezas, suelo);
         crearPiezaDer = false;
       }
@@ -168,9 +181,16 @@ AFRAME.registerComponent('rotarpieza', {
 
   tick: function() {
     var el = this.el;
+    var id = el.getAttribute('id');
 
     el.addEventListener('grab-start', function(event) {
-      rotarPieza = true;
+      if (id == "rotarpieza") {
+        rotarPieza = true;
+      } else if (id == "rotarpiezaizq") {
+        rotarPiezaIzq = true;
+      } else if (id == "rotarpiezader") {
+        rotarPiezaDer = true;
+      }
     });
   }
 });
@@ -216,9 +236,16 @@ AFRAME.registerComponent('bajarpieza', {
 
   tick: function() {
     var el = this.el;
+    var id = el.getAttribute('id');
 
     el.addEventListener('grab-start', function(event) {
-      bajarPieza = true;
+      if (id == "bajarpieza") {
+        bajarPieza = true;
+      } else if (id == "bajarpiezaizq") {
+        bajarPiezaIzq = true;
+      } else if (id == "bajarpiezader") {
+        bajarPiezaDer = true;
+      }
     });
   }
 });
@@ -374,28 +401,52 @@ AFRAME.registerComponent('controller', {
     var data = this.data;
 
     var id = el.getAttribute('id');
+    var position = el.getAttribute('position');
 
-    if (id == "controller") {
+    var derecha = false;
+    var izquierda = false;
+    var normal = false;
 
+    if (id == "controllerder") {
+      var pieza = document.getElementById("cubo_der" + contadorPiezaDer);
+      var posXController = posXTablerosDer/3;
+      var posControllerAux = posControllerDer;
+      derecha = true;
+    } else if (id == "controllerizq") {
+      var pieza = document.getElementById("cubo_izq" + contadorPiezaIzq);
+      var posXController = posXTablerosIzq/3;
+      var posControllerAux = posControllerIzq;
+      izquierda = true;
+    } else {
       var pieza = document.getElementById("cubo" + contadorPieza);
-      var position = el.getAttribute('position');
-      var positionPieza = pieza.getAttribute('position');
+      var posXController = 0;
+      var posControllerAux = posController;
+      normal = true;
+    }
 
-      if (positionPieza.y == alturaTablero + 5) {
-        var positionAux = {x: 0, y: position.y, z: position.z};
-        el.setAttribute('position', positionAux);
-      }
+    var positionPieza = pieza.getAttribute('position');
+    if (positionPieza.y == alturaTablero + 5) {
+      var positionAux = {x: posXController, y: position.y, z: position.z};
+      el.setAttribute('position', positionAux);
+    }
 
-      if (!pieza.components.cubo.tocaSuelo) {
-        if (posController.x != position.x) {
+    if (!pieza.components.cubo.tocaSuelo) {
+      if (posControllerAux.x != position.x) {
+        if (derecha) {
+          moverPiezaDer = true;
+          nuevaPosDer = ((Number(position.x) - posXTablerosDer/3) * 2);
+        } else if (izquierda) {
+          moverPiezaIzq = true;
+          nuevaPosIzq = ((Number(position.x) - posXTablerosIzq/3) * 2);
+        } else {
           moverPieza = true;
           nuevaPos = position.x * 2;
         }
-
-        el.addEventListener('grab-end', function(event) {
-          moverControlador(controller, data, el);
-        });
       }
+
+      el.addEventListener('grab-end', function(event) {
+        moverControlador(data, el, id);
+      });
     }
   }
 });
@@ -431,55 +482,94 @@ AFRAME.registerComponent('cubo', {
     var data = this.data;
 
     var idPieza = el.getAttribute('id');
+    var position = el.getAttribute('position');
+    var alturaPieza = el.getAttribute('height');
+    var anchuraPieza = el.getAttribute('width');
+    var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
 
-    if (!idPieza.includes("cubo_der") && !idPieza.includes("cubo_izq")) {
+    var derecha = false;
+    var izquierda = false;
+    var normal = false;
+
+    if (idPieza.includes("cubo_der")) {
+      derecha = true;
+      var numPieza = idPieza.split("cubo_der")[1];
+      var posX = dameCoordenadaX(Number(position.x) - Number(posXTablerosDer), anchuraPieza);
+      var positionAux = {x: position.x - posXTablerosDer, y: position.y, z: position.z};
+      var tab = tableroDer;
+      var cont = contadorPiezaDer;
+    } else if (idPieza.includes("cubo_izq")) {
+      izquierda = true;
+      var numPieza = idPieza.split("cubo_izq")[1];
+      var posX = dameCoordenadaX(Number(position.x) - Number(posXTablerosIzq), anchuraPieza);
+      var positionAux = {x: position.x - posXTablerosIzq, y: position.y, z: position.z};
+      var tab = tableroIzq;
+      var cont = contadorPiezaIzq;
+    } else {
+      normal = true;
       var numPieza = idPieza.split("cubo")[1];
-
-      var position = el.getAttribute('position');
-      var alturaPieza = el.getAttribute('height');
-      var anchuraPieza = el.getAttribute('width');
-      var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
-
       var posX = dameCoordenadaX(position.x, anchuraPieza);
-      var posY = dameCoordenadaY(position.y, alturaPieza);
+      var positionAux = position;
+      var tab = tablero;
+      var cont = contadorPieza;
+    }
 
-      revisaPosicionHorizontalPieza(el, position, alturaPieza, anchuraPieza);
-      revisaPosicionVerticalPieza(el, posX, posY, alturaPieza, anchuraPieza);
 
-      if (numPieza == contadorPieza) {
-        if (!this.tocaSuelo) {
-          if (el != null) {
-            el.setAttribute('position', positionTmp);
+    var posY = dameCoordenadaY(position.y, alturaPieza);
+    revisaPosicionHorizontalPieza(el, positionAux, alturaPieza, anchuraPieza);
+    revisaPosicionVerticalPieza(el, posX, posY, alturaPieza, anchuraPieza, tab);
 
-            if (rotarPieza) {
-              rotarPiezaFunction(el);
-            }
+    if (numPieza == cont) {
+      if (!this.tocaSuelo) {
+        if (el != null) {
+          el.setAttribute('position', positionTmp);
 
-            if (bajarPieza) {
-              bajarPiezaFunction(el);
-            }
-
-            if (moverPieza) {
-              moverPiezaFunction(el);
-            }
+          if ( (rotarPiezaDer && derecha) || (rotarPiezaIzq && izquierda) || (rotarPieza && normal) ) {
+            rotarPiezaFunction(el, posX, posY, idPieza);
           }
 
+          if ( (bajarPiezaDer && derecha) || (bajarPiezaIzq && izquierda) || (bajarPieza && normal) ) {
+            bajarPiezaFunction(el, posX, posY, idPieza);
+          }
+
+          if ( (moverPiezaDer && derecha) || (moverPiezaIzq && izquierda) || (moverPieza && normal) ) {
+            moverPiezaFunction(el, idPieza);
+          }
+        }
+      } else {
+
+        if (imprimeTableroBool) {
+          actualizaTablero(posX, posY, anchuraPieza, alturaPieza, cont, tab);
+          imprimeTableroBool = false;
+        }
+
+        if (derecha) {
+          tipoPiezaMarcador = "der";
+        } else if (izquierda) {
+          tipoPiezaMarcador = "izq";
         } else {
+          tipoPiezaMarcador = "def";
+        }
 
-          if (imprimeTableroBool) {
-            actualizaTablero(posX,posY,anchuraPieza,alturaPieza, contadorPieza);
-            imprimeTableroBool = false;
-          }
+        actualizaMarcadorPieza = true;
 
-          actualizaMarcadorPieza = true;
 
-          if (!isGameOver()) {
+        if (!isGameOver()) {
+          if (derecha) {
+            crearPiezaDer = true;
+            bajarPiezaDer = false;
+            rotarPiezaDer = false;
+          } else if (izquierda) {
+            crearPiezaIzq = true;
+            bajarPiezaIzq = false;
+            rotarPiezaIzq = false;
+          } else {
             crearPieza = true;
             bajarPieza = false;
             rotarPieza = false;
-          } else {
-            location.replace("../gameover.html")
           }
+        } else {
+          location.replace("../gameover.html?puntuacion=" + scoreActual);
         }
       }
     }

@@ -1,13 +1,6 @@
 
 function actualizaMarcadorPiezaFunction (data) {
-  if (tipoPiezaMarcador == "der") {
-    var pieza = document.getElementById("cubo_der" + contadorPiezaDer);
-  } else if (tipoPiezaMarcador == "izq") {
-    var pieza = document.getElementById("cubo_izq" + contadorPiezaIzq);
-  } else {
-    var pieza = document.getElementById("cubo" + contadorPieza);
-  }
-
+  var pieza = document.getElementById("cubo" + contadorPieza);
   var alturaPieza = pieza.getAttribute('height');
   var anchuraPieza = pieza.getAttribute('width');
 

@@ -29,9 +29,11 @@
       <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, a-link" sphere-collider="objects: a-box" oculus-touch-controls="hand: left"></a-entity>
       <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, a-link" sphere-collider="objects: a-box" cursor="rayOrigin: mouse"></entity>
 
-      <a-entity position="0 5 -10" text="value:GAME OVER; width:40; height:40; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json"></a-entity>
+      <a-entity position="0 6 -10" text="value:GAME OVER; width:40; height:40; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json"></a-entity>
 
-      <a-box boton="color:black; position: 0 2.5 -10; width: 8; height: 2; texto: JUGAR DE NUEVO" clickable></a-box>
+      <a-entity id="score" score="position: 0 4 -10; anchuraTexto:20; alturaTexto:10"></a-entity>
+
+      <a-box boton="color:black; position: 0 2 -10; width: 8; height: 2; texto: JUGAR DE NUEVO" clickable></a-box>
 
     </a-scene>
   </body>

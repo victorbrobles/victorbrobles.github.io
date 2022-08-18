@@ -305,10 +305,11 @@ AFRAME.registerComponent('cubo', {
     var posX = dameCoordenadaX(position.x, anchuraPieza);
     var posY = dameCoordenadaY(position.y, alturaPieza);
 
-    revisaPosicionHorizontalPieza(el, position, alturaPieza, anchuraPieza);
-    revisaPosicionVerticalPieza(el, posX, posY, alturaPieza, anchuraPieza);
-
     if (numPieza == contadorPieza) {
+
+      revisaPosicionHorizontalPieza(el, position, alturaPieza, anchuraPieza);
+      revisaPosicionVerticalPieza(el, posX, posY, alturaPieza, anchuraPieza);
+
       if (!this.tocaSuelo) {
         if (el != null) {
           el.setAttribute('position', positionTmp);

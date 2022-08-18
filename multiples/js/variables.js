@@ -34,6 +34,8 @@ let scoreActual = 0;
 let imprimeTableroBool = true;
 let numFilasEliminadas = 0;
 
+let tipoPiezaMarcador = "";
+
 //MULTITABLEROS
 let posXTablerosIzq = 0;
 let posXTablerosDer = 0;
@@ -41,11 +43,29 @@ let crearTablerosIzq = false;
 let crearTablerosDer = false;
 let separacionTableros = 0;
 
+let tableroIzq = [];
+let tableroDer = [];
+
 let tableroDerCreado = false;
 let tableroIzqCreado = false;
 
 let crearPiezaIzq = false;
 let crearPiezaDer = false;
 
+let bajarPiezaIzq = false;
+let bajarPiezaDer = false;
+
+let rotarPiezaIzq = false;
+let rotarPiezaDer = false;
+
+let moverPiezaIzq = false;
+let moverPiezaDer = false;
+
 let contadorPiezaIzq = 0;
 let contadorPiezaDer = 0;
+
+let posControllerIzq = {x: -10, y: 0, z: 0};
+let posControllerDer = {x: 10, y: 0, z: 0};
+
+let nuevaPosIzq = "";
+let nuevaPosDer = "";

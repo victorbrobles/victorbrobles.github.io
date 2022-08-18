@@ -80,6 +80,8 @@ AFRAME.registerComponent('boton', {
         location.replace("estandar/demo.html");
       } else if (idPulsado == "opcion2") {
         location.replace("multiples/multiples.html");
+      } else if (idPulsado == "opcion3") {
+        location.replace("colores/colores.html")
       }
     }
 

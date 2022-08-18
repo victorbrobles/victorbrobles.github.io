@@ -1,11 +1,8 @@
 
 function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+  var colores = ['blue', 'red', 'yellow', 'green'];
+  var indice = Math.floor(Math.random() * 4);
+  return colores[indice];
 }
 
 function damePropsPieza (suelo) {
@@ -28,6 +25,7 @@ function damePropsPieza (suelo) {
 }
 
 
+
 function iniciaVariablesEntorno(data) {
   var positionYSuelo = Number(data.positionSuelo.split(" ")[1]);
   alturaSuelo = positionYSuelo + Number(data.alturaSuelo) / 2;
@@ -43,27 +41,43 @@ function iniciaVariablesEntorno(data) {
 }
 
 
+
+
 function isGameOver() {
   for (let i=tablero.length -1; i>alturaTablero; i--) {
     for (let j=1; j<=anchuraTablero; j++) {
-      if (casillaEstaOcupada(j, i, tablero)) {
-        return true;
-      }
-    }
-  }
-  for (let i=tableroIzq.length -1; i>alturaTablero; i--) {
-    for (let j=1; j<=anchuraTablero; j++) {
-      if (casillaEstaOcupada(j, i, tableroIzq)) {
-        return true;
-      }
-    }
-  }
-  for (let i=tableroDer.length -1; i>alturaTablero; i--) {
-    for (let j=1; j<=anchuraTablero; j++) {
-      if (casillaEstaOcupada(j, i, tableroDer)) {
+      if (casillaEstaOcupada(j, i)) {
         return true;
       }
     }
   }
   return false;
+}
+
+function revisaColor(pieza, posX, posY, anchuraPieza) {
+  var color = pieza.getAttribute('color');
+
+  console.log("Color " + color);
+  console.log("posX " + posX);
+  console.log("posY " + posY);
+
+  if (posY != 0) {
+    var piezasVecinas = [];
+    for (var i=0; i<anchuraPieza; i++) {
+      var idPieza = tablero[posY][posX + i];
+      console.log("idPieza " + idPieza);
+      if (idPieza != "." && !piezasVecinas.includes(idPieza)) {
+        piezasVecinas.push(idPieza);
+      }
+    }
+
+    for (var j=0; j<piezasVecinas.length; j++) {
+      var piezaAux = document.getElementById("cubo" + piezasVecinas[j]);
+      var colorAux = piezaAux.getAttribute('color');
+
+      if (color != colorAux) {
+        location.replace("../gameover.html?puntuacion=" + scoreActual);
+      }
+    }
+  }
 }

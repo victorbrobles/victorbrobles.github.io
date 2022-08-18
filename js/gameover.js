@@ -1,4 +1,5 @@
 let fuenteBoton = "https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/specialelite/SpecialElite-Regular.json";
+let fuenteScore = "https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/snippet/Snippet.json";
 
 let minX = 0;
 let maxX = 0;
@@ -7,6 +8,35 @@ let derecha = false;
 let izquierda = false;
 
 let volverMenu = false;
+
+
+var URLsearch = window.location.search;
+console.log(URLsearch);
+
+AFRAME.registerComponent('score', {
+  schema: {
+    position: {default: "0 0 0"},
+    anchuraTexto: {default: 0},
+    alturaTexto: {default:0}
+  },
+
+  init: function() {
+    var el = this.el;
+    var data = this.data;
+
+    el.setAttribute('position', data.position);
+
+    var puntuacion = window.location.search;
+    var score = puntuacion.split("=")[1];
+
+    var texto = document.createElement("a-entity");
+    texto.id = "valorscore";
+    texto.setAttribute('position', "0 0 1");
+    texto.setAttribute('text', "value:PUNTUACION FINAL: " + score + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: black; shader: msdf; font: " + fuenteScore);
+
+    el.appendChild(texto);
+  }
+});
 
 AFRAME.registerComponent('boton', {
   schema: {

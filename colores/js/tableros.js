@@ -1,13 +1,14 @@
 
-function casillaEstaOcupada (posX, posY, tab) {
-  if (tab[posY][posX] == ".") {
+function casillaEstaOcupada (posX, posY) {
+  if (tablero[posY][posX] == ".") {
     return false;
   } else {
     return true;
   }
 }
 
-function crearTablero(anchura, altura, tab) {
+
+function crearTablero(anchura, altura) {
 
   for (let i=1; i<=altura; i++) {
     var columna = [];
@@ -15,30 +16,36 @@ function crearTablero(anchura, altura, tab) {
     for (let j=1; j<=anchura; j++) {
       columna[j] = ".";
     }
-    tab[i] = columna;
+    tablero[i] = columna;
   }
 }
 
-function imprimeTablero (tab) {
-  for (let i=tab.length - 1; i>=alturaSuelo; i--) {
-    console.log(tab[i]);
+
+function imprimeTablero () {
+  for (let i=tablero.length - 1; i>=alturaSuelo; i--) {
+    console.log(tablero[i]);
   }
 }
 
-function actualizaTablero (posX, posY, width, height, contadorPieza, tab) {
+
+function actualizaTablero (posX, posY, width, height, contadorPieza) {
   for (let i=0; i<width; i++) {
     for (let j=0; j<height; j++) {
-      tab[posY + 1 + j][posX + i] = contadorPieza;
+      tablero[posY + 1 + j][posX + i] = contadorPieza;
     }
   }
-  imprimeTablero(tab);
+  imprimeTablero();
 }
 
-function eliminarFilasCompletas(tab, tipoTablero) {
-  var filasEliminadas = revisaEliminarFilas(tab);
+
+
+
+
+function eliminarFilasCompletas() {
+  var filasEliminadas = revisaEliminarFilas();
   var filaAnterior = 0;
   for (let i=0; i<filasEliminadas.length; i++) {
-      eliminarFila(filasEliminadas[i] - filaAnterior, tab, tipoTablero);
+      eliminarFila(filasEliminadas[i] - filaAnterior);
       filaAnterior += 1;
   }
 
@@ -48,12 +55,12 @@ function eliminarFilasCompletas(tab, tipoTablero) {
   }
 }
 
-function revisaEliminarFilas(tab) {
+function revisaEliminarFilas() {
   var filasAEliminar = [];
   for (let i=1; i<=alturaTablero; i++) {
     var eliminar = true;
     for (let j=1; j<=anchuraTablero; j++) {
-      var casilla = tab[i][j];
+      var casilla = tablero[i][j];
       if (casilla == ".") {
         eliminar = false;
       }
@@ -66,11 +73,11 @@ function revisaEliminarFilas(tab) {
 }
 
 
-function eliminarFila (numFila, tab, tipoTablero) {
+function eliminarFila (numFila) {
   var listaPiezas = [];
   for (let i=numFila; i<=alturaTablero; i++) {
     for (let j=1; j<=anchuraTablero; j++) {
-      var casilla = tab[i][j];
+      var casilla = tablero[i][j];
       if (casilla != "." && !listaPiezas.includes(casilla)) {
         listaPiezas.push(casilla);
       }
@@ -78,23 +85,14 @@ function eliminarFila (numFila, tab, tipoTablero) {
   }
 
   for (let j=0; j<listaPiezas.length; j++) {
-    if (tipoTablero == "der") {
-      var pieza = document.getElementById("cubo_der" + listaPiezas[j]);
-      var entornoPiezas = document.getElementById("piezas_der");
-    } else if (tipoTablero == "izq") {
-      var pieza = document.getElementById("cubo_izq" + listaPiezas[j]);
-      var entornoPiezas = document.getElementById("piezas_izq");
-    } else {
-      var pieza = document.getElementById("cubo" + listaPiezas[j]);
-      var entornoPiezas = document.getElementById("piezas");
-    }
-
+    var pieza = document.getElementById("cubo" + listaPiezas[j]);
     var height = pieza.getAttribute('height');
     var position = pieza.getAttribute('position');
+    var entornoPiezas = document.getElementById("piezas");
 
     var piezaPerteneceAFila = false;
     for (let x=1; x<=anchuraTablero; x++) {
-      if (tab[numFila][x] == listaPiezas[j]) {
+      if (tablero[numFila][x] == listaPiezas[j]) {
         piezaPerteneceAFila = true;
       }
     }
@@ -111,11 +109,11 @@ function eliminarFila (numFila, tab, tipoTablero) {
   }
 
 
-  for (let y=numFila; y<tab.length-1; y++) {
+  for (let y=numFila; y<tablero.length-1; y++) {
     for (let z=1; z<=anchuraTablero; z++) {
-      tab[y][z] = tab[y+1][z];
+      tablero[y][z] = tablero[y+1][z];
     }
   }
 
-  imprimeTablero(tab);
+  imprimeTablero();
 }
