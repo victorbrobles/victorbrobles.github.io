@@ -1,0 +1,5 @@
+
+Cambiar que al cambiar la anchura del tablero tenga que cambiar a mano la posicion de las paredes, la anchura del controlador y la posicion de los botones.
+
+Deberia haber una pantalla intermedia donde elegir el tamaño del tablero y a partir de ahi hacer que las paredes se coloquen en la anchura/2 - 1,
+la anchura del controlador sea la mitad que esa anchura y los botones se coloquen 3 unidades a derecha e izquierda de los límites laterales, por ejemplo.
