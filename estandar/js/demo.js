@@ -1,6 +1,9 @@
 
 //PUNTUACION
 
+let anchuraElegida = window.location.search;
+anchuraElegida = anchuraElegida.replace("?", "");
+
 AFRAME.registerComponent('score', {
   schema: {
     position: {default: "0 0 0"},
@@ -38,7 +41,6 @@ AFRAME.registerComponent('score', {
 AFRAME.registerComponent('tablero', {
   schema: {
     alturaSuelo: {default: 0},
-    anchuraSuelo: {default: 0},
     positionSuelo: {default: "0 0 0"},
     colorTablero: {default: "white"},
     alturaPared: {default: 0},
@@ -51,9 +53,15 @@ AFRAME.registerComponent('tablero', {
     var el = this.el;
     var data = this.data;
 
+    var positionIzq = - (parseInt(anchuraElegida) - 1) / 2;
+    var positionDer = (parseInt(anchuraElegida) - 1) / 2;
+
+    var positionParedIzq = positionIzq + " " + data.positionParedIzq;
+    var positionParedDer = positionDer + " " + data.positionParedDer;
+
     var suelo = document.createElement('a-box');
     suelo.setAttribute('height', data.alturaSuelo);
-    suelo.setAttribute('width', data.anchuraSuelo);
+    suelo.setAttribute('width', anchuraElegida);
     suelo.setAttribute('position', data.positionSuelo);
     suelo.setAttribute('color', data.colorTablero);
     suelo.id = 'suelo';
@@ -61,14 +69,14 @@ AFRAME.registerComponent('tablero', {
     var paredIzq = document.createElement('a-box');
     paredIzq.setAttribute('height', data.alturaPared);
     paredIzq.setAttribute('width', data.anchuraPared);
-    paredIzq.setAttribute('position', data.positionParedIzq);
+    paredIzq.setAttribute('position', positionParedIzq);
     paredIzq.setAttribute('color', data.colorTablero);
     paredIzq.id = 'pared_izq';
 
     var paredDer = document.createElement('a-box');
     paredDer.setAttribute('height', data.alturaPared);
     paredDer.setAttribute('width', data.anchuraPared);
-    paredDer.setAttribute('position', data.positionParedDer);
+    paredDer.setAttribute('position', positionParedDer);
     paredDer.setAttribute('color', data.colorTablero);
     paredDer.id = 'pared_der';
 
@@ -76,7 +84,7 @@ AFRAME.registerComponent('tablero', {
     el.appendChild(paredIzq);
     el.appendChild(paredDer);
 
-    iniciaVariablesEntorno(data);
+    iniciaVariablesEntorno(data, positionIzq, positionDer, anchuraElegida);
 
     crearTablero(anchuraTablero, alturaTablero + 4);
     imprimeTablero();
@@ -119,7 +127,10 @@ AFRAME.registerComponent('rotarpieza', {
     var el = this.el;
     var data = this.data;
 
-    el.setAttribute('position', data.position);
+    var position = (anchuraElegida/2) + 4;
+    var positionFinal = position + " " + data.position;
+
+    el.setAttribute('position', positionFinal);
     el.setAttribute('color', data.color);
     el.setAttribute('width', data.width);
     el.setAttribute('height', data.height);
@@ -165,7 +176,10 @@ AFRAME.registerComponent('bajarpieza', {
     var el = this.el;
     var data = this.data;
 
-    el.setAttribute('position', data.position);
+    var position = -(anchuraElegida/2) - 4;
+    var positionFinal = position + " " + data.position;
+
+    el.setAttribute('position', positionFinal);
     el.setAttribute('color', data.color);
     el.setAttribute('width', data.width);
     el.setAttribute('height', data.height);
@@ -197,7 +211,6 @@ AFRAME.registerComponent('bajarpieza', {
 AFRAME.registerComponent('mando', {
   schema: {
     position: {default: "0 0 0"},
-    width: {default: 0},
     height: {default: 0},
     rotation: {default: "0 0 0"},
     color: {default: "white"},
@@ -208,9 +221,11 @@ AFRAME.registerComponent('mando', {
     var el = this.el;
     var data = this.data;
 
+    var width = (anchuraElegida - 2) / 2;
+
     el.setAttribute('position', data.position);
     el.setAttribute('color', data.color);
-    el.setAttribute('width', data.width);
+    el.setAttribute('width', width);
     el.setAttribute('height', data.height);
     el.setAttribute('rotation', data.rotation);
     el.id = data.id;

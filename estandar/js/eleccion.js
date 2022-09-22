@@ -35,7 +35,7 @@ AFRAME.registerComponent('boton', {
     var positionY = data.position.split(" ")[1];
 
     maxY = positionY;
-    minY = positionY - 1;
+    minY = positionY - 0.5;
 
     var texto = document.createElement('a-entity');
 
@@ -77,13 +77,13 @@ AFRAME.registerComponent('boton', {
     if (botonPulsado) {
       botonPulsado = false;
       if (idPulsado == "opcion1") {
-        location.replace("estandar/eleccion.html");
+        location.replace("demo.html?7");
       } else if (idPulsado == "opcion2") {
-        location.replace("multiples/multiples.html");
+        location.replace("demo.html?12");
       } else if (idPulsado == "opcion3") {
-        location.replace("colores/eleccion.html");
+        location.replace("demo.html?17");
       } else if (idPulsado == "opcion4") {
-        location.replace("obstaculos/menu.html");
+        location.replace("demo.html?22");
       }
     }
 

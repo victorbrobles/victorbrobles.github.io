@@ -37,17 +37,17 @@ function sleep(milliseconds) {
 
 
 
-function iniciaVariablesEntorno(data) {
+function iniciaVariablesEntorno (data, positionIzq, positionDer, anchuraElegida) {
   var positionYSuelo = Number(data.positionSuelo.split(" ")[1]);
   alturaSuelo = positionYSuelo + Number(data.alturaSuelo) / 2;
 
-  var positionXParedIzq = Number(data.positionParedIzq.split(" ")[0]);
+  var positionXParedIzq = Number(positionIzq);
   limiteIzq = positionXParedIzq + Number(data.anchuraPared) / 2;
 
-  var positionXParedDer = Number(data.positionParedDer.split(" ")[0]);
+  var positionXParedDer = Number(positionDer);
   limiteDer = positionXParedDer - Number(data.anchuraPared) / 2;
 
-  anchuraTablero = Number(data.anchuraSuelo) - 2 * Number(data.anchuraPared);
+  anchuraTablero = Number(anchuraElegida) - 2 * Number(data.anchuraPared);
   alturaTablero = Number(data.alturaPared) - Number(data.alturaSuelo);
 }
 
