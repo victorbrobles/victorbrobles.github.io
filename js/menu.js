@@ -1,14 +1,14 @@
 
-let fuenteBoton = "https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/specialelite/SpecialElite-Regular.json";
+let buttonFont = "https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/specialelite/SpecialElite-Regular.json";
 
 let maxY = 0;
 let minY = 0;
 
-let subir = false;
-let bajar = true;
+let goUp = false;
+let goDown = true;
 
-let botonPulsado = false;
-let idPulsado = "";
+let pressedButton = false;
+let pressedId = "";
 
 AFRAME.registerComponent('boton', {
   schema: {
@@ -17,7 +17,7 @@ AFRAME.registerComponent('boton', {
     width: {default: "1"},
     height: {default: "1"},
     color: {default: "white"},
-    texto: {default: ""}
+    text: {default: ""}
   },
 
   init: function() {
@@ -37,18 +37,18 @@ AFRAME.registerComponent('boton', {
     maxY = positionY;
     minY = positionY - 1;
 
-    var texto = document.createElement('a-entity');
+    var text = document.createElement('a-entity');
 
     var id = el.getAttribute('id');
 
-    if (id == "opcion1" || id == "opcion2") {
-      texto.setAttribute('position', "0.5 -0.4 1");
+    if (id == "desktop" || id == "standard" || id == "multiboard" || id == "3dimensional" || id == "reactiontest") {
+      text.setAttribute('position', "0.5 -0.4 1");
     } else {
-      texto.setAttribute('position', "-0.5 -0.4 1");
+      text.setAttribute('position', "-0.5 -0.4 1");
     }
-    texto.setAttribute('text', "value: " + data.texto + "; width: 15; height: 20; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteBoton);
+    text.setAttribute('text', "value: " + data.text + "; width: 15; height: 20; align: center; color: #FFFFFF; shader: msdf; font: " + buttonFont);
 
-    el.appendChild(texto);
+    el.appendChild(text);
   },
   tick: function() {
     var el = this.el;
@@ -56,40 +56,92 @@ AFRAME.registerComponent('boton', {
 
     var position = el.getAttribute('position');
 
-    if (bajar) {
+    if (goDown) {
       if (position.y > minY) {
         el.setAttribute('position', {x:position.x, y:position.y - 0.005, z:position.z});
       } else {
-        bajar = false;
-        subir = true;
+        goDown = false;
+        goUp = true;
       }
     }
 
-    if (subir) {
+    if (goUp) {
       if (position.y < maxY) {
         el.setAttribute('position', {x:position.x, y:position.y + 0.005, z:position.z});
       } else {
-        bajar = true;
-        subir = false;
+        goDown = true;
+        goUp = false;
       }
     }
 
-    if (botonPulsado) {
-      botonPulsado = false;
-      if (idPulsado == "opcion1") {
+    if (pressedButton) {
+      pressedButton = false;
+      if (pressedId == "desktop") {
+        location.replace("menuDesktop.html");
+      } else if (pressedId == "vr") {
+        location.replace("menuVr.html");
+      } else if (pressedId == "standard") {
         location.replace("estandar/eleccion.html");
-      } else if (idPulsado == "opcion2") {
+      } else if (pressedId == "multiboard") {
         location.replace("multiples/multiples.html");
-      } else if (idPulsado == "opcion3") {
+      } else if (pressedId == "colors") {
         location.replace("colores/eleccion.html");
-      } else if (idPulsado == "opcion4") {
+      } else if (pressedId == "obstacles") {
         location.replace("obstaculos/menu.html");
+      } else if (pressedId == "3dimensional") {
+        location.replace("3dimensional/eleccion.html");
+      } else if (pressedId == "reactiontest") {
+        location.replace("reaction/eleccion.html");
+      } else if (pressedId == "drop") {
+        location.replace("drop/eleccion.html");
+      } else if (pressedId == "moldable") {
+        location.replace("moldable/eleccion.html");
       }
     }
 
     el.addEventListener('grab-end', function(event) {
-      botonPulsado = true;
-      idPulsado = el.getAttribute('id');
+      pressedButton = true;
+      pressedId = el.getAttribute('id');
+    });
+  }
+});
+
+
+AFRAME.registerComponent('botonback', {
+  schema: {
+    position: {default: "0 0 0"},
+    rotation: {default: "0 0 0"},
+    width: {default: "1"},
+    height: {default: "1"},
+    color: {default: "white"},
+    text: {default: ""}
+  },
+
+  init: function() {
+
+    var el = this.el;
+    var data = this.data;
+
+    el.setAttribute('color', data.color);
+    el.setAttribute('position', data.position);
+    el.setAttribute('rotation', data.rotation);
+    el.setAttribute('width', data.width);
+    el.setAttribute('height', data.height);
+    el.setAttribute('depth', 0);
+    el.classList.add('botonBack');
+
+    var text = document.createElement('a-entity');
+    text.setAttribute('position', "1.4 -1.1 1");
+    text.setAttribute('text', "value: " + data.text + "; width: 15; height: 20; align: center; color: #FFFFFF; shader: msdf; font: " + buttonFont);
+
+    el.appendChild(text);
+  },
+  tick: function() {
+    var el = this.el;
+    var data = this.data;
+
+    el.addEventListener('grab-end', function(event) {
+      location.replace("menuPrincipal.html");
     });
   }
 });

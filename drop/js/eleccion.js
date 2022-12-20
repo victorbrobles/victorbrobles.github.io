@@ -130,7 +130,7 @@ AFRAME.registerComponent('botonback', {
     var data = this.data;
 
     el.addEventListener('grab-end', function(event) {
-      location.replace("../menuDesktop.html");
+      location.replace("../menuVr.html");
     });
   }
 });

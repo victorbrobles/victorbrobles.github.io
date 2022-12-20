@@ -93,3 +93,43 @@ AFRAME.registerComponent('boton', {
     });
   }
 });
+
+
+AFRAME.registerComponent('botonback', {
+  schema: {
+    position: {default: "0 0 0"},
+    rotation: {default: "0 0 0"},
+    width: {default: "1"},
+    height: {default: "1"},
+    color: {default: "white"},
+    text: {default: ""}
+  },
+
+  init: function() {
+
+    var el = this.el;
+    var data = this.data;
+
+    el.setAttribute('color', data.color);
+    el.setAttribute('position', data.position);
+    el.setAttribute('rotation', data.rotation);
+    el.setAttribute('width', data.width);
+    el.setAttribute('height', data.height);
+    el.setAttribute('depth', 0);
+    el.classList.add('botonBack');
+
+    var text = document.createElement('a-entity');
+    text.setAttribute('position', "1.4 -1.1 1");
+    text.setAttribute('text', "value: " + data.text + "; width: 15; height: 20; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteBoton);
+
+    el.appendChild(text);
+  },
+  tick: function() {
+    var el = this.el;
+    var data = this.data;
+
+    el.addEventListener('grab-end', function(event) {
+      location.replace("../menuDesktop.html");
+    });
+  }
+});

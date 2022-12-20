@@ -1,5 +1,16 @@
 
-Cambiar que al cambiar la anchura del tablero tenga que cambiar a mano la posicion de las paredes, la anchura del controlador y la posicion de los botones.
 
-Deberia haber una pantalla intermedia donde elegir el tamaño del tablero y a partir de ahi hacer que las paredes se coloquen en la anchura/2 - 1,
-la anchura del controlador sea la mitad que esa anchura y los botones se coloquen 3 unidades a derecha e izquierda de los límites laterales, por ejemplo.
+Pasar todo a inglés y meter botón de volver atrás en pantallas intermedias.
+
+MODOS VR:
+
+
+1. Tetris estándar pero en 3 dimensiones. Hacer un tablero con profundidad y que el controlador pueda moverse en un plano en lugar de una línea.
+
+2. Tablero en tres dimensiones. Una pieza sale en una posición aleatoria. Tienes 3 segundos para pulsarla, si pulsas la pieza cae en esa casilla, si no desaparece y te
+restan 100 puntos. Si dejas pasar 10 piezas sin elegir, pierdes. Si una pieza cae sobre otra de un color diferente, pierdes.
+
+3. Tablero en tres dimensiones. 5 piezas random a cada lado del tablero, flotando. Puedes coger una pieza y dejarla sobre el tablero, y así con todas. Si la posición en la
+que dejas la pieza coincide con el tablero, la pones en él, si no, la pieza vuelve a su posición inicial. Tienes un tiempo para llegar a una determinada posición, si no pierdes.
+
+4. Modo estándar pero con una funcionalidad extra. Puedes agarrar las piezas, y dependiendo hacia donde, puedes alargarlas de altura, anchura o profundidad.

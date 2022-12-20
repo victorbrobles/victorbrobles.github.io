@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Menu Principal Tetris VR</title>
+    <title>Menu eleccion tipo tablero</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
-    <script src="js/menu.js"></script>
+    <script src="js/eleccion.js"></script>
     <script src="https://github.com/wmurphyrd/aframe-super-hands-component/tree/master/examples/build.js"></script>
   </head>
   <body>
@@ -25,16 +25,19 @@
                               colliderEndEventProperty: clearedEls;">
       </a-mixin>
 
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, a-link"sphere-collider="objects: a-box" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, a-link" sphere-collider="objects: a-box" oculus-touch-controls="hand: left"></a-entity>
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, a-link" sphere-collider="objects: a-box" cursor="rayOrigin: mouse"></entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, .botonBack, a-link" sphere-collider="objects: a-box, a-plane" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, .botonBack, a-link" sphere-collider="objects: a-box, a-plane" oculus-touch-controls="hand: left"></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, .botonBack, a-link" sphere-collider="objects: a-box, a-plane" cursor="rayOrigin: mouse"></entity>
 
-      <a-entity position="0 6.5 -10" text="value:T e t r i s      V R; width:40; height:40; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json"></a-entity>
+      <a-entity position="0 6.5 -10" text="value:M y   T e t r i s   V R; width:40; height:40; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json"></a-entity>
+      <a-entity position="0 5 -10" text="value: Escoge la anchura del tablero; width:20; height:10; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/specialelite/SpecialElite-Regular.json"></a-entity>
 
-      <a-box id="opcion1" boton="color:#383D4E; position: -12 4 -10; rotation: 0 0 5; width: 6; height: 2; texto: NORMAL" clickable></a-box>
-      <a-box id="opcion2" boton="color:#383D4E; position: -4 4 -10; rotation: 0 0 -5; width: 6; height: 2; texto: MULTITABLERO" clickable></a-box>
-      <a-box id="opcion3" boton="color:#383D4E; position: 4 4 -10; rotation: 0 0 5; width: 6; height: 2; texto: COLORES" clickable></a-box>
-      <a-box id="opcion4" boton="color:#383D4E; position: 12 4 -10; rotation: 0 0 -5; width: 6; height: 2; texto: OBSTACULOS" clickable></a-box>
+      <a-plane id="botonBack" botonback = "color:black; position: -15 9 -10; rotation: 0 0 0; width: 4; height: 1; text: RETURN" clickable></a-plane>
+
+      <a-box id="opcion1" boton="color:#383D4E; position: -12 3 -10; rotation: 0 0 5; width: 3; height: 1; texto: 7" clickable></a-box>
+      <a-box id="opcion2" boton="color:#383D4E; position: -4 3 -10; rotation: 0 0 -5; width: 3; height: 1; texto: 12" clickable></a-box>
+      <a-box id="opcion3" boton="color:#383D4E; position: 4 3 -10; rotation: 0 0 5; width: 3; height: 1; texto: 17" clickable></a-box>
+      <a-box id="opcion4" boton="color:#383D4E; position: 12 3 -10; rotation: 0 0 -5; width: 3; height: 1; texto: 22" clickable></a-box>
 
     </a-scene>
   </body>
