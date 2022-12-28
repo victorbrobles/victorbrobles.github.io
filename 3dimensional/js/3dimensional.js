@@ -80,9 +80,63 @@ AFRAME.registerComponent('tablero', {
     paredDer.setAttribute('color', data.colorTablero);
     paredDer.id = 'pared_der';
 
+    var positionSueloParams = data.positionSuelo.split(" ");
+    var positionSueloIzq = positionIzq + " " + positionSueloParams[1] + " " + (parseInt(positionSueloParams[2]) - parseInt(anchuraElegida/2));
+
+    var sueloIzq = document.createElement('a-box');
+    sueloIzq.setAttribute('height', data.alturaSuelo);
+    sueloIzq.setAttribute('width', 1);
+    sueloIzq.setAttribute('depth', anchuraElegida);
+    sueloIzq.setAttribute('position', positionSueloIzq);
+    sueloIzq.setAttribute('color', data.colorTablero);
+    sueloIzq.id = 'suelo_izq';
+
+    var positionSueloDer = positionDer + " " + positionSueloParams[1] + " " + (parseInt(positionSueloParams[2]) - parseInt(anchuraElegida/2));
+
+    var sueloDer = document.createElement('a-box');
+    sueloDer.setAttribute('height', data.alturaSuelo);
+    sueloDer.setAttribute('width', 1);
+    sueloDer.setAttribute('depth', anchuraElegida);
+    sueloDer.setAttribute('position', positionSueloDer);
+    sueloDer.setAttribute('color', data.colorTablero);
+    sueloDer.id = 'suelo_der';
+
+    var positionParedTraseraParams = data.positionParedIzq.split(" ");
+    var positionParedIzqTrasera = positionIzq + " " + positionParedTraseraParams[0] + " " + (parseInt(positionParedTraseraParams[1]) - parseInt(anchuraElegida));
+
+    var paredIzqTrasera = document.createElement('a-box');
+    paredIzqTrasera.setAttribute('height', data.alturaPared);
+    paredIzqTrasera.setAttribute('width', data.anchuraPared);
+    paredIzqTrasera.setAttribute('position', positionParedIzqTrasera);
+    paredIzqTrasera.setAttribute('color', data.colorTablero);
+    paredIzqTrasera.id = 'pared_izq_trasera';
+
+    var positionParedDerTrasera = positionDer + " " + positionParedTraseraParams[0] + " " + (parseInt(positionParedTraseraParams[1]) - parseInt(anchuraElegida));
+
+    var paredDerTrasera = document.createElement('a-box');
+    paredDerTrasera.setAttribute('height', data.alturaPared);
+    paredDerTrasera.setAttribute('width', data.anchuraPared);
+    paredDerTrasera.setAttribute('position', positionParedDerTrasera);
+    paredDerTrasera.setAttribute('color', data.colorTablero);
+    paredDerTrasera.id = 'pared_der_trasera';
+
+    var positionSueloTrasero = positionSueloParams[0] + " " + positionSueloParams[1] + " " + (parseInt(positionSueloParams[2]) - parseInt(anchuraElegida));
+
+    var sueloTrasero = document.createElement('a-box');
+    sueloTrasero.setAttribute('height', data.alturaSuelo);
+    sueloTrasero.setAttribute('width', anchuraElegida);
+    sueloTrasero.setAttribute('position', positionSueloTrasero);
+    sueloTrasero.setAttribute('color', data.colorTablero);
+    sueloTrasero.id = 'suelo_trasero';
+
     el.appendChild(suelo);
     el.appendChild(paredIzq);
     el.appendChild(paredDer);
+    el.appendChild(sueloIzq);
+    el.appendChild(sueloDer);
+    el.appendChild(paredIzqTrasera);
+    el.appendChild(paredDerTrasera);
+    el.appendChild(sueloTrasero);
 
     iniciaVariablesEntorno(data, positionIzq, positionDer, anchuraElegida);
 

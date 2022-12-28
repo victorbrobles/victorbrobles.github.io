@@ -77,13 +77,13 @@ AFRAME.registerComponent('boton', {
     if (botonPulsado) {
       botonPulsado = false;
       if (idPulsado == "opcion1") {
-        location.replace("standard.html?7");
+        location.replace("3dimensional.html?7");
       } else if (idPulsado == "opcion2") {
-        location.replace("standard.html?12");
+        location.replace("3dimensional.html?12");
       } else if (idPulsado == "opcion3") {
-        location.replace("standard.html?17");
+        location.replace("3dimensional.html?17");
       } else if (idPulsado == "opcion4") {
-        location.replace("standard.html?22");
+        location.replace("3dimensional.html?22");
       }
     }
 

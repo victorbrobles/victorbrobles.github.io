@@ -96,7 +96,7 @@ AFRAME.registerComponent('boton', {
 
     if (volverMenu) {
       volverMenu = false;
-      location.replace("menu.html");
+      location.replace("menuPrincipal.html");
     }
 
     el.addEventListener('grab-end', function(event) {
