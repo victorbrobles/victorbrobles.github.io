@@ -34,27 +34,48 @@
       <a-mixin id="objetosManejables" hoverable grabbable="suppressY:true" stretchable draggable droppable></a-mixin>
       <a-mixin id="botones" clickable></a-mixin>
 
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton"sphere-collider="objects: a-box, a-sphere" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton" sphere-collider="objects: a-box, a-sphere" oculus-touch-controls="hand: left"></a-entity>
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton" sphere-collider="objects: a-box, a-sphere" cursor="rayOrigin: mouse"></entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, #controllertrasero, .boton"sphere-collider="objects: a-box, a-sphere" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, #controllertrasero, .boton" sphere-collider="objects: a-box, a-sphere" oculus-touch-controls="hand: left"></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, #controllertrasero, .boton" sphere-collider="objects: a-box, a-sphere" cursor="rayOrigin: mouse"></entity>
 
       <a-entity id="score" score="position: 0 25 -20; anchuraTexto:30; alturaTexto:30"></a-entity>
+      <a-entity id="scoreTrasero" score="position: 0 25 20; anchuraTexto:30; alturaTexto:30"></a-entity>
+
 
       <a-entity id="tablero" tablero="alturaSuelo: 1; positionSuelo: 0 0.5 -20; colorTablero: black;
           alturaPared: 21; anchuraPared: 1; positionParedIzq: 10.5 -20; positionParedDer: 10.5 -20">
           <a-entity id="piezas"></a-entity>
       </a-entity>
 
+      <a-entity id="tablerotrasero" tablero="alturaSuelo: 1; positionSuelo: 0 0.5 20; colorTablero: black;
+          alturaPared: 21; anchuraPared: 1; positionParedIzq: 10.5 20; positionParedDer: 10.5 20">
+          <a-entity id="piezastraseras"></a-entity>
+      </a-entity>
+
+
       <a-entity id="botones">
         <a-box bajarpieza="position: 15 -20; color: red; width: 3; height: 3; depth: 0; id:bajarPieza; mixin:botones;
           positionText: 0.3 -0.4 1; colorText: black; alignText: center; valueText: BAJAR PIEZA; widthText: 10"></a-box>
-        <a-box rotarpieza="position: 15 -20; color: red; width: 3; height: 3; depth: 0 id:rotarPieza; mixin:botones;
+        <a-box rotarpieza="position: 15 -20; color: red; width: 3; height: 3; depth: 0; id:rotarPieza; mixin:botones;
           positionText: -0.3 -0.4 1; colorText: black; alignText: center; valueText: ROTAR PIEZA; widthText: 10"></a-box>
       </a-entity>
+
+      <a-entity id="botonestraseros">
+        <a-box bajarpieza="position: 15 20; color: red; width: 3; height: 3; depth: 0; id:bajarPiezaTrasera; mixin:botones;
+          positionText: -0.3 -0.4 -1; colorText: black; alignText: center; valueText: BAJAR PIEZA; widthText: 10"></a-box>
+        <a-box rotarpieza="position: 15 20; color: red; width: 3; height: 3; depth: 0; id:rotarPiezaTrasera; mixin:botones;
+          positionText: 0.3 -0.4 -1; colorText: black; alignText: center; valueText: ROTAR PIEZA; widthText: 10"></a-box>
+      </a-entity>
+
 
       <a-entity id="mandocontrolador">
         <a-plane mando="height:0.2; position: 0 0.5 -5; rotation: -45 0 0; color:black; id: mando"></a-plane>
         <a-sphere controller="height:0.5; width:0.5; radius:0.25; position: 0 0.5 -4.9; rotation: -45 0 0; mixin:objetosManejables; color: #525250; id: controller"></a-sphere>
+      </a-entity>
+
+      <a-entity id="mandocontroladortrasero">
+        <a-plane mando="height:0.2; position: 0 0.5 5; rotation: -135 0 0; color:black; id: mandotrasero"></a-plane>
+        <a-sphere controller="height:0.5; width:0.5; radius:0.25; position: 0 0.5 4.9; rotation: -45 0 0; mixin:objetosManejables; color: #525250; id: controllertrasero"></a-sphere>
       </a-entity>
 
     </a-scene>

@@ -18,9 +18,15 @@ AFRAME.registerComponent('score', {
     el.setAttribute('position', data.position);
 
     var texto = document.createElement("a-entity");
-    texto.id = "valorscore";
     texto.setAttribute('position', "0 0 1");
     texto.setAttribute('text', "value:HIGH SCORE: 0; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
+
+    if (el.getAttribute("id") === "scoreTrasero") {
+      texto.setAttribute('rotation', "-180 0 -180");
+      texto.id = "valorscoretrasero";
+    } else {
+      texto.id = "valorscore";
+    }
 
     el.appendChild(texto);
   },
@@ -80,63 +86,9 @@ AFRAME.registerComponent('tablero', {
     paredDer.setAttribute('color', data.colorTablero);
     paredDer.id = 'pared_der';
 
-    var positionSueloParams = data.positionSuelo.split(" ");
-    var positionSueloIzq = positionIzq + " " + positionSueloParams[1] + " " + (parseInt(positionSueloParams[2]) - parseInt(anchuraElegida/2));
-
-    var sueloIzq = document.createElement('a-box');
-    sueloIzq.setAttribute('height', data.alturaSuelo);
-    sueloIzq.setAttribute('width', 1);
-    sueloIzq.setAttribute('depth', anchuraElegida);
-    sueloIzq.setAttribute('position', positionSueloIzq);
-    sueloIzq.setAttribute('color', data.colorTablero);
-    sueloIzq.id = 'suelo_izq';
-
-    var positionSueloDer = positionDer + " " + positionSueloParams[1] + " " + (parseInt(positionSueloParams[2]) - parseInt(anchuraElegida/2));
-
-    var sueloDer = document.createElement('a-box');
-    sueloDer.setAttribute('height', data.alturaSuelo);
-    sueloDer.setAttribute('width', 1);
-    sueloDer.setAttribute('depth', anchuraElegida);
-    sueloDer.setAttribute('position', positionSueloDer);
-    sueloDer.setAttribute('color', data.colorTablero);
-    sueloDer.id = 'suelo_der';
-
-    var positionParedTraseraParams = data.positionParedIzq.split(" ");
-    var positionParedIzqTrasera = positionIzq + " " + positionParedTraseraParams[0] + " " + (parseInt(positionParedTraseraParams[1]) - parseInt(anchuraElegida));
-
-    var paredIzqTrasera = document.createElement('a-box');
-    paredIzqTrasera.setAttribute('height', data.alturaPared);
-    paredIzqTrasera.setAttribute('width', data.anchuraPared);
-    paredIzqTrasera.setAttribute('position', positionParedIzqTrasera);
-    paredIzqTrasera.setAttribute('color', data.colorTablero);
-    paredIzqTrasera.id = 'pared_izq_trasera';
-
-    var positionParedDerTrasera = positionDer + " " + positionParedTraseraParams[0] + " " + (parseInt(positionParedTraseraParams[1]) - parseInt(anchuraElegida));
-
-    var paredDerTrasera = document.createElement('a-box');
-    paredDerTrasera.setAttribute('height', data.alturaPared);
-    paredDerTrasera.setAttribute('width', data.anchuraPared);
-    paredDerTrasera.setAttribute('position', positionParedDerTrasera);
-    paredDerTrasera.setAttribute('color', data.colorTablero);
-    paredDerTrasera.id = 'pared_der_trasera';
-
-    var positionSueloTrasero = positionSueloParams[0] + " " + positionSueloParams[1] + " " + (parseInt(positionSueloParams[2]) - parseInt(anchuraElegida));
-
-    var sueloTrasero = document.createElement('a-box');
-    sueloTrasero.setAttribute('height', data.alturaSuelo);
-    sueloTrasero.setAttribute('width', anchuraElegida);
-    sueloTrasero.setAttribute('position', positionSueloTrasero);
-    sueloTrasero.setAttribute('color', data.colorTablero);
-    sueloTrasero.id = 'suelo_trasero';
-
     el.appendChild(suelo);
     el.appendChild(paredIzq);
     el.appendChild(paredDer);
-    el.appendChild(sueloIzq);
-    el.appendChild(sueloDer);
-    el.appendChild(paredIzqTrasera);
-    el.appendChild(paredDerTrasera);
-    el.appendChild(sueloTrasero);
 
     iniciaVariablesEntorno(data, positionIzq, positionDer, anchuraElegida);
 
@@ -149,12 +101,14 @@ AFRAME.registerComponent('tablero', {
     var entornoPiezas = document.getElementById("piezas");
     var suelo = document.getElementById('suelo');
 
-    if (crearPieza) {
-      imprimeTableroBool = true;
-      contadorPieza += 1;
+    if (el.getAttribute("id") === "tablero") {
+      if (crearPieza) {
+        imprimeTableroBool = true;
+        contadorPieza += 1;
 
-      eliminarFilasCompletas();
-      crearPiezaFunction(entornoPiezas, suelo);
+        eliminarFilasCompletas();
+        crearPiezaFunction(entornoPiezas, suelo);
+      }
     }
   }
 });
@@ -181,7 +135,14 @@ AFRAME.registerComponent('rotarpieza', {
     var el = this.el;
     var data = this.data;
 
-    var position = (anchuraElegida/2) + 4;
+    var position = "";
+
+    if (data.id === "rotarPieza") {
+      position = (anchuraElegida/2) + 4;
+    } else {
+      position = -(anchuraElegida/2) - 4;
+    }
+
     var positionFinal = position + " " + data.position;
 
     el.setAttribute('position', positionFinal);
@@ -196,6 +157,10 @@ AFRAME.registerComponent('rotarpieza', {
     var texto = document.createElement("a-entity");
     texto.setAttribute('position', data.positionText);
     texto.setAttribute('text', "color: " + data.colorText + "; align: " + data.alignText + "; value: " + data.valueText + "; width: " + data.widthText);
+
+    if (data.id === "rotarPiezaTrasera") {
+      texto.setAttribute('rotation', "-180 0 -180");
+    }
 
     el.appendChild(texto);
   },
@@ -230,7 +195,14 @@ AFRAME.registerComponent('bajarpieza', {
     var el = this.el;
     var data = this.data;
 
-    var position = -(anchuraElegida/2) - 4;
+    var position = "";
+
+    if (data.id === "bajarPieza") {
+      position = -(anchuraElegida/2) - 4;
+    } else {
+      position = (anchuraElegida/2) + 4;
+    }
+
     var positionFinal = position + " " + data.position;
 
     el.setAttribute('position', positionFinal);
@@ -245,6 +217,10 @@ AFRAME.registerComponent('bajarpieza', {
     var texto = document.createElement("a-entity");
     texto.setAttribute('position', data.positionText);
     texto.setAttribute('text', "color: " + data.colorText + "; align: " + data.alignText + "; value: " + data.valueText + "; width: " + data.widthText);
+
+    if (data.id === "bajarPiezaTrasera") {
+      texto.setAttribute('rotation', "-180 0 -180");
+    }
 
     el.appendChild(texto);
   },
@@ -316,19 +292,21 @@ AFRAME.registerComponent('controller', {
     var position = el.getAttribute('position');
     var positionPieza = pieza.getAttribute('position');
 
-    if (positionPieza.y == alturaTablero + 5) {
-      var positionAux = {x: 0, y: position.y, z: position.z};
-      el.setAttribute('position', positionAux);
-    }
-
-    if (!pieza.components.cubo.tocaSuelo) {
-      if (posController.x != position.x) {
-        moverPieza = true;
-        nuevaPos = position.x * 2;
+    if (el.getAttribute("id") === "controller") {
+      if (positionPieza.y == alturaTablero + 5) {
+        var positionAux = {x: 0, y: position.y, z: position.z};
+        el.setAttribute('position', positionAux);
       }
-      el.addEventListener('grab-end', function(event) {
-        moverControlador(controller, data, el);
-      });
+
+      if (!pieza.components.cubo.tocaSuelo) {
+        if (posController.x != position.x) {
+          moverPieza = true;
+          nuevaPos = position.x * 2;
+        }
+        el.addEventListener('grab-end', function(event) {
+          moverControlador(controller, data, el);
+        });
+      }
     }
   }
 });

@@ -9,6 +9,8 @@ function actualizaMarcadorPiezaFunction (data) {
 
   var texto = document.getElementById("valorscore");
   texto.setAttribute('text', "value:HIGH SCORE: " + scoreActual + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
+  var textoTrasero = document.getElementById("valorscoretrasero");
+  textoTrasero.setAttribute('text', "value:HIGH SCORE: " + scoreActual + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
   actualizaMarcadorPieza = false;
 }
 
@@ -17,5 +19,7 @@ function actualizaMarcadorFilaFunction (data) {
 
   var texto = document.getElementById("valorscore");
   texto.setAttribute('text', "value:HIGH SCORE: " + scoreActual + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
+  var textoTrasero = document.getElementById("valorscoretrasero");
+  textoTrasero.setAttribute('text', "value:HIGH SCORE: " + scoreActual + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
   actualizaMarcadorFila = false;
 }

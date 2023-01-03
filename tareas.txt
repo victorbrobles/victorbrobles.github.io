@@ -14,3 +14,8 @@ restan 100 puntos. Si dejas pasar 10 piezas sin elegir, pierdes. Si una pieza ca
 que dejas la pieza coincide con el tablero, la pones en él, si no, la pieza vuelve a su posición inicial. Tienes un tiempo para llegar a una determinada posición, si no pierdes.
 
 4. Modo estándar pero con una funcionalidad extra. Puedes agarrar las piezas, y dependiendo hacia donde, puedes alargarlas de altura, anchura o profundidad.
+
+
+iluminacion y sonido
+sala con todos los juagos a la vez
+servidor externo (probar con visual studio code)
