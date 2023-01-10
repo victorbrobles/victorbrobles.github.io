@@ -52,7 +52,11 @@ AFRAME.registerComponent('tablero', {
     alturaPared: {default: 0},
     anchuraPared: {default: 0},
     positionParedIzq: {default: "0 0 0"},
-    positionParedDer: {default: "0 0 0"}
+    positionParedDer: {default: "0 0 0"},
+    idtablero: {default: ""},
+    idSuelo: {default: ""},
+    idParedDer: {default: ""},
+    idParedIzq: {default: ""}
   },
 
   init: function() {
@@ -70,44 +74,63 @@ AFRAME.registerComponent('tablero', {
     suelo.setAttribute('width', anchuraElegida);
     suelo.setAttribute('position', data.positionSuelo);
     suelo.setAttribute('color', data.colorTablero);
-    suelo.id = 'suelo';
+    suelo.id = data.idSuelo;
 
     var paredIzq = document.createElement('a-box');
     paredIzq.setAttribute('height', data.alturaPared);
     paredIzq.setAttribute('width', data.anchuraPared);
     paredIzq.setAttribute('position', positionParedIzq);
     paredIzq.setAttribute('color', data.colorTablero);
-    paredIzq.id = 'pared_izq';
+    paredIzq.id = data.idParedIzq;
 
     var paredDer = document.createElement('a-box');
     paredDer.setAttribute('height', data.alturaPared);
     paredDer.setAttribute('width', data.anchuraPared);
     paredDer.setAttribute('position', positionParedDer);
     paredDer.setAttribute('color', data.colorTablero);
-    paredDer.id = 'pared_der';
+    paredDer.id = data.idParedDer;
 
     el.appendChild(suelo);
     el.appendChild(paredIzq);
     el.appendChild(paredDer);
 
-    iniciaVariablesEntorno(data, positionIzq, positionDer, anchuraElegida);
+    if (data.idtablero == "tablero") {
+      iniciaVariablesEntorno(data, positionIzq, positionDer, anchuraElegida);
 
-    crearTablero(anchuraTablero, alturaTablero + 4);
-    imprimeTablero();
-
+      crearTablero(anchuraTablero, alturaTablero + 4, tablero);
+      imprimeTablero(tablero);
+    } else if (data.idtablero == "tablerotrasero") {
+      crearTablero(anchuraTablero, alturaTablero + 4, tableroTrasero);
+      imprimeTablero(tableroTrasero);
+    }
   },
   tick: function() {
     var el = this.el;
-    var entornoPiezas = document.getElementById("piezas");
-    var suelo = document.getElementById('suelo');
+    var id = el.getAttribute('id');
 
-    if (el.getAttribute("id") === "tablero") {
+    if (id == "tablero") {
+      var suelo = document.getElementById('suelo');
+      var entornoPiezas = document.getElementById("piezas");
+
       if (crearPieza) {
         imprimeTableroBool = true;
         contadorPieza += 1;
 
-        eliminarFilasCompletas();
+        eliminarFilasCompletas(tablero, "def");
         crearPiezaFunction(entornoPiezas, suelo);
+        crearPieza = false;
+      }
+    } else if (id == "tablerotrasero") {
+      var suelo = document.getElementById('suelo_trasero');
+      var entornoPiezas = document.getElementById("piezas_traseras");
+
+      if (crearPiezaTrasera) {
+        imprimeTableroBool = true;
+        contadorPiezaTrasera += 1;
+
+        eliminarFilasCompletas(tableroTrasero, "tras");
+        crearPiezaFunction(entornoPiezas, suelo);
+        crearPiezaTrasera = false;
       }
     }
   }
@@ -167,9 +190,14 @@ AFRAME.registerComponent('rotarpieza', {
 
   tick: function() {
     var el = this.el;
+    var id = el.getAttribute('id');
 
     el.addEventListener('grab-start', function(event) {
-      rotarPieza = true;
+      if (id == "rotarPieza") {
+        rotarPieza = true;
+      } else if (id == "rotarPiezaTrasera") {
+        rotarPiezaTrasera = true;
+      }
     });
   }
 });
@@ -227,9 +255,14 @@ AFRAME.registerComponent('bajarpieza', {
 
   tick: function() {
     var el = this.el;
+    var id = el.getAttribute('id');
 
     el.addEventListener('grab-start', function(event) {
-      bajarPieza = true;
+      if (id == "bajarPieza") {
+        bajarPieza = true;
+      } else if (id == "bajarPiezaTrasera") {
+        bajarPiezaTrasera = true;
+      }
     });
   }
 });
@@ -337,54 +370,82 @@ AFRAME.registerComponent('cubo', {
   },
 
   tick: function() {
-
     var el = this.el;
     var data = this.data;
 
     var idPieza = el.getAttribute('id');
-    var numPieza = idPieza.split("cubo")[1];
-
     var position = el.getAttribute('position');
     var alturaPieza = el.getAttribute('height');
     var anchuraPieza = el.getAttribute('width');
     var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
 
-    var posX = dameCoordenadaX(position.x, anchuraPieza);
+    var normal = false;
+    var trasera = false;
+
+    if (idPieza.includes("cubo_trasero")) {
+      trasera = true;
+      var numPieza = idPieza.split("cubo_trasero")[1];
+      var posX = dameCoordenadaX(position.x, anchuraPieza);
+      var positionAux = position;
+      var tab = tableroTrasero;
+      var cont = contadorPiezaTrasera;
+    } else {
+      normal = true;
+      var numPieza = idPieza.split("cubo")[1];
+      var posX = dameCoordenadaX(position.x, anchuraPieza);
+      var positionAux = position;
+      var tab = tablero;
+      var cont = contadorPieza;
+    }
+
     var posY = dameCoordenadaY(position.y, alturaPieza);
+    revisaPosicionHorizontalPieza(el, positionAux, alturaPieza, anchuraPieza);
+    revisaPosicionVerticalPieza(el, posX, posY, alturaPieza, anchuraPieza, tab);
 
-    revisaPosicionHorizontalPieza(el, position, alturaPieza, anchuraPieza);
-    revisaPosicionVerticalPieza(el, posX, posY, alturaPieza, anchuraPieza);
 
-    if (numPieza == contadorPieza) {
+    if (numPieza == cont) {
       if (!this.tocaSuelo) {
         if (el != null) {
           el.setAttribute('position', positionTmp);
 
-          if (rotarPieza) {
-            rotarPiezaFunction(el);
+          if ( (rotarPiezaTrasera && trasera) || (rotarPieza && normal) ) {
+            rotarPiezaFunction(el, posX, posY, idPieza);
           }
 
-          if (bajarPieza) {
-            bajarPiezaFunction(el);
+          if ( (bajarPiezaTrasera && trasera) ||  (bajarPieza && normal) ) {
+            bajarPiezaFunction(el, posX, posY, idPieza);
           }
 
-          if (moverPieza) {
-            moverPiezaFunction(el);
+          if ( (moverPiezaTrasera && trasera) || (moverPieza && normal) ) {
+            moverPiezaFunction(el, idPieza);
           }
         }
       } else {
 
         if (imprimeTableroBool) {
-          actualizaTablero(posX,posY,anchuraPieza,alturaPieza, contadorPieza);
+          actualizaTablero(posX, posY, anchuraPieza, alturaPieza, cont, tab);
           imprimeTableroBool = false;
+        }
+
+        if (trasera) {
+          tipoPiezaMarcador = "tras";
+        } else {
+          tipoPiezaMarcador = "def";
         }
 
         actualizaMarcadorPieza = true;
 
+
         if (!isGameOver()) {
-          crearPieza = true;
-          bajarPieza = false;
-          rotarPieza = false;
+          if (trasera) {
+            crearPiezaTrasera = true;
+            bajarPiezaTrasera = false;
+            rotarPiezaTrasera = false;
+          } else {
+            crearPieza = true;
+            bajarPieza = false;
+            rotarPieza = false;
+          }
         } else {
           location.replace("../gameover.html?puntuacion=" + scoreActual);
         }

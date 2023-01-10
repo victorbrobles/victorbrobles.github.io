@@ -57,7 +57,14 @@ function iniciaVariablesEntorno (data, positionIzq, positionDer, anchuraElegida)
 function isGameOver() {
   for (let i=tablero.length -1; i>alturaTablero; i--) {
     for (let j=1; j<=anchuraTablero; j++) {
-      if (casillaEstaOcupada(j, i)) {
+      if (casillaEstaOcupada(j, i, tablero)) {
+        return true;
+      }
+    }
+  }
+  for (let i=tableroTrasero.length -1; i>alturaTablero; i--) {
+    for (let j=1; j<=anchuraTablero; j++) {
+      if (casillaEstaOcupada(j, i, tableroTrasero)) {
         return true;
       }
     }

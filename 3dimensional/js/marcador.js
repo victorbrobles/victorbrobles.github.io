@@ -1,6 +1,11 @@
 
 function actualizaMarcadorPiezaFunction (data) {
-  var pieza = document.getElementById("cubo" + contadorPieza);
+  if (tipoPiezaMarcador == "tras") {
+    var pieza = document.getElementById("cubo_trasero" + contadorPiezaTrasera);
+  } else {
+    var pieza = document.getElementById("cubo" + contadorPieza);
+  }
+
   var alturaPieza = pieza.getAttribute('height');
   var anchuraPieza = pieza.getAttribute('width');
 
