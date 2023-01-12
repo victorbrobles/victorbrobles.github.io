@@ -134,23 +134,16 @@ function bajarPiezaFunction (el, posX, posY, idPieza) {
 
 
 function moverPiezaFunction (el, id) {
-
   var position = el.getAttribute("position");
   var width = el.getAttribute('width');
   var height = el.getAttribute('height');
 
-  if (id.includes("cubo_der")) {
-    posControllerDer = {x: nuevaPosDer/2 + posXTablerosDer/3, y: position.y, z: position.z};
-    var newPosition = nuevaPosDer;
-    var posiReal = Number(newPosition) + Number(posXTablerosDer/3);
-    var posXReal = dameCoordenadaX(position.x - posXTablerosDer, width);
-    var tab = tableroDer;
-  } else if (id.includes("cubo_izq")) {
-    posControllerIzq = {x: nuevaPosIzq/2 + posXTablerosIzq/3, y: position.y, z: position.z};
-    var newPosition = nuevaPosIzq;
-    var posiReal = Number(newPosition) + Number(posXTablerosIzq/3);
-    var posXReal = dameCoordenadaX(position.x - posXTablerosIzq, width);
-    var tab = tableroIzq;
+  if (id.includes("cubo_trasero")) {
+    posControllerTrasero = {x: nuevaPosTrasera/2, y: position.y, z: position.z};
+    var newPosition = nuevaPosTrasera;
+    var posiReal = newPosition
+    var posXReal = dameCoordenadaX(position.x, width);
+    var tab = tableroTrasero;
   } else {
     posController = {x: nuevaPos/2, y: position.y, z: position.z};
     var newPosition = nuevaPos;
@@ -207,20 +200,12 @@ function moverPiezaFunction (el, id) {
   }
 
   if (moverPiezaBool) {
-    if (id.includes("cubo_der")) {
-      positionTmp = {x: positionTmp.x + posXTablerosDer, y:positionTmp.y, z: positionTmp.z};
-    } else if (id.includes("cubo_izq")) {
-      positionTmp = {x: positionTmp.x + posXTablerosIzq, y:positionTmp.y, z: positionTmp.z};
-    }
     el.setAttribute('position', positionTmp);
   }
 
-  if (id.includes("cubo_der")) {
-    moverPiezaDer = false;
-  } else if (id.includes("cubo_izq")) {
-    moverPiezaIzq = false;
+  if (id.includes("cubo_trasero")) {
+    moverPiezaTrasera = false;
   } else {
     moverPieza = false;
   }
-
 }

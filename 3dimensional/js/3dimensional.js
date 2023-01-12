@@ -321,25 +321,44 @@ AFRAME.registerComponent('controller', {
     var el = this.el;
     var data = this.data;
 
-    var pieza = document.getElementById("cubo" + contadorPieza);
+    var id = el.getAttribute('id');
     var position = el.getAttribute('position');
+
+    var trasera = false;
+    var normal = false;
+
+    if (id == "controllertrasero") {
+      var pieza = document.getElementById("cubo_trasero" + contadorPiezaTrasera);
+      var posXController = 0;
+      var posControllerAux = posControllerTrasero;
+      trasera = true;
+    } else {
+      var pieza = document.getElementById("cubo" + contadorPieza);
+      var posXController = 0;
+      var posControllerAux = posController;
+      normal = true;
+    }
+
     var positionPieza = pieza.getAttribute('position');
+    if (positionPieza.y == alturaTablero + 5) {
+      var positionAux = {x: posXController, y: position.y, z: position.z};
+      el.setAttribute('position', positionAux);
+    }
 
-    if (el.getAttribute("id") === "controller") {
-      if (positionPieza.y == alturaTablero + 5) {
-        var positionAux = {x: 0, y: position.y, z: position.z};
-        el.setAttribute('position', positionAux);
-      }
-
-      if (!pieza.components.cubo.tocaSuelo) {
-        if (posController.x != position.x) {
+    if (!pieza.components.cubo.tocaSuelo) {
+      if (posControllerAux.x != position.x) {
+        if (trasera) {
+          moverPiezaTrasera = true;
+          nuevaPosTrasera = position.x * 2;
+        } else {
           moverPieza = true;
           nuevaPos = position.x * 2;
         }
-        el.addEventListener('grab-end', function(event) {
-          moverControlador(controller, data, el);
-        });
       }
+
+      el.addEventListener('grab-end', function(event) {
+        moverControlador(data, el, id);
+      });
     }
   }
 });
