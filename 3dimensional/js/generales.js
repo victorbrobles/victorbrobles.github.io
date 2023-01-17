@@ -20,10 +20,6 @@ function damePropsPieza (suelo) {
   var positionAnchuraPar = position.x + " " + (alturaTablero + 5) + " " + position.z;
   var positionAnchuraImpar = (Number(position.x) - 0.5) + " " + (alturaTablero + 5) + " " + position.z;
 
-  console.log("PositionAnchuraPar " + positionAnchuraPar);
-  console.log("positionAnchuraImpar " + positionAnchuraImpar);
-  console.log("anchura " + anchura);
-
   if ((anchura % 2) == 0) {
     return "position: " + positionAnchuraPar + "; width:" + anchura + "; height:" + altura + "; velocidad: " + velocidad;
   } else {
@@ -74,4 +70,15 @@ function isGameOver() {
     }
   }
   return false;
+}
+
+
+function actualizaContador() {
+  var num = Math.floor((Math.random() * 5) + 1);
+  contadorStop = contadorStop + num;
+}
+
+function actualizaContadorTrasero() {
+  var num = Math.floor((Math.random() * 5) + 1);
+  contadorTraseroStop = contadorTraseroStop + num;
 }

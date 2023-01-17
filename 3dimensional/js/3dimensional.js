@@ -42,6 +42,81 @@ AFRAME.registerComponent('score', {
 });
 
 
+AFRAME.registerComponent('giro', {
+  schema: {
+    position: {default: "0 0 0"},
+    anchuraTexto: {default: 0},
+    alturaTexto: {default:0}
+  },
+  tick: function() {
+    var el = this.el;
+    var data = this.data;
+
+    var id = el.getAttribute("id");
+
+
+
+    if ( ((id === "giroTraseroIzq" || id === "giroTraseroDer") && crearTextoGiroTrasero) || ((id === "giroIzq" || id === "giroDer") && crearTextoGiro)) {
+      var elementoIzq = document.getElementById("giroIzq");
+      var elementoDer = document.getElementById("giroDer");
+      var elementoTraseroIzq = document.getElementById("giroTraseroIzq");
+      var elementoTraseroDer = document.getElementById("giroTraseroDer");
+
+      var textoIzq = document.getElementById("giroTextIzq");
+      var textoDer = document.getElementById("giroTextDer");
+      var textoTraseroIzq = document.getElementById("giroTraseroTextIzq");
+      var textoTraseroDer = document.getElementById("giroTraseroTextDer");
+
+      if (textoIzq != null && textoDer != null) {
+        crearTextoGiro = false;
+      }
+
+      if (textoTraseroIzq != null && textoTraseroDer != null) {
+        crearTextoGiroTrasero = false;
+      }
+
+      if (id === "giroIzq" || id === "giroDer") {
+        if (textoTraseroIzq != null) {
+          elementoTraseroIzq.removeChild(textoTraseroIzq);
+        }
+
+        if (textoTraseroDer != null) {
+          elementoTraseroDer.removeChild(textoTraseroDer);
+        }
+      } else {
+        if (textoIzq != null) {
+          elementoIzq.removeChild(textoIzq);
+        }
+        
+        if (textoDer != null) {
+          elementoDer.removeChild(textoDer);
+        }
+      }
+
+      el.setAttribute('position', data.position);
+
+      var texto = document.createElement("a-entity");
+      texto.setAttribute('position', "0 0 1");
+      texto.setAttribute('text', "value:TURN AROUND 180; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: black; shader: msdf; font: " + fuenteScore);
+
+      if (id === "giroTraseroIzq") {
+        texto.setAttribute('rotation', "-180 0 -180");
+        texto.id = "giroTraseroTextIzq";
+      } else if (id === "giroTraseroDer") {
+        texto.setAttribute('rotation', "-180 0 -180");
+        texto.id = "giroTraseroTextDer";
+      } else if (id === "giroIzq") {
+        texto.id = "giroTextIzq";
+      } else {
+        texto.id = "giroTextDer";
+      }
+
+      el.appendChild(texto);
+    }
+  }
+});
+
+
 // CREACIÓN DEL TABLERO
 
 AFRAME.registerComponent('tablero', {
@@ -112,7 +187,15 @@ AFRAME.registerComponent('tablero', {
       var suelo = document.getElementById('suelo');
       var entornoPiezas = document.getElementById("piezas");
 
-      if (crearPieza) {
+      if (contadorStop == 0) {
+        actualizaContador();
+      }
+
+      if (contadorTraseroStop == 0) {
+        actualizaContadorTrasero();
+      }
+
+      if (crearPieza && !stopCrearPieza) {
         imprimeTableroBool = true;
         contadorPieza += 1;
 
@@ -124,7 +207,7 @@ AFRAME.registerComponent('tablero', {
       var suelo = document.getElementById('suelo_trasero');
       var entornoPiezas = document.getElementById("piezas_traseras");
 
-      if (crearPiezaTrasera) {
+      if (crearPiezaTrasera && !stopCrearPiezaTrasera) {
         imprimeTableroBool = true;
         contadorPiezaTrasera += 1;
 
@@ -339,26 +422,28 @@ AFRAME.registerComponent('controller', {
       normal = true;
     }
 
-    var positionPieza = pieza.getAttribute('position');
-    if (positionPieza.y == alturaTablero + 5) {
-      var positionAux = {x: posXController, y: position.y, z: position.z};
-      el.setAttribute('position', positionAux);
-    }
-
-    if (!pieza.components.cubo.tocaSuelo) {
-      if (posControllerAux.x != position.x) {
-        if (trasera) {
-          moverPiezaTrasera = true;
-          nuevaPosTrasera = position.x * 2;
-        } else {
-          moverPieza = true;
-          nuevaPos = position.x * 2;
-        }
+    if (pieza != null) {
+      var positionPieza = pieza.getAttribute('position');
+      if (positionPieza.y == alturaTablero + 5) {
+        var positionAux = {x: posXController, y: position.y, z: position.z};
+        el.setAttribute('position', positionAux);
       }
 
-      el.addEventListener('grab-end', function(event) {
-        moverControlador(data, el, id);
-      });
+      if (!pieza.components.cubo.tocaSuelo) {
+        if (posControllerAux.x != position.x) {
+          if (trasera) {
+            moverPiezaTrasera = true;
+            nuevaPosTrasera = position.x * 2;
+          } else {
+            moverPieza = true;
+            nuevaPos = position.x * 2;
+          }
+        }
+
+        el.addEventListener('grab-end', function(event) {
+          moverControlador(data, el, id);
+        });
+      }
     }
   }
 });
@@ -440,33 +525,45 @@ AFRAME.registerComponent('cubo', {
           }
         }
       } else {
-
-        if (imprimeTableroBool) {
-          actualizaTablero(posX, posY, anchuraPieza, alturaPieza, cont, tab);
-          imprimeTableroBool = false;
-        }
-
-        if (trasera) {
-          tipoPiezaMarcador = "tras";
-        } else {
-          tipoPiezaMarcador = "def";
-        }
-
-        actualizaMarcadorPieza = true;
-
-
-        if (!isGameOver()) {
-          if (trasera) {
-            crearPiezaTrasera = true;
-            bajarPiezaTrasera = false;
-            rotarPiezaTrasera = false;
-          } else {
-            crearPieza = true;
-            bajarPieza = false;
-            rotarPieza = false;
+        if ((normal && !stopCrearPieza) || (trasera && !stopCrearPiezaTrasera)) {
+          if (imprimeTableroBool) {
+            actualizaTablero(posX, posY, anchuraPieza, alturaPieza, cont, tab);
+            imprimeTableroBool = false;
           }
-        } else {
-          location.replace("../gameover.html?puntuacion=" + scoreActual);
+
+          if (trasera) {
+            tipoPiezaMarcador = "tras";
+          } else {
+            tipoPiezaMarcador = "def";
+          }
+
+          actualizaMarcadorPieza = true;
+
+          if (normal && contadorStop == contadorPieza) {
+            stopCrearPieza = true;
+            stopCrearPiezaTrasera = false;
+            actualizaContador();
+            crearTextoGiro = true;
+          } else if (trasera && contadorTraseroStop == contadorPiezaTrasera) {
+            stopCrearPieza = false;
+            stopCrearPiezaTrasera = true;
+            actualizaContadorTrasero();
+            crearTextoGiroTrasero = true;
+          }
+
+          if (!isGameOver()) {
+            if (trasera) {
+              crearPiezaTrasera = true;
+              bajarPiezaTrasera = false;
+              rotarPiezaTrasera = false;
+            } else {
+              crearPieza = true;
+              bajarPieza = false;
+              rotarPieza = false;
+            }
+          } else {
+            location.replace("../gameover.html?puntuacion=" + scoreActual);
+          }
         }
       }
     }

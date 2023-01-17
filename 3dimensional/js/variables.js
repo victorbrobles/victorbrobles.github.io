@@ -30,8 +30,17 @@ let alturaTablero = 0;
 let contadorPieza = 0;
 let contadorPiezaTrasera = 0;
 
+let contadorStop = 0;
+let contadorTraseroStop = 0;
+
 let crearPieza = true;
 let crearPiezaTrasera = true;
+
+let crearTextoGiro = false;
+let crearTextoGiroTrasero = false;
+
+let stopCrearPieza = false;
+let stopCrearPiezaTrasera = true;
 
 let rotarPieza = false;
 let rotarPiezaTrasera = false;
@@ -43,6 +52,6 @@ let moverPieza = false;
 let moverPiezaTrasera = false;
 
 //Otras variables
-let velocidad = 0.01;
+let velocidad = 0.025;
 let scoreActual = 0;
 let numFilasEliminadas = 0;
