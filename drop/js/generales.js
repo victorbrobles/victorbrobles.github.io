@@ -8,7 +8,7 @@ function getRandomColor() {
   return color;
 }
 
-function damePropsPieza (suelo) {
+function damePropsPieza (suelo, i) {
   var anchuras = [1, 1, 1, 2, 3, 4];
   var alturas = [1, 1, 1, 2, 3, 4];
 
@@ -17,14 +17,21 @@ function damePropsPieza (suelo) {
 
   var position = suelo.getAttribute('position');
 
-  var positionAnchuraPar = position.x + " " + (alturaTablero + 5) + " " + position.z;
-  var positionAnchuraImpar = (Number(position.x) - 0.5) + " " + (alturaTablero + 5) + " " + position.z;
-
-  if ((anchura % 2) == 0) {
-    return "position: " + positionAnchuraPar + "; width:" + anchura + "; height:" + altura + "; velocidad: " + velocidad;
-  } else {
-    return "position: " + positionAnchuraImpar + "; width:" + anchura + "; height:" + altura + "; velocidad: " + velocidad;
+  if (i == 0) {
+    var positionPieza = (Number(position.x) - anchuraTablero) + " " + (alturaTablero - 3) + " " + position.z;
+  } else if (i == 1) {
+    var positionPieza = (Number(position.x) - anchuraTablero) + " " + (alturaTablero - 9) + " " + position.z;
+  } else if (i == 2) {
+    var positionPieza = (Number(position.x) - anchuraTablero) + " " + (alturaTablero - 15) + " " + position.z;
+  } else if (i == 3) {
+    var positionPieza = (Number(position.x) + anchuraTablero) + " " + (alturaTablero - 3) + " " + position.z;
+  } else if (i == 4) {
+    var positionPieza = (Number(position.x) + anchuraTablero) + " " + (alturaTablero - 9) + " " + position.z;
+  } else if (i == 5) {
+    var positionPieza = (Number(position.x) + anchuraTablero) + " " + (alturaTablero - 15) + " " + position.z;
   }
+
+    return "position: " + positionPieza + "; width:" + anchura + "; height:" + altura + "; velocidad: " + velocidad + "; mixin:objetosManejables";
 }
 
 function sleep(milliseconds) {

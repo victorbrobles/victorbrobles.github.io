@@ -41,7 +41,9 @@ AFRAME.registerComponent('boton', {
 
     var id = el.getAttribute('id');
 
-    if (id == "desktop" || id == "standard" || id == "multiboard" || id == "3dimensional" || id == "reactiontest") {
+    if (id == "drop") {
+      text.setAttribute('position', "0 -0.4 1");
+    } else if (id == "desktop" || id == "standard" || id == "multiboard" || id == "3dimensional") {
       text.setAttribute('position', "0.5 -0.4 1");
     } else {
       text.setAttribute('position', "-0.5 -0.4 1");
@@ -94,8 +96,6 @@ AFRAME.registerComponent('boton', {
         location.replace("reaction/eleccion.html");
       } else if (pressedId == "drop") {
         location.replace("drop/eleccion.html");
-      } else if (pressedId == "moldable") {
-        location.replace("moldable/eleccion.html");
       }
     }
 
