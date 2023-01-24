@@ -8,6 +8,7 @@ let limiteDer = 0;
 
 //Booleans para activar funciones
 let crearPieza = true;
+let rotarPiezas = true;
 let actualizaMarcadorPieza = false;
 let actualizaMarcadorFila = false;
 let imprimeTableroBool = true;

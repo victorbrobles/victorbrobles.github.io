@@ -34,11 +34,16 @@
       <a-mixin id="objetosManejables" hoverable grabbable stretchable draggable droppable></a-mixin>
       <a-mixin id="botones" clickable></a-mixin>
 
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link"sphere-collider="objects: a-box" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link" sphere-collider="objects: a-box" oculus-touch-controls="hand: left"></a-entity>
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link" sphere-collider="objects: a-box" cursor="rayOrigin: mouse"></entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, .boton"sphere-collider="objects: a-box" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, .boton" sphere-collider="objects: a-box" oculus-touch-controls="hand: left"></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, .boton" sphere-collider="objects: a-box" cursor="rayOrigin: mouse"></entity>
 
       <a-entity id="score" score="position: 0 25 -20; anchuraTexto:30; alturaTexto:30"></a-entity>
+
+      <a-entity id="botones">
+        <a-box rotarpieza="position: 0.5 -10; color: red; width: 3; height: 1; depth: 0 id:rotarPieza; mixin:botones;
+          positionText: 0 0 1; colorText: black; alignText: center; valueText: ROTAR PIEZAS; widthText: 8"></a-box>
+      </a-entity>
 
       <a-entity id="tablero" tablero="alturaSuelo: 1; positionSuelo: 0 0.5 -20; colorTablero: black;
           alturaPared: 21; anchuraPared: 1; positionParedIzq: 10.5 -20; positionParedDer: 10.5 -20">

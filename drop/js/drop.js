@@ -97,11 +97,62 @@ AFRAME.registerComponent('tablero', {
 
     if (crearPieza) {
       imprimeTableroBool = true;
-      contadorPieza += 1;
-
       eliminarFilasCompletas();
       crearPiezas(entornoPiezas, suelo);
     }
+
+    if (rotarPiezas) {
+      rotarPiezasFunction();
+    }
+  }
+});
+
+
+AFRAME.registerComponent('rotarpieza', {
+  schema: {
+    position: {default: "0 0 0"},
+    width: {default: 0},
+    height: {default: 0},
+    color: {default: "black"},
+    depth: {default: 0},
+    id: {default: ""},
+    mixin: {default: ""},
+    positionText: {default: "0 0 0"},
+    colorText: {default: "white"},
+    alignText: {default: "center"},
+    valueText: {default: ""},
+    widthText: {default: 0}
+  },
+
+  init: function () {
+    var el = this.el;
+    var data = this.data;
+
+    var position = 0;
+    var positionFinal = position + " " + data.position;
+
+    el.setAttribute('position', positionFinal);
+    el.setAttribute('color', data.color);
+    el.setAttribute('width', data.width);
+    el.setAttribute('height', data.height);
+    el.setAttribute('depth', data.depth);
+    el.setAttribute('mixin', data.mixin);
+    el.classList.add('boton');
+    el.id = data.id;
+
+    var texto = document.createElement("a-entity");
+    texto.setAttribute('position', data.positionText);
+    texto.setAttribute('text', "color: " + data.colorText + "; align: " + data.alignText + "; value: " + data.valueText + "; width: " + data.widthText);
+
+    el.appendChild(texto);
+  },
+
+  tick: function() {
+    var el = this.el;
+
+    el.addEventListener('grab-start', function(event) {
+      rotarPiezas = true;
+    });
   }
 });
 
@@ -129,6 +180,7 @@ AFRAME.registerComponent('cubo', {
     this.tocaSuelo = false;
     this.tocaParedDer = false;
     this.tocaParedIzq = false;
+    this.bajarPieza = false;
     crearPieza = false;
   },
 
@@ -136,42 +188,10 @@ AFRAME.registerComponent('cubo', {
     var el = this.el;
     var data = this.data;
 
-    /*
-    var idPieza = el.getAttribute('id');
-    var numPieza = idPieza.split("cubo")[1];
-
-    var position = el.getAttribute('position');
-    var alturaPieza = el.getAttribute('height');
-    var anchuraPieza = el.getAttribute('width');
-    var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
-
-    var posX = dameCoordenadaX(position.x, anchuraPieza);
-    var posY = dameCoordenadaY(position.y, alturaPieza);
-
-    revisaPosicionHorizontalPieza(el, position, alturaPieza, anchuraPieza);
-    revisaPosicionVerticalPieza(el, posX, posY, alturaPieza, anchuraPieza);
-
-    if (numPieza == contadorPieza) {
-      if (!this.tocaSuelo) {
-        if (el != null) {
-          el.setAttribute('position', positionTmp);
-        }
-      } else {
-
-        if (imprimeTableroBool) {
-          actualizaTablero(posX,posY,anchuraPieza,alturaPieza, contadorPieza);
-          imprimeTableroBool = false;
-        }
-
-        actualizaMarcadorPieza = true;
-
-        if (!isGameOver()) {
-          crearPieza = true;
-        } else {
-          location.replace("../gameover.html?puntuacion=" + scoreActual);
-        }
-      }
-    }
-    */
+    el.addEventListener('grab-end', function(event) {
+      var position = el.getAttribute('position');
+      //el.removeAttribute('mixin');
+      console.log("Posicion " + position.x + " " + position.y + " " + position.z);
+    });
   }
 });

@@ -64,10 +64,27 @@ function crearPiezas (entornoPiezas, suelo) {
   for (var i=0; i<6; i++) {
     var pieza = document.createElement("a-box");
 
+    contadorPieza++;
     pieza.classList.add("cubo");
     pieza.id = "cubo" + contadorPieza;
     pieza.setAttribute('cubo', damePropsPieza(suelo, i));
 
     entornoPiezas.appendChild(pieza);
+  }
+}
+
+function rotarPiezasFunction () {
+  rotarPiezas = false;
+
+  for (let i=contadorPieza; i > contadorPieza - 6; i--) {
+    let el = document.getElementById("cubo" + i);
+
+    var width = el.getAttribute('width');
+    var height = el.getAttribute('height');
+
+    if (!el.components.cubo.tocaSuelo) {
+      el.setAttribute('width', height);
+      el.setAttribute('height', width);
+    }
   }
 }
