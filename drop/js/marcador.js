@@ -1,6 +1,6 @@
 
 function actualizaMarcadorPiezaFunction (data) {
-  var pieza = document.getElementById("cubo" + contadorPieza);
+  var pieza = document.getElementById("cubo" + piezaActual);
   var alturaPieza = pieza.getAttribute('height');
   var anchuraPieza = pieza.getAttribute('width');
 

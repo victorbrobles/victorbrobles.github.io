@@ -95,9 +95,15 @@ AFRAME.registerComponent('tablero', {
     var entornoPiezas = document.getElementById("piezas");
     var suelo = document.getElementById('suelo');
 
+    eliminarFilasCompletas();
+
+    if (piezasCaidas == 6) {
+      piezasCaidas = 0;
+      crearPieza = true;
+    }
+
     if (crearPieza) {
       imprimeTableroBool = true;
-      eliminarFilasCompletas();
       crearPiezas(entornoPiezas, suelo);
     }
 
@@ -180,7 +186,7 @@ AFRAME.registerComponent('cubo', {
     this.tocaSuelo = false;
     this.tocaParedDer = false;
     this.tocaParedIzq = false;
-    this.bajarPieza = false;
+    this.bajarPieza = false; //******************* solo bajaran las piezas que tengan esto a true
     crearPieza = false;
   },
 
@@ -188,10 +194,72 @@ AFRAME.registerComponent('cubo', {
     var el = this.el;
     var data = this.data;
 
+    if (!this.tocaSuelo) {
+      if (this.bajarPieza) {
+        var position = el.getAttribute('position');
+        var alturaPieza = el.getAttribute('height');
+        var anchuraPieza = el.getAttribute('width');
+
+        var positionTmp = {x: position.x, y: position.y - data.velocidad, z: position.z};
+
+        var posX = dameCoordenadaX(position.x, anchuraPieza);
+        var posY = dameCoordenadaY(position.y, alturaPieza);
+
+        revisaPosicionVerticalPieza(el, posX, posY, alturaPieza, anchuraPieza);
+
+        if (el != null) {
+          el.setAttribute('position', positionTmp);
+        }
+      }
+    } else {
+      if (this.bajarPieza) {
+        this.bajarPieza = false;
+        imprimeTableroBool = true;
+        piezasCaidas++;
+
+        var position = el.getAttribute('position');
+        var alturaPieza = el.getAttribute('height');
+        var anchuraPieza = el.getAttribute('width');
+
+        var posX = dameCoordenadaX(position.x, anchuraPieza);
+        var posY = dameCoordenadaY(position.y, alturaPieza);
+
+        var id = el.getAttribute('id');
+        var contador = id.split('cubo')[1];
+        piezaActual = contador;
+
+        if (imprimeTableroBool) {
+          actualizaTablero(posX, posY, anchuraPieza, alturaPieza, contador);
+          imprimeTableroBool = false;
+        }
+
+        actualizaMarcadorPieza = true;
+
+        if (!isGameOver()) {
+          //
+        } else {
+          location.replace("../gameover.html?puntuacion=" + scoreActual);
+        }
+      }
+    }
+
     el.addEventListener('grab-end', function(event) {
+      event.stopImmediatePropagation();
       var position = el.getAttribute('position');
-      //el.removeAttribute('mixin');
+      var anchuraPieza = el.getAttribute('width');
+      var alturaPieza = el.getAttribute('height');
+
       console.log("Posicion " + position.x + " " + position.y + " " + position.z);
+
+      if (position.y > alturaTablero + alturaPieza/2) {
+        el.removeAttribute('mixin');
+        el.components.cubo.bajarPieza = true;
+
+        var positionZInicial = data.position.split(" ")[2];
+        colocarPiezaFunction(el, positionZInicial);
+      } else {
+        el.setAttribute('position', data.position);
+      }
     });
   }
 });

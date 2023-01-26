@@ -20,8 +20,10 @@ let alturaTablero = 0;
 
 //Piezas
 let contadorPieza = 0;
+let piezaActual = 0;
+let piezasCaidas = 0;
 
 //Otras variables
-let velocidad = 0.01;
+let velocidad = 0.1;
 let scoreActual = 0;
 let numFilasEliminadas = 0;

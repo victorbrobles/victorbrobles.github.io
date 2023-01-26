@@ -88,3 +88,33 @@ function rotarPiezasFunction () {
     }
   }
 }
+
+
+function colocarPiezaFunction (el, positionZInicial) {
+  var position = el.getAttribute("position");
+  var width = el.getAttribute('width');
+  var height = el.getAttribute('height');
+
+  var positionTmp = {x: position.x, y: position.y.toFixed(0), z: positionZInicial};
+
+  revisaPosicionHorizontalPieza(el, position, height, width);
+
+  if (el.components.cubo.tocaParedDer) {
+    positionTmp.x = limiteDer - width/2;
+  }
+  if (el.components.cubo.tocaParedIzq) {
+    positionTmp.x = limiteIzq + width/2;
+  }
+
+  for (let i=0; i < anchuraTablero; i++) {
+    var limite = limiteIzq + 0.5 + i;
+    if (positionTmp.x > limite && positionTmp.x < limite + 1) {
+      if ((width % 2 ) == 0) {
+        positionTmp.x = limite + 0.5;
+      } else {
+        positionTmp.x = limite;
+      }
+    }
+  }
+  el.setAttribute('position', positionTmp);
+}
