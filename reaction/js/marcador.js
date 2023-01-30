@@ -19,3 +19,11 @@ function actualizaMarcadorFilaFunction (data) {
   texto.setAttribute('text', "value:HIGH SCORE: " + scoreActual + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
   actualizaMarcadorFila = false;
 }
+
+function restarPuntos(data) {
+  scoreActual = Number(scoreActual) - 1000;
+
+  var texto = document.getElementById("valorscore");
+  texto.setAttribute('text', "value:HIGH SCORE: " + scoreActual + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: #FFFFFF; shader: msdf; font: " + fuenteScore);
+  restarPuntosBool = false;
+}

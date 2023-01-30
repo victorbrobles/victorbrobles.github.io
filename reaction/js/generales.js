@@ -17,8 +17,23 @@ function damePropsPieza (suelo) {
 
   var position = suelo.getAttribute('position');
 
-  var positionAnchuraPar = position.x + " " + (alturaTablero + 5) + " " + position.z;
-  var positionAnchuraImpar = (Number(position.x) - 0.5) + " " + (alturaTablero + 5) + " " + position.z;
+  var posX = Math.random() * (limiteDer - limiteIzq) + limiteIzq;
+  var posXFinal = 0;
+
+  for (let i=0; i < anchuraTablero; i++) {
+    var limite = limiteIzq + 0.5 + i;
+    if (posX > limite && posX < limite + 1) {
+      if ((anchura % 2 ) == 0) {
+        posXFinal = limite + 0.5;
+      } else {
+        posXFinal = limite;
+      }
+    }
+  }
+
+  var positionAnchuraPar = posXFinal + " " + (alturaTablero + 5) + " " + position.z;
+  var positionAnchuraImpar = posXFinal + " " + (alturaTablero + 5) + " " + position.z;
+
 
   if ((anchura % 2) == 0) {
     return "position: " + positionAnchuraPar + "; width:" + anchura + "; height:" + altura + "; velocidad: " + velocidad;

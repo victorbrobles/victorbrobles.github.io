@@ -7,19 +7,10 @@ let limiteIzq = 0;
 let limiteDer = 0;
 
 //Booleans para activar funciones
-let rotarPieza = false;
-let bajarPieza = false;
-let moverPieza = false;
 let crearPieza = true;
 let actualizaMarcadorPieza = false;
 let actualizaMarcadorFila = false;
 let imprimeTableroBool = true;
-
-//Inicialización del controlador
-let posController = {x: 0, y: 0, z: 0};
-
-//Variable de nueva posición pieza
-let nuevaPos = "";
 
 //Tablero
 let tablero = [];
@@ -30,6 +21,9 @@ let alturaTablero = 0;
 let contadorPieza = 0;
 
 //Otras variables
-let velocidad = 0.01;
+let velocidad = 0.1;
 let scoreActual = 0;
 let numFilasEliminadas = 0;
+
+let piezasSaltadas = 0;
+let restarPuntosBool = false;

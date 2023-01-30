@@ -88,6 +88,7 @@ AFRAME.registerComponent('boton', {
     }
 
     el.addEventListener('grab-end', function(event) {
+      event.stopImmediatePropagation();
       botonPulsado = true;
       idPulsado = el.getAttribute('id');
     });
@@ -130,6 +131,7 @@ AFRAME.registerComponent('botonback', {
     var data = this.data;
 
     el.addEventListener('grab-end', function(event) {
+      event.stopImmediatePropagation();
       location.replace("../menuVr.html");
     });
   }

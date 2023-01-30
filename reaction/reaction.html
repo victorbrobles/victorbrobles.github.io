@@ -6,13 +6,12 @@
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
     <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
-    <script src="js/standard.js"></script>
+    <script src="js/reaction.js"></script>
     <script src="js/variables.js"></script>
     <script src="js/generales.js"></script>
     <script src="js/piezas.js"></script>
     <script src="js/tableros.js"></script>
     <script src="js/marcador.js"></script>
-    <script src="js/controller.js"></script>
     <script src="https://github.com/wmurphyrd/aframe-super-hands-component/tree/master/examples/build.js"></script>
   </head>
   <body>
@@ -31,30 +30,17 @@
                               colliderEndEventProperty: clearedEls;">
       </a-mixin>
 
-      <a-mixin id="objetosManejables" hoverable grabbable="suppressY:true" stretchable draggable droppable></a-mixin>
       <a-mixin id="botones" clickable></a-mixin>
 
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton"sphere-collider="objects: a-box, a-sphere" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton" sphere-collider="objects: a-box, a-sphere" oculus-touch-controls="hand: left"></a-entity>
-      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link, #controller, .boton" sphere-collider="objects: a-box, a-sphere" cursor="rayOrigin: mouse"></entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link"sphere-collider="objects: a-box" oculus-touch-controls="hand: right" oculus-go-controls></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link" sphere-collider="objects: a-box" oculus-touch-controls="hand: left"></a-entity>
+      <a-entity mixin="pointer" raycaster="showLine: true; objects: .cubo, a-link" sphere-collider="objects: a-box" cursor="rayOrigin: mouse"></entity>
 
       <a-entity id="score" score="position: 0 25 -20; anchuraTexto:30; alturaTexto:30"></a-entity>
 
       <a-entity id="tablero" tablero="alturaSuelo: 1; positionSuelo: 0 0.5 -20; colorTablero: black;
           alturaPared: 21; anchuraPared: 1; positionParedIzq: 10.5 -20; positionParedDer: 10.5 -20">
           <a-entity id="piezas"></a-entity>
-      </a-entity>
-
-      <a-entity id="botones">
-        <a-box bajarpieza="position: 15 -20; color: red; width: 3; height: 3; depth: 0; id:bajarPieza; mixin:botones;
-          positionText: 0.3 -0.4 1; colorText: black; alignText: center; valueText: BAJAR PIEZA; widthText: 10"></a-box>
-        <a-box rotarpieza="position: 15 -20; color: red; width: 3; height: 3; depth: 0 id:rotarPieza; mixin:botones;
-          positionText: -0.3 -0.4 1; colorText: black; alignText: center; valueText: ROTAR PIEZA; widthText: 10"></a-box>
-      </a-entity>
-
-      <a-entity id="mandocontrolador">
-        <a-plane mando="height:0.2; position: 0 0.5 -5; rotation: -45 0 0; color:black; id: mando"></a-plane>
-        <a-sphere controller="height:0.5; width:0.5; radius:0.25; position: 0 0.5 -4.9; rotation: -45 0 0; mixin:objetosManejables; color: #525250; id: controller"></a-sphere>
       </a-entity>
 
     </a-scene>
