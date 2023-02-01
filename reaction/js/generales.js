@@ -31,6 +31,14 @@ function damePropsPieza (suelo) {
     }
   }
 
+  if (posXFinal + anchura/2 >= limiteDer) {
+    posXFinal = limiteDer - anchura/2;
+  } else if (posXFinal - anchura/2 <= limiteIzq) {
+    posXFinal = limiteIzq + anchura/2;
+  }
+
+
+
   var positionAnchuraPar = posXFinal + " " + (alturaTablero + 5) + " " + position.z;
   var positionAnchuraImpar = posXFinal + " " + (alturaTablero + 5) + " " + position.z;
 

@@ -41,7 +41,7 @@ AFRAME.registerComponent('boton', {
 
     var id = el.getAttribute('id');
 
-    if (id == "drop") {
+    if (id == "colors") {
       text.setAttribute('position', "0 -0.4 1");
     } else if (id == "desktop" || id == "standard" || id == "multiboard" || id == "3dimensional") {
       text.setAttribute('position', "0.5 -0.4 1");
@@ -100,6 +100,7 @@ AFRAME.registerComponent('boton', {
     }
 
     el.addEventListener('grab-end', function(event) {
+      event.stopImmediatePropagation();
       pressedButton = true;
       pressedId = el.getAttribute('id');
     });
@@ -141,6 +142,7 @@ AFRAME.registerComponent('botonback', {
     var data = this.data;
 
     el.addEventListener('grab-end', function(event) {
+      event.stopImmediatePropagation();
       location.replace("menuPrincipal.html");
     });
   }
