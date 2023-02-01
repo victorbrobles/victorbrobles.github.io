@@ -32,7 +32,7 @@ AFRAME.registerComponent('score', {
     var texto = document.createElement("a-entity");
     texto.id = "valorscore";
     texto.setAttribute('position', "0 0 1");
-    texto.setAttribute('text', "value:PUNTUACION FINAL: " + score + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: black; shader: msdf; font: " + fuenteScore);
+    texto.setAttribute('text', "value:FINAL SCORE: " + score + "; width: " + data.anchuraTexto + "; height: " + data.alturaTexto + "; align: center; color: black; shader: msdf; font: " + fuenteScore);
 
     el.appendChild(texto);
   }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Menu Eleccion obstaculos</title>
+    <title>Selection obstacles menu</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
@@ -10,14 +10,17 @@
     <script src="https://github.com/wmurphyrd/aframe-super-hands-component/tree/master/examples/build.js"></script>
   </head>
   <body>
-    <!--<a-scene id="entorno" environment="horizonColor:#0481f6;skyColor:#00ffe1;active:true;preset:yavapai">-->
-    <a-scene environment="grid:dots;dressingColor:#f5bb56;groundTexture:walkernoise;shadowSize:10.01;groundColor:#fbbb4b;groundColor2:#f2a65f;groundYScale:30;skyColor:#f3f702;horizonColor:#02f2e2;active:true;seed:11;skyType:gradient;lightPosition:0.5 1 0;fog:0.8;flatShading:false;dressingAmount:500;dressingScale:0.04;dressingVariance:0.2 0.1 0.2;dressingOnPlayArea:0;gridColor:#239893;preset:yavapai" preset-switcher="" id="entorno" position="0 0 -1.087">
+    <a-scene environment="grid:dots;dressingColor:#f5bb56;groundTexture:walkernoise;shadowSize:10.01;groundColor:#fbbb4b;groundColor2:#f2a65f;groundYScale:30;skyColor:#f3f702;horizonColor:#02f2e2;active:true;seed:11;skyType:gradient;lightPosition:0.5 1 0;fog:0.8;flatShading:false;dressingAmount:500;dressingScale:0.04;dressingVariance:0.2 0.1 0.2;dressingOnPlayArea:0;gridColor:#239893;preset:yavapai" preset-switcher="" id="entorno" sound="src: #tetris; on: mouseenter; loop: true; volume: 0.05; rolloffFactor: 0" position="0 0 -1.087">
       <a-entity class="environment" position="0 50 0" light="intensity:0.6;color:#f9fb80;groundColor:#fbbb4b;type:hemisphere"></a-entity>
       <a-entity class="environment" position="0.5 1 0" light="shadowCameraLeft:-10.01;shadowCameraBottom:-10.01;shadowCameraRight:10.01;shadowCameraTop:10.01;intensity:0.6"></a-entity>
       <a-entity rotation="-90 0 0" class="environmentGround environment" scale="1 1 30" shadow="cast:false;receive:false"></a-entity>
       <a-entity class="environmentDressing environment" visible="false"></a-entity>
       <a-sky radius="200" theta-length="110" class="environment" geometry="" material="npot:false;shader:gradientshader;topColor:#f3f702;bottomColor:#02f2e2"></a-sky>
       <a-entity id="stars" visible="false"></a-entity>
+
+      <audio id="tetris" src="../assets/tetris.mp3" crossorigin="anonymous"></audio>
+      <audio id="button" src="../assets/button.wav" crossorigin="anonymous"></audio>
+      <a-image src="../assets/logo.png" position="0 14 -20" width="30" height="8"></a-image>
 
       <a-mixin id="pointer" super-hands="colliderEvent: raycaster-intersection;
                               colliderEventProperty: els;
@@ -29,15 +32,15 @@
       <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, .botonBack, a-link" sphere-collider="objects: a-box, a-plane" oculus-touch-controls="hand: left"></a-entity>
       <a-entity mixin="pointer" raycaster="showLine: true; objects: .boton, .botonBack, a-link" sphere-collider="objects: a-box, a-plane" cursor="rayOrigin: mouse"></entity>
 
-      <a-entity position="0 6.5 -10" text="value:M y   T e t r i s   V R; width:40; height:40; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json"></a-entity>
-      <a-entity position="0 5 -10" text="value:Escoge el numero de obstaculos; width:20; height:10; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/specialelite/SpecialElite-Regular.json"></a-entity>
+      <!--<a-entity position="0 6.5 -10" text="value:M y   T e t r i s   V R; width:40; height:40; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/creepster/Creepster-Regular.json"></a-entity>-->
+      <a-entity position="0 5 -10" text="value:Choose the number of obstacles; width:20; height:10; color:#FFFFFF; align:center; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/specialelite/SpecialElite-Regular.json"></a-entity>
 
-      <a-plane id="botonBack" botonback = "color:black; position: -15 9 -10; rotation: 0 0 0; width: 4; height: 1; text: RETURN" clickable></a-plane>
+      <a-plane id="botonBack" botonback = "color:black; position: -15 9 -10; rotation: 0 0 0; width: 4; height: 1; text: RETURN" clickable sound__mouseenter="src: #button; on: mouseenter; poolSize: 2"></a-plane>
 
-      <a-box id="opcion1" boton="color:#383D4E; position: -12 3 -10; rotation: 0 0 5; width: 3; height: 1; texto: 5" clickable></a-box>
-      <a-box id="opcion2" boton="color:#383D4E; position: -4 3 -10; rotation: 0 0 -5; width: 3; height: 1; texto: 10" clickable></a-box>
-      <a-box id="opcion3" boton="color:#383D4E; position: 4 3 -10; rotation: 0 0 5; width: 3; height: 1; texto: 15" clickable></a-box>
-      <a-box id="opcion4" boton="color:#383D4E; position: 12 3 -10; rotation: 0 0 -5; width: 3; height: 1; texto: 20" clickable></a-box>
+      <a-box id="opcion1" boton="color:#383D4E; position: -12 3 -10; rotation: 0 0 5; width: 3; height: 1; texto: 5" clickable sound__mouseenter="src: #button; on: mouseenter; poolSize: 2"></a-box>
+      <a-box id="opcion2" boton="color:#383D4E; position: -4 3 -10; rotation: 0 0 -5; width: 3; height: 1; texto: 10" clickable sound__mouseenter="src: #button; on: mouseenter; poolSize: 2"></a-box>
+      <a-box id="opcion3" boton="color:#383D4E; position: 4 3 -10; rotation: 0 0 5; width: 3; height: 1; texto: 15" clickable sound__mouseenter="src: #button; on: mouseenter; poolSize: 2"></a-box>
+      <a-box id="opcion4" boton="color:#383D4E; position: 12 3 -10; rotation: 0 0 -5; width: 3; height: 1; texto: 20" clickable sound__mouseenter="src: #button; on: mouseenter; poolSize: 2"></a-box>
 
     </a-scene>
   </body>

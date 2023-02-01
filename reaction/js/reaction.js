@@ -152,7 +152,7 @@ AFRAME.registerComponent('cubo', {
 
       var tiempoComparar = Date.now();
 
-      if (tiempoComparar >= this.contadorTiempo + 5000) {
+      if (tiempoComparar >= this.contadorTiempo + 3000) {
         this.tiempoExpirado = true;
       }
 
