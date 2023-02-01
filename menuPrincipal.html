@@ -10,13 +10,15 @@
     <script src="https://github.com/wmurphyrd/aframe-super-hands-component/tree/master/examples/build.js"></script>
   </head>
   <body>
-    <a-scene environment="shadow:true;skyColor:#87CEEB;horizonColor:#3f888f;grid:crosses;dressingAmount:500;groundTexture:none;groundColor2:#3b83bd;groundColor:#3b83bd;ground:canyon;flatShading:true;active:true;skyType:gradient;lightPosition:-0.11 1 0.33;fog:0.78;dressingScale:1;dressingVariance:0 0 0" preset-switcher="" id="environment">
+    <a-scene environment="shadow:true;skyColor:#87CEEB;horizonColor:#3f888f;grid:crosses;dressingAmount:500;groundTexture:none;groundColor2:#3b83bd;groundColor:#3b83bd;ground:canyon;flatShading:true;active:true;skyType:gradient;lightPosition:-0.11 1 0.33;fog:0.78;dressingScale:1;dressingVariance:0 0 0" preset-switcher="" sound="src: #rainforest; on: click; loop: true; volume: 0.2; rolloffFactor: 0" id="environment">
       <a-entity class="environment" position="0 50 0" light="intensity:0.5722448147213711;groundColor:#243194;color:#91dacf;type:hemisphere"></a-entity>
       <a-entity class="environment" position="-0.11 1 0.33" light="castShadow:true;shadowCameraLeft:-10;shadowCameraBottom:-10;shadowCameraRight:10;shadowCameraTop:10;intensity:0.5722448147213711"></a-entity>
       <a-entity rotation="-90 0 0" class="environmentGround environment" scale="1 1 3" shadow="cast:false;receive:false"></a-entity>
       <a-entity class="environmentDressing environment" visible="false"></a-entity>
       <a-sky radius="200" theta-length="110" class="environment" geometry="" material="sunPosition:-0.10389385923870163 0.9444896294427422 0.31168157771610494;shader:skyshader;npot:false;color:#fff"></a-sky>
       <a-entity id="stars"></a-entity>
+
+      <audio id="rainforest" src="//cdn.rawgit.com/michaelnebeling/src/master/rainforest_ambience-GlorySunz-1938133500.mp3" crossorigin="anonymous"></audio>
 
       <a-mixin id="pointer" super-hands="colliderEvent: raycaster-intersection;
                               colliderEventProperty: els;
