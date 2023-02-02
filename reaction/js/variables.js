@@ -27,3 +27,8 @@ let numFilasEliminadas = 0;
 
 let piezasSaltadas = 0;
 let restarPuntosBool = false;
+
+//Sonido
+let sonidoNuevaPieza = false;
+let sonidoFilaEliminada = false;
+let sonidoPiezaSaltada = false;

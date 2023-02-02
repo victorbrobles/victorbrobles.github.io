@@ -141,9 +141,11 @@ function crearBotones(pos) {
 
   var botonBajar = document.createElement('a-box');
   botonBajar.setAttribute('bajarpieza', propsBajar);
+  botonBajar.setAttribute('sound__click', "src: #click; on: click; poolSize: 2")
 
   var botonRotar = document.createElement('a-box');
   botonRotar.setAttribute('rotarpieza', propsRotar);
+  botonRotar.setAttribute('sound__click', "src: #click; on: click; poolSize: 2")
 
   entity.appendChild(botonBajar);
   entity.appendChild(botonRotar);

@@ -25,6 +25,12 @@
 
       <audio id="environment" src="../assets/environment.mp3" crossorigin="anonymous"></audio>
 
+      <audio id="sonidonuevapieza" src="../assets/nuevapieza.wav" crossorigin="anonymous" volume="0.3"></audio>
+      <a-box handlernuevapieza></a-box>
+
+      <audio id="sonidofilaeliminada" src="../assets/filaeliminada.wav" crossorigin="anonymous" volume="0.3"></audio>
+      <a-box handlerfilaeliminada></a-box>
+
       <a-mixin id="pointer"
                 super-hands="colliderEvent: raycaster-intersection;
                               colliderEventProperty: els;

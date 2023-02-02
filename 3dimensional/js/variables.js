@@ -55,3 +55,7 @@ let moverPiezaTrasera = false;
 let velocidad = 0.025;
 let scoreActual = 0;
 let numFilasEliminadas = 0;
+
+//Sonido
+let sonidoNuevaPieza = false;
+let sonidoFilaEliminada = false;

@@ -69,3 +69,9 @@ let posControllerDer = {x: 10, y: 0, z: 0};
 
 let nuevaPosIzq = "";
 let nuevaPosDer = "";
+
+//Sonido
+let sonidoNuevaPieza = false;
+let sonidoFilaEliminada = false;
+let sonidoNuevoTablero = false;
+

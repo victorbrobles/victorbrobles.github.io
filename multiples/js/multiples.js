@@ -1,3 +1,35 @@
+//SONIDOS
+
+AFRAME.registerComponent('handlernuevapieza', {
+  tick: function() {
+    let el = document.getElementById('sonidonuevapieza');
+    if (sonidoNuevaPieza) {
+      el.play();
+      sonidoNuevaPieza = false;
+    }
+  }
+});
+
+AFRAME.registerComponent('handlerfilaeliminada', {
+  tick: function() {
+    let el = document.getElementById('sonidofilaeliminada');
+    if (sonidoFilaEliminada) {
+      el.play();
+      sonidoFilaEliminada = false;
+    }
+  }
+});
+
+AFRAME.registerComponent('handlernuevotablero', {
+  tick: function() {
+    let el = document.getElementById('sonidonuevotablero');
+    if (sonidoNuevoTablero) {
+      el.play();
+      sonidoNuevoTablero = false;
+    }
+  }
+});
+
 
 
 
@@ -333,13 +365,17 @@ AFRAME.registerComponent('botonestableros', {
 
       if (botonIzq != null) {
         botonIzq.addEventListener('grab-end', function(event) {
+          event.stopImmediatePropagation();
           crearTablerosIzq = true;
+          sonidoNuevoTablero = true;
         });
       }
 
       if (botonDer != null) {
         botonDer.addEventListener('grab-end', function(event) {
+          event.stopImmediatePropagation();
           crearTablerosDer = true;
+          sonidoNuevoTablero = true;
         });
       }
     }
@@ -559,14 +595,17 @@ AFRAME.registerComponent('cubo', {
             crearPiezaDer = true;
             bajarPiezaDer = false;
             rotarPiezaDer = false;
+            sonidoNuevaPieza = true;
           } else if (izquierda) {
             crearPiezaIzq = true;
             bajarPiezaIzq = false;
             rotarPiezaIzq = false;
+            sonidoNuevaPieza = true;
           } else {
             crearPieza = true;
             bajarPieza = false;
             rotarPieza = false;
+            sonidoNuevaPieza = true;
           }
         } else {
           location.replace("../gameover.html?puntuacion=" + scoreActual);

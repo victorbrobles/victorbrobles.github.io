@@ -35,3 +35,7 @@ let scoreActual = 0;
 let numFilasEliminadas = 0;
 
 let obstaculoChocado = false;
+
+//Sonido
+let sonidoNuevaPieza = false;
+let sonidoFilaEliminada = false;

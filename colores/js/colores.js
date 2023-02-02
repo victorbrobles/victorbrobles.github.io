@@ -4,6 +4,33 @@
 let anchuraElegida = window.location.search;
 anchuraElegida = anchuraElegida.replace("?", "");
 
+
+//SONIDOS
+
+AFRAME.registerComponent('handlernuevapieza', {
+  tick: function() {
+    let el = document.getElementById('sonidonuevapieza');
+    if (sonidoNuevaPieza) {
+      el.play();
+      sonidoNuevaPieza = false;
+    }
+  }
+});
+
+AFRAME.registerComponent('handlerfilaeliminada', {
+  tick: function() {
+    let el = document.getElementById('sonidofilaeliminada');
+    if (sonidoFilaEliminada) {
+      el.play();
+      sonidoFilaEliminada = false;
+    }
+  }
+});
+
+
+
+
+
 AFRAME.registerComponent('score', {
   schema: {
     position: {default: "0 0 0"},
@@ -354,6 +381,7 @@ AFRAME.registerComponent('cubo', {
           crearPieza = true;
           bajarPieza = false;
           rotarPieza = false;
+          sonidoNuevaPieza = true;
         } else {
           location.replace("../gameover.html?puntuacion=" + scoreActual);
         }

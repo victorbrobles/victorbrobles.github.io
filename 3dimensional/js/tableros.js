@@ -47,6 +47,7 @@ function eliminarFilasCompletas(tab, tipoTablero) {
   }
 
   if (filasEliminadas.length > 0) {
+    sonidoFilaEliminada = true;
     actualizaMarcadorFila = true;
     numFilasEliminadas = filasEliminadas.length;
   }

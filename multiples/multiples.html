@@ -27,6 +27,16 @@
       <a-entity id="stars" visible="false"></a-entity>
 
       <audio id="environment" src="../assets/environment.mp3" crossorigin="anonymous"></audio>
+      <audio id="click" src="../assets/click.wav" crossorigin="anonymous"></audio>
+
+      <audio id="sonidonuevapieza" src="../assets/nuevapieza.wav" crossorigin="anonymous" volume="0.3"></audio>
+      <a-box handlernuevapieza></a-box>
+
+      <audio id="sonidofilaeliminada" src="../assets/filaeliminada.wav" crossorigin="anonymous" volume="0.3"></audio>
+      <a-box handlerfilaeliminada></a-box>
+
+      <audio id="sonidonuevotablero" src="../assets/nuevotablero.wav" crossorigin="anonymous" volume="0.3"></audio>
+      <a-box handlernuevotablero></a-box>
 
       <a-mixin id="pointer"
                 super-hands="colliderEvent: raycaster-intersection;
@@ -55,9 +65,9 @@
       <a-entity id="botonespiezas">
         <a-entity id="botonesbajarrotar">
           <a-box bajarpieza="position: -10 15 -20; color: red; width: 3; height: 3; depth: 0; id:bajarpieza; mixin:botones;
-            positionText: 0.3 -0.4 1; colorText: black; alignText: center; valueText: BAJAR PIEZA; widthText: 10; idText: bajarpiezatext"></a-box>
+            positionText: 0.3 -0.4 1; colorText: black; alignText: center; valueText: BAJAR PIEZA; widthText: 10; idText: bajarpiezatext" sound__click="src: #click; on: click; poolSize: 2"></a-box>
           <a-box rotarpieza="position: 10 15 -20; color: red; width: 3; height: 3; depth: 0; id:rotarpieza; mixin:botones;
-            positionText: -0.3 -0.4 1; colorText: black; alignText: center; valueText: ROTAR PIEZA; widthText: 10; idText: rotarpiezatext"></a-box>
+            positionText: -0.3 -0.4 1; colorText: black; alignText: center; valueText: ROTAR PIEZA; widthText: 10; idText: rotarpiezatext" sound__click="src: #click; on: click; poolSize: 2"></a-box>
         </a-entity>
       </a-entity>
 

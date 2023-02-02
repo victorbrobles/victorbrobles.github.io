@@ -16,7 +16,7 @@
     <script src="https://github.com/wmurphyrd/aframe-super-hands-component/tree/master/examples/build.js"></script>
   </head>
   <body>
-    <a-scene id="entorno" environment="skyColor:#87faf4;horizonColor:#87faf4;dressingAmount:0;dressingOnPlayArea:0.5;dressingVariance:0.2 0.2 0.2;dressingScale:0.5;groundColor:#7d787b;groundColor2:#f1f518;dressingColor:#08fd18;grid:dots;dressingUniformScale:false;ground:flat;active:true;seed:17;lightPosition:-0.72 0.53 0.97;fog:0.8;groundYScale:20;groundTexture:walkernoise;gridColor:#239893;preset:dream" preset-switcher="" sound="src: #environment; on: mouseenter; loop: true; volume: 0.05; rolloffFactor: 0">
+    <a-scene id="entorno" environment="skyColor:#87faf4;horizonColor:#87faf4;dressingAmount:0;dressingOnPlayArea:0.5;dressingVariance:0.2 0.2 0.2;dressingScale:0.5;groundColor:#7d787b;groundColor2:#f1f518;dressingColor:#08fd18;grid:dots;dressingUniformScale:false;ground:flat;active:true;seed:17;lightPosition:-0.72 0.53 0.97;fog:0.8;groundYScale:20;groundTexture:walkernoise;gridColor:#239893;preset:dream" preset-switcher="" sound="src: #environment; on: mouseenter; loop: true; volume: 0.2; rolloffFactor: 0">
       <a-entity class="environment" position="0 50 0" light="color:#c3fcf9;intensity:0.6;groundColor:#7d787b;type:hemisphere"></a-entity>
       <a-entity class="environment" position="-0.72 0.53 0.97" light="shadowCameraLeft:-10;shadowCameraBottom:-10;shadowCameraRight:10;shadowCameraTop:10;intensity:0.6"></a-entity>
       <a-entity rotation="-90 0 0" class="environmentGround environment" scale="1 1 20" shadow="cast:false;receive:false"></a-entity>
@@ -26,6 +26,14 @@
 
       <audio id="environment" src="../assets/environment.mp3" crossorigin="anonymous"></audio>
       <audio id="click" src="../assets/click.wav" crossorigin="anonymous"></audio>
+
+    
+      <audio id="sonidonuevapieza" src="../assets/nuevapieza.wav" crossorigin="anonymous" volume="0.3"></audio>
+      <a-box handlernuevapieza></a-box>
+
+      <audio id="sonidofilaeliminada" src="../assets/filaeliminada.wav" crossorigin="anonymous" volume="0.3"></audio>
+      <a-box handlerfilaeliminada></a-box>
+    
 
       <a-mixin id="pointer"
                 super-hands="colliderEvent: raycaster-intersection;

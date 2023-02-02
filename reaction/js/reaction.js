@@ -1,3 +1,36 @@
+//SONIDOS
+
+AFRAME.registerComponent('handlernuevapieza', {
+  tick: function() {
+    let el = document.getElementById('sonidonuevapieza');
+    if (sonidoNuevaPieza) {
+      el.play();
+      sonidoNuevaPieza = false;
+    }
+  }
+});
+
+AFRAME.registerComponent('handlerfilaeliminada', {
+  tick: function() {
+    let el = document.getElementById('sonidofilaeliminada');
+    if (sonidoFilaEliminada) {
+      el.play();
+      sonidoFilaEliminada = false;
+    }
+  }
+});
+
+AFRAME.registerComponent('handlerpiezasaltada', {
+  tick: function() {
+    let el = document.getElementById('sonidopiezasaltada');
+    if (sonidoPiezaSaltada) {
+      el.play();
+      sonidoPiezaSaltada = false;
+    }
+  }
+});
+
+
 
 //PUNTUACION
 
@@ -152,7 +185,7 @@ AFRAME.registerComponent('cubo', {
 
       var tiempoComparar = Date.now();
 
-      if (tiempoComparar >= this.contadorTiempo + 3000) {
+      if (tiempoComparar >= this.contadorTiempo + 3000 && !this.bajarPieza) {
         this.tiempoExpirado = true;
       }
 
@@ -165,6 +198,7 @@ AFRAME.registerComponent('cubo', {
         var entornoPiezas = document.getElementById("piezas");
         entornoPiezas.removeChild(el);
         crearPieza = true;
+        sonidoPiezaSaltada = true;
 
         piezasSaltadas++;
         restarPuntosBool = true;
@@ -202,6 +236,7 @@ AFRAME.registerComponent('cubo', {
 
           if (!isGameOver()) {
             crearPieza = true;
+            sonidoNuevaPieza = true;
           } else {
             location.replace("../gameover.html?puntuacion=" + scoreActual);
           }

@@ -27,3 +27,7 @@ let piezasCaidas = 0;
 let velocidad = 0.1;
 let scoreActual = 0;
 let numFilasEliminadas = 0;
+
+//Sonido
+let sonidoNuevaPieza = false;
+let sonidoFilaEliminada = false;

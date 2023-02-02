@@ -50,6 +50,7 @@ function eliminarFilasCompletas() {
   }
 
   if (filasEliminadas.length > 0) {
+    sonidoFilaEliminada = true;
     actualizaMarcadorFila = true;
     numFilasEliminadas = filasEliminadas.length;
   }

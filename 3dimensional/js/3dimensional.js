@@ -1,4 +1,30 @@
 
+
+//SONIDOS
+
+AFRAME.registerComponent('handlernuevapieza', {
+  tick: function() {
+    let el = document.getElementById('sonidonuevapieza');
+    if (sonidoNuevaPieza) {
+      el.play();
+      sonidoNuevaPieza = false;
+    }
+  }
+});
+
+AFRAME.registerComponent('handlerfilaeliminada', {
+  tick: function() {
+    let el = document.getElementById('sonidofilaeliminada');
+    if (sonidoFilaEliminada) {
+      el.play();
+      sonidoFilaEliminada = false;
+    }
+  }
+});
+
+
+
+
 //PUNTUACION
 
 let anchuraElegida = window.location.search;
@@ -556,10 +582,12 @@ AFRAME.registerComponent('cubo', {
               crearPiezaTrasera = true;
               bajarPiezaTrasera = false;
               rotarPiezaTrasera = false;
+              sonidoNuevaPieza = true;
             } else {
               crearPieza = true;
               bajarPieza = false;
               rotarPieza = false;
+              sonidoNuevaPieza = true;
             }
           } else {
             location.replace("../gameover.html?puntuacion=" + scoreActual);
