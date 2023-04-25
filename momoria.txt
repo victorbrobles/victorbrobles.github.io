@@ -1,0 +1,46 @@
+
+latex
+
+overleaf.com
+
+https://github.com/gregoriorobles/plantilla-memoria/blob/master/memoria.tex
+https://gitlab.etsit.urjc.es/ofilibre/TFG-TFM-plantilla
+
+https://gsyc.urjc.es/jgb/ -> otras tesis
+
+https://mstoyano.github.io/TFG_Momchil_Stoyanov.pdf
+
+
+Capitulos:
+
+	Introduccion -> Explicar lo que voy a hacer, historia de tetris, realidad
+		virtual y contexto actual, navegador DOM.
+		Motivacion, objetivo principal, objetivos secundarios.
+		Descripcion de la memoria.
+	Tecnologias relacionadas -> tecnologias usadas y proyectos relacionados.
+		aframe, js, html5, three, webvr, superhands...
+	Proceso de desarrollo (Prototipo 0, 1, 2)... -> Etapas del proyecto y desarrollo de las mismas
+		Describir el proyecto en sprints. (4 o 5 mas o menos). Cada sprint tiene 
+		un apartado de requisitos y diseño, division de tareas, problemas
+		y cosas a destacar, analisis del prototipo.
+	Descripcion tecnica -> Partes: como esta hecho y como se usa.
+		Descripcion de componentes y como funcionan. Manual de usuario
+		donde explico como construir un escenario (manual 1) y como mover
+		las piezas y usar la app (manual 2).
+	Conclusiones -> Detalles de lo que hecho, que objetivos se han cumplido y 
+		como. Url de mi repo github, como probarlo... Hablar de las distintas versiones
+		que he creado y como han acabado funcionando.
+		Seccion detalles de realizacion -> Cuando empece, cuando acabe, 
+		tiempo de cada sprint, tiempo empleado en el proyecto, problemas
+		al conectar las gafas (hablar de esto mejor en un sprint), 
+		visual code, github pages...
+		Seccion en la que hablo de los conocimientos del grado que me han
+		ayudado en el proyecto.
+		Seccion cosas nuevas que he tenido que aprender.
+		Seccion trabajos futuros que podre implementar.
+	Bibliografia
+
+
+Entre 60 y 80 paginas mas o menos.
+Pagina web opcional donde enlazo la app, la memoria, las capturas, un video de 
+presentacion...
