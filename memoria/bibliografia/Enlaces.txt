@@ -40,3 +40,9 @@ https://code.visualstudio.com/docs
 https://es.wikipedia.org/wiki/Visual_Studio_Code
 
 https://www.xataka.com/basics/que-github-que-que-le-ofrece-a-desarrolladores
+
+https://www.atlassian.com/es/git/tutorials/what-is-git
+
+https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/getting-started-with-github-desktop
+
+https://es.wikipedia.org/wiki/LaTeX
