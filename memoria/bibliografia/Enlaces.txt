@@ -1,14 +1,4 @@
 
-https://es.wikipedia.org/wiki/A-Frame
-
-https://www.russian-university.com/la-historia-del-tetris-inventado-por-un-ruso
-
-https://internetpasoapaso.com/maquinas-arcade/
-
-https://javiersalinas.es/que-es-la-webvr/
-
-https://es.wikipedia.org/wiki/Document_Object_Model
-
 https://openwebinars.net/blog/que-es-html5/
 https://www.hostinger.es/tutoriales/que-es-html#%C2%BFComo_funciona_HTML
 
@@ -17,10 +7,8 @@ https://desarrolloweb.com/home/javascript
 https://www.aprenderaprogramar.com/index.php?option=com_content&view=article&id=778&catid=78&Itemid=206
 
 https://www.adictosaltrabajo.com/2017/06/28/aframe-bienvenido-a-webvr/
-https://es.wikipedia.org/wiki/A-Frame
 https://aframe.io/examples/showcase/helloworld/
 
-https://es.wikipedia.org/wiki/Document_Object_Model
 https://desarrolloweb.com/articulos/que-es-el-dom.html
 https://blog.hubspot.es/website/que-es-dom
 
@@ -46,3 +34,8 @@ https://www.atlassian.com/es/git/tutorials/what-is-git
 https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/getting-started-with-github-desktop
 
 https://es.wikipedia.org/wiki/LaTeX
+
+
+
+
+https://aframe.io/docs/1.4.0/introduction/

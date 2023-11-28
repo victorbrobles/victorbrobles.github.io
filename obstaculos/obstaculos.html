@@ -25,6 +25,7 @@
       <a-entity id="stars" visible="false"></a-entity>
 
       <audio id="environment" src="../assets/environment.mp3" crossorigin="anonymous"></audio>
+      <audio id="click" src="../assets/click.wav" crossorigin="anonymous"></audio>
 
       <audio id="sonidonuevapieza" src="../assets/nuevapieza.wav" crossorigin="anonymous" volume="0.3"></audio>
       <a-box handlernuevapieza></a-box>
@@ -56,9 +57,9 @@
 
       <a-entity id="botones">
         <a-box bajarpieza="position: -19 15 -20; color: red; width: 3; height: 3; depth: 0; id:bajarPieza; mixin:botones;
-          positionText: 0.3 -0.4 1; colorText: black; alignText: center; valueText: BAJAR PIEZA; widthText: 10"></a-box>
+          positionText: 0.3 -0.4 1; colorText: black; alignText: center; valueText: BAJAR PIEZA; widthText: 10" sound__click="src: #click; on: click; poolSize: 2"></a-box>
         <a-box rotarpieza="position: 19 15 -20; color: red; width: 3; height: 3; depth: 0 id:rotarPieza; mixin:botones;
-          positionText: -0.3 -0.4 1; colorText: black; alignText: center; valueText: ROTAR PIEZA; widthText: 10"></a-box>
+          positionText: -0.3 -0.4 1; colorText: black; alignText: center; valueText: ROTAR PIEZA; widthText: 10" sound__click="src: #click; on: click; poolSize: 2"></a-box>
       </a-entity>
 
       <a-entity id="mandocontrolador">

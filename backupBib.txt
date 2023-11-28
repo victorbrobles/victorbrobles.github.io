@@ -1,0 +1,181 @@
+@misc{wiki-aframe,
+  author = {Wikipedia},
+  title = {{Información general sobre A-Frame}},
+  howpublished = "\url{https://es.wikipedia.org/wiki/A-Frame}",
+  language = {en}, 
+}
+
+@misc{aframe-ejemplos,
+  author = {A-Frame},
+  title = {{Prácticas con A-Frame}},
+  howpublished = "\url{https://aframe.io/examples/showcase/helloworld/}",
+  language = {es}, 
+}
+
+@misc{aframe-docs,
+  author = {A-Frame},
+  title = {{Documentación de A-Frame}},
+  howpublished = "\url{https://aframe.io/docs/1.4.0/introduction/}",
+  language = {en}, 
+}
+
+@misc{tetris-historia,
+  author = {Russian University},
+  title = {{Historia del Tetris}},
+  howpublished = "\url{https://www.russian-university.com/la-historia-del-tetris-inventado-por-un-ruso}",
+  language = {es}, 
+}
+
+@misc{arcade-historia,
+  author = {Internet paso a paso},
+  title = {{Historia de los juegos arcade}},
+  howpublished = "\url{https://internetpasoapaso.com/maquinas-arcade/}",
+  language = {es}, 
+}
+
+@misc{webvr-intro,
+  author = {Adictos al trabajo},
+  title = {{Introdución a WebVR}},
+  howpublished = "\url{https://www.adictosaltrabajo.com/2017/06/28/aframe-bienvenido-a-webvr/}",
+  language = {es}, 
+}
+
+@misc{web-vr,
+  author = {Javier Salinas},
+  title = {{¿Qué es la WebVR?}},
+  howpublished = "\url{https://javiersalinas.es/que-es-la-webvr/}",
+  language = {es}, 
+}
+
+@misc{dom,
+  author = {Wikipedia},
+  title = {{Información sobre el DOM}},
+  howpublished = "\url{https://es.wikipedia.org/wiki/Document_Object_Model}",
+  language = {es}, 
+}
+
+@misc{dom2,
+  author = {Desarrollo Web},
+  title = {{Información extra sobre el DOM}},
+  howpublished = "\url{https://desarrolloweb.com/articulos/que-es-el-dom.html}",
+  language = {es}, 
+}
+
+@misc{dom-javascript,
+  author = {Blog Hubspot},
+  title = {{El DOM integrado con JavaScript}},
+  howpublished = "\url{https://blog.hubspot.es/website/que-es-dom}",
+  language = {es}, 
+}
+
+@misc{html,
+  author = {Open Webinars},
+  title = {{Información sobre HTML}},
+  howpublished = "\url{https://openwebinars.net/blog/que-es-html5/}",
+  language = {es}, 
+}
+
+@misc{html2,
+  author = {Hostinger},
+  title = {{Información extra sobre HTML}},
+  howpublished = "\url{https://www.hostinger.es/tutoriales/que-es-html#%C2%BFComo_funciona_HTML}",
+  language = {es}, 
+}
+
+@misc{javascript,
+  author = {Wikipedia},
+  title = {{Información sobre JavaScript}},
+  howpublished = "\url{https://es.wikipedia.org/wiki/JavaScript}",
+  language = {es}, 
+}
+
+@misc{javascript-integrador,
+  author = {Desarrollo Web},
+  title = {{JavaScript como lenguaje integrador}},
+  howpublished = "\url{https://desarrolloweb.com/home/javascript}",
+  language = {es}, 
+}
+
+@misc{javascript-servidor,
+  author = {Aprender a programar},
+  title = {{JavaScript del lado del servidor}},
+  howpublished = "\url{https://www.aprenderaprogramar.com/index.php?option=com_content&view=article&id=778&catid=78&Itemid=206}",
+  language = {es}, 
+}
+
+@misc{super-hands,
+  author = {GitHub},
+  title = {{Librería Super-Hands}},
+  howpublished = "\url{https://github.com/c-frame/aframe-super-hands-component}",
+  language = {en}, 
+}
+
+@misc{oculus-wiki,
+  author = {Wikipedia},
+  title = {{Oculus y la realidad virtual}},
+  howpublished = "\url{https://es.wikipedia.org/wiki/Oculus_VR}",
+  language = {es}, 
+}
+
+@misc{oculus-historia,
+  author = {César Mesa},
+  title = {{Historia de Oculus}},
+  howpublished = "\url{https://cesarmesa.com.co/la-historia-de-oculus-que-es-y-como-funciona/}",
+  language = {es}, 
+}
+
+@misc{oculus-developer-hub,
+  author = {Oculus},
+  title = {{Información sobre Oculus Developer Hub}},
+  howpublished = "\url{https://developer.oculus.com/blog/oculus-developer-hub-20/}",
+  language = {en}, 
+}
+
+@misc{atom,
+  author = {Wikipedia},
+  title = {{Información sobre Atom}},
+  howpublished = "\url{https://es.wikipedia.org/wiki/Atom_(software)}",
+  language = {en}, 
+}
+
+@misc{visual,
+  author = {Visual Studio},
+  title = {{Información sobre Visual Studio Code}},
+  howpublished = "\url{https://code.visualstudio.com/docs}",
+  language = {es}, 
+}
+
+@misc{visual2,
+  author = {Wikipedia},
+  title = {{Información extra sobre Visual Studio Code}},
+  howpublished = "\url{https://es.wikipedia.org/wiki/Visual_Studio_Code}",
+  language = {es}, 
+}
+
+@misc{github,
+  author = {Xataka},
+  title = {{Información sobre GitHub}},
+  howpublished = "\url{https://www.xataka.com/basics/que-github-que-que-le-ofrece-a-desarrolladores}",
+  language = {es}, 
+}
+
+@misc{git,
+  author = {Atlassian},
+  title = {{Información sobre Git}},
+  howpublished = "\url{https://www.atlassian.com/es/git/tutorials/what-is-git}",
+  language = {en}, 
+}
+
+@misc{github-desktop,
+  author = {GitHub},
+  title = {{Ventajas de GitHub Desktop}},
+  howpublished = "\url{https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/getting-started-with-github-desktop}",
+  language = {en}, 
+}
+
+@misc{latex,
+  author = {Wikipedia},
+  title = {{Introdución a LaTeX}},
+  howpublished = "\url{https://es.wikipedia.org/wiki/LaTeX}",
+  language = {es}, 
+}

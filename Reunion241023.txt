@@ -1,0 +1,10 @@
+NOTAS REU 24/10/23
+
+9. https://ofilibre.urjc.es/guias/tfg-abierto/  -> Publicar en el archivo abierto de la universidad
+15. url como nota a pie de pagina
+22. autor especifico en bibliografia, quitar anclas y revisar texto y añadir a cada una visitado el ... y la fecha
+23. quitar wikipedia y buscar libros como citas
+25. Figuras en practica
+
+
+
