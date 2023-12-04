@@ -608,7 +608,7 @@ AFRAME.registerComponent('cubo', {
             sonidoNuevaPieza = true;
           }
         } else {
-          location.replace("../gameover.html?puntuacion=" + scoreActual);
+          location.replace("../gameover.HTML?puntuacion=" + scoreActual);
         }
       }
     }

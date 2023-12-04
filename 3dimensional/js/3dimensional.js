@@ -113,7 +113,7 @@ AFRAME.registerComponent('giro', {
         if (textoIzq != null) {
           elementoIzq.removeChild(textoIzq);
         }
-        
+
         if (textoDer != null) {
           elementoDer.removeChild(textoDer);
         }
@@ -590,7 +590,7 @@ AFRAME.registerComponent('cubo', {
               sonidoNuevaPieza = true;
             }
           } else {
-            location.replace("../gameover.html?puntuacion=" + scoreActual);
+            location.replace("../gameover.HTML?puntuacion=" + scoreActual);
           }
         }
       }

@@ -267,7 +267,7 @@ AFRAME.registerComponent('cubo', {
         if (!isGameOver()) {
           //
         } else {
-          location.replace("../gameover.html?puntuacion=" + scoreActual);
+          location.replace("../gameover.HTML?puntuacion=" + scoreActual);
         }
       }
     }

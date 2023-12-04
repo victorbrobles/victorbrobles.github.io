@@ -384,7 +384,7 @@ AFRAME.registerComponent('cubo', {
           rotarPieza = false;
           sonidoNuevaPieza = true;
         } else {
-          location.replace("../gameover.html?puntuacion=" + scoreActual);
+          location.replace("../gameover.HTML?puntuacion=" + scoreActual);
         }
       }
     }
