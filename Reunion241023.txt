@@ -1,10 +1,26 @@
 NOTAS REU 24/10/23
 
 9. https://ofilibre.urjc.es/guias/tfg-abierto/  -> Publicar en el archivo abierto de la universidad
-15. url como nota a pie de pagina
-22. autor especifico en bibliografia, quitar anclas y revisar texto y añadir a cada una visitado el ... y la fecha
-23. quitar wikipedia y buscar libros como citas
-25. Figuras en practica
+
+
+
+capitulo 4 cambiar orden completo
+capitulo 4 antes del capitulo 3
+primero con capturas de pantalla -> los modos de juego y el manual de usuario
+componentes -> html de los componentes -> descripcion de los 
+componentes (funcionalidad) -> crear anexo de listado de componentes con la lista 
+de atributos -> funciones de los componentes
+luego complementos (implementacion), -> elementos y arquitectura general a un anexo
+por ultimo desarrollo de las etapas
+
+QUEDA:
+
+meter figuras para la declaracion de cada componente y quizas para la implementacion?
+anexo componentes con sus propiedades
+revision general
+
+
+
 
 
 
