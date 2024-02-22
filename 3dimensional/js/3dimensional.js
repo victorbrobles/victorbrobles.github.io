@@ -590,7 +590,7 @@ AFRAME.registerComponent('cubo', {
               sonidoNuevaPieza = true;
             }
           } else {
-            location.replace("../gameover.HTML?puntuacion=" + scoreActual);
+            location.replace("../gameover.html?puntuacion=" + scoreActual);
           }
         }
       }

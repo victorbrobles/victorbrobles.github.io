@@ -1,72 +1,17 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="es">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>ViRto</title>
+    <title>Tetris VR</title>
 
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="https://jdjuli.github.io/virto/an-old-hope.min.css" rel="stylesheet">
-    <link href="https://jdjuli.github.io/virto/style.css" rel="stylesheet">
-    <link href="https://jdjuli.github.io/virto/custom.css" rel="stylesheet">
-
-    <link rel="apple-touch-icon" href="https://jdjuli.github.io/virto/apple-touch-icon.png">
-    <link rel="icon" href="https://jdjuli.github.io/virto/favicon.ico">
-    <meta name="generator" content="Hugo 0.88.1" />
-
-    <link rel="alternate" type="application/rss+xml" href="https://jdjuli.github.io/virto/index.xml" title="ViRto" />
-
-
-    <script>
-      function setTheme() {
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          document.body.classList.add('dark');
-          return;
-        }
-
-        const time = new Date();
-        const prev = localStorage.getItem('date');
-        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
-
-        const now = time.getTime();
-        let sunrise;
-        let sunset;
-
-        function setBodyClass() {
-          if (now > sunrise && now < sunset) return;
-          document.body.classList.add('dark');
-        }
-
-        if (date !== prev) {
-          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
-            .then((res) => res.json())
-            .then((data) => {
-              sunrise = data.sunrise.split(':').map(Number);
-              sunset = data.sunset.split(':').map(Number);
-            })
-            .catch(() => {
-              sunrise = [7, 0];
-              sunset = [19, 0];
-            })
-            .finally(() => {
-              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
-              sunset = time.setHours(sunset[0], sunset[1], 0);
-              setBodyClass();
-              localStorage.setItem('sunrise', sunrise);
-              localStorage.setItem('sunset', sunset);
-            });
-          localStorage.setItem('date', date);
-        } else {
-          sunrise = Number(localStorage.getItem('sunrise'));
-          sunset = Number(localStorage.getItem('sunset'));
-          setBodyClass();
-        }
-      }
-    </script>
+    <link href="css/min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
   </head>
   <body class="list home">
     <script>
@@ -74,34 +19,26 @@
     </script>
     <header id="top" class="header">
       <nav class="nav">
-        <h1 class="logo"><a href="https://jdjuli.github.io/virto/">ViRto</a></h1>
-        <ul class="menu">
-          <li>
-            <a href="/virto/components/">Components</a>
-          </li>
-          <li>
-            <a href="/virto/scenes/demos/demo23">Latest scene</a>
-          </li>
-        </ul>
+        <h1 class="logo"><a href="https://victorbrobles.github.io/tetrisWeb.html">Página web de la aplicación Tetris VR</a></h1>
       </nav>
     </header>
     <main class="main">
 
-<header class="page-header"><h1>ViRto</h1></header>
+<header class="page-header"><h1>Tetris VR</h1></header>
   <hr>
-  <h3>Some useful links</h3>
+  <h3>Enlaces de interés</h3>
   <hr>
   <p>
   <ul style="margin-left: 1.5em;">
-    <li><a style="text-decoration: underline" href="https://jdjuli.github.io/virto/memoria.pdf">Thesis in spanish (.pdf)</a></li>
-    <li><a style="text-decoration: underline" href="https://jdjuli.github.io/virto/presentacion.pdf">Slides (.pdf)</a></li>
-    <li><a style="text-decoration: underline" href="https://www.youtube.com/channel/UCS-eM4L0dlqbrv3XB45IxKA">Videos</a></li>
-    <li>Suggested demos to be tried:
+    <li><a style="text-decoration: underline" href="https://victorbrobles.github.io/MemoriaTetris.pdf">Tesis del proyecto</a></li>
+    <li><a style="text-decoration: underline" href="https://victorbrobles.github.io/PresentacionTFG.pptx">Presentación de la tesis</a></li>
+    <li><a style="text-decoration: underline" href="https://victorbrobles.github.io/video.mp4">Vídeos relacionados</a></li>
+    <li>Demos de la aplicación:
       <ul style="margin-left: 2em;">
-        <li><a style="text-decoration: underline;" href="https://jdjuli.github.io/virto/scenes/demos/demo18/">Demo 18</a>: First idea of VR IDE, programs are built vertically and elements are created through a menu.</li>
-        <li><a style="text-decoration: underline;" href="https://jdjuli.github.io/virto/scenes/demos/demo19/">Demo 19</a>: Second idea, programs are built horizontally and the instructions are parametrizable. Values are constants.</li>
-        <li><a style="text-decoration: underline;" href="https://jdjuli.github.io/virto/scenes/demos/demo20/">Demo 20</a>: Similar to the Demo 19, but environment changed and now variables are available.</li>
-        <li><a style="text-decoration: underline;" href="https://jdjuli.github.io/virto/scenes/demos/demo22/">Demo 22</a>: Adds conditional and repetitive instructions to the Demo 20.</li>
+        <li><a style="text-decoration: underline;" href="https://victorbrobles.github.io/fase0/rebotadores.html">Demo fase 0</a>: Pequeña aplicación con A-Frame para conocer su funcionamiento</li>
+        <li><a style="text-decoration: underline;" href="https://victorbrobles.github.io/fase1/standard.html?12">Demo Prototipo</a>: Prototipo inicial de la aplicación</li>
+        <li><a style="text-decoration: underline;" href="https://victorbrobles.github.io/estandar/standard.html?20">Demo Modo Standard</a>: Demo para probar el modo Standard de la aplicación (modo escritorio)</li>
+        <li><a style="text-decoration: underline;" href="https://victorbrobles.github.io/reaction/reaction.html?15">Demo Modo Reaction Test</a>: Demo para probar el modo Reaction Test de la aplicación (modo VR)</li>
       </ul>
     </li>
   </ul>
@@ -113,144 +50,33 @@
     <h2>Version 1.0</h2>
   </header>
   <section class="entry-content">
-   <p>This is the first fully usable version of the proyect (more about it here).
-It allows the creation of sequential programs with variables that can be modified manually on runtime and is completely compatible with VR headsets and partialy with PCs.
-Things that can be done:  Write your own programs on HTML Run the program Modify the program Work with variables Build your own program from scratch  Scenes available to play with  Sample program Sample program &amp; build-your-own   Write your own programs on HTML Even though you only need to know the basics of HTML to write programs with this proyect, I would recommend to get used to work with A-Frame so you can get the most of it....</p>
+   <p>Esta es la primera versión de la página web asociada al proyecto Tetris VR.
+      Desde esta página se puede acceder a todo el contenido asociado al proyecto, así como a la tesis del proyecto, la presentación del mismo, o los vídeos y demos diseñados para
+      testear el funcionamiento de la aplicación completa.</p>
   </section>
   <footer class="entry-footer">
-    <time>April 4, 2022</time>
+    <time>16 de Febrero de 2024</time>
   </footer>
-  <a class="entry-link" href="https://jdjuli.github.io/virto/version-1.0/"></a>
 </article>
 <article class="post-entry">
   <header class="entry-header">
-    <h2>Review on colliders</h2>
+    <h2>Sobre mí</h2>
   </header>
   <section class="entry-content">
-   <p>This few past weeks I remembered a small issue I had from the begining related to the ‘realism’ of the grab and touch. I’ve already developed the component box-collider, which implements an OBB collider (i’ll explain this later) but it’s performance was worse than what I thought when I designed it.
-I decided to invest some time doing some research about how colliders work and creating components to use them on A-Frame, I came out with 4 types of colliders:...</p>
+   <p>Hola, mi nombre es Víctor Blasco y esta página web forma parte de mi trabajo de fin de grado en Ingeniería en Tecnologías de la Telecomunicación. Este proyecto ha sido
+      diseñado con el fin de conocer los avances que supone la adaptación de los videojuegos a la realidad virtual. Para ello se ha desarrollado una aplicación que mezcla las
+      características propias del juego clásico llamado "Tetris" con las funcionalidades que proporciona un entorno de realidad virtual.</p>
   </section>
   <footer class="entry-footer">
-    <time>January 28, 2022</time>
+    <time>16 de Febrero de 2024</time>
   </footer>
-  <a class="entry-link" href="https://jdjuli.github.io/virto/review-on-colliders/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>Including parameters to instructions</h2>
-  </header>
-  <section class="entry-content">
-   <p>I decided to put aside the conditional execution until I had a solid variable and condition evaluation system, and I put an intermediate milestone between a non-parametric execution and that objective of a fully functional variable manipulation and logical operators evaluation system on the execution of programs that allow ‘static’ variable and constant assignements (meaning they don’t vary with time but are intended to do so as the developments continues)....</p>
-  </section>
-  <footer class="entry-footer">
-    <time>December 18, 2021</time>
-  </footer>
-  <a class="entry-link" href="https://jdjuli.github.io/virto/parameters-on-instructions/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>Interaction improvements</h2>
-  </header>
-  <section class="entry-content">
-   <p>My thesis mentor gave me the idea of improving the interaction by implementing a previewing dynamic that allows the user to view how would the program look like if a certain instruction is added. I’ve took the previous demo 16 as the base to implement this preview and instead of overwriting the scene, I decided to create a new one to avoid anyone interested on following my progress having to navigate through the repository commits and start a webserver on their own to test it....</p>
-  </section>
-  <footer class="entry-footer">
-    <time>November 11, 2021</time>
-  </footer>
-  <a class="entry-link" href="https://jdjuli.github.io/virto/interaction-improvements/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>Creating iterative programs</h2>
-  </header>
-  <section class="entry-content">
-   <p>I’ve been working on making a fully usable demo that allows the users to create sequential programs. Also, I’m exploring two different ways of creating instruction blocks, both of them implemented on the demo 16.
-How to use the demo 16: This demo implements two different ways of creating new instructions blocks, I’ll explain how to use each one:
-  Use a static ‘panel’ to select the desired instruction:...</p>
-  </section>
-  <footer class="entry-footer">
-    <time>October 28, 2021</time>
-  </footer>
-  <a class="entry-link" href="https://jdjuli.github.io/virto/creating-iterative-programs/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>super-hands-component issue</h2>
-  </header>
-  <section class="entry-content">
-   <p>The library aframe-physics-system which I’m using to add physics to my scenes supports 2 physics engines, cannon.js and ammo.js, but recently I started using the library super-hands-component and it’s component super-hands attached to the A-Frame component hand-controls in order to provide a more natural way to interact with the elements of the scene, but super-hands-component is only compatible with the cannon.js engine. The problem arises with the latest version of A-Frame, which breaks the support of cannon....</p>
-  </section>
-  <footer class="entry-footer">
-    <time>September 22, 2021</time>
-  </footer>
-  <a class="entry-link" href="https://jdjuli.github.io/virto/super-hands-component-issue/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>Iteration 3</h2>
-  </header>
-  <section class="entry-content">
-   <p>On this iteration, the main objectives are:
- Ensure that the scenes can be used on PC and Oculus Quest. Create an element specifically intended for executing the program (a “run” button) Modify the program component so it creates a platform on which, by dropping the blocks, the user can create the program.  Scenes created  Demonstration of component “multidevice” On this scene, the component multidevice takes care of detecting if the device is a VR headset or not and on each case, initializes the corresponding controllers....</p>
-  </section>
-  <footer class="entry-footer">
-    <time>August 19, 2021</time>
-  </footer>
-  <a class="entry-link" href="https://jdjuli.github.io/virto/iteration-3/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>Iteration 2</h2>
-  </header>
-  <section class="entry-content">
-   <p>On this iteration the objectives are to improve the comunication between components and start making simple programming-oriented components.
-Scenes developed   Listening for entity collisions
-The scene represents a bunch of spheres bouncing and colliding, each time the spheres collide their color changes to red for a small time frame. To archieve this behaviour I created a component called “colorea_colision” that listens for “collide” events and changes the color of the attached entity for a short time....</p>
-  </section>
-  <footer class="entry-footer">
-    <time>June 22, 2021</time>
-  </footer>
-  <a class="entry-link" href="https://jdjuli.github.io/virto/iteration-2/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>Iteration 1</h2>
-  </header>
-  <section class="entry-content">
-   <p>I don’t have a lot of experience programming on Javascript before and also, as A-Frame is a component-based framework, the objectives of this first iteration are becoming familiar with Javascript and A-Frame.
-This first scenes are very basic and not so interactive, because I used them as “prototypes” for the next ones, I decided to keep them to ilustrate my progress.
-Scenes developed   Non parametric component
-This scene shows one brown sphere, it’s entity element on the DOM has the attribute “esfera_marron” set, which maps to the component with the same name....</p>
-  </section>
-  <footer class="entry-footer">
-    <time>June 10, 2021</time>
-  </footer>
-  <a class="entry-link" href="https://jdjuli.github.io/virto/iteration-1/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>About this blog</h2>
-  </header>
-  <section class="entry-content">
-   <p>Hello! My name is Julián Sánchez and this blog is part of my bachelor thesis on Informatic Engineering.
-About the proyect This proyect aims to create a virtual environment in which, the users could build programs that allow them to move a virtual drone. The main focus is to exploit all the advantages of the virtual reality in contrast with the 2D environments, such as the well-known IDEs.
-Where did the idea came from?...</p>
-  </section>
-  <footer class="entry-footer">
-    <time>June 8, 2021</time>
-  </footer>
-  <a class="entry-link" href="https://jdjuli.github.io/virto/about-virto/"></a>
 </article></main>
 <footer class="footer">
-  <span>&copy; 2022 <a href="https://jdjuli.github.io/virto/">ViRto</a></span>
+  <span>&copy; 2024 <a href="https://victorbrobles.github.io/">Tetris VR</a></span>
   <span>&middot;</span>
   <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
   <span>&middot;</span>
   <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
 </footer>
-<script src="https://jdjuli.github.io/virto/highlight.min.js"></script>
-<script>
-  hljs.initHighlightingOnLoad();
-</script>
 </body>
 </html>
