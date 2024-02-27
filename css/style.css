@@ -234,7 +234,7 @@ img {
   margin-top: 14px;
   margin-bottom: 14px;
   font-size: 16px;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 5;
 }
 .first-entry .entry-footer {
   font-size: 14px;
